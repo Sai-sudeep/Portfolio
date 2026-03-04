@@ -6,11 +6,11 @@ permalink: /
 
 <div class="home">
   <div class="intro-box">
-    <h1>Research Portfolio & Blog</h1>
-    <p>PhD Researcher in Computational Linguistics at IIT Delhi. Exploring syntax, phonetics, and NLP for low-resource languages.</p>
+    <h1>🎓 Research Portfolio & Blog</h1>
+    <p>PhD Researcher in <strong>Computational Linguistics</strong> at IIT Delhi. Exploring syntax, phonetics, and NLP for low-resource languages.</p>
   </div>
 
-  <h2>Research Areas</h2>
+  <h2>🔬 Research Areas</h2>
   <ul class="research-list">
     <li><strong>Computational Syntax</strong> - Formal syntactic analysis and parsing</li>
     <li><strong>Data Quality Estimation</strong> - Corpus validation methods</li>
@@ -22,7 +22,7 @@ permalink: /
 
   <hr>
 
-  <h2>Latest Posts</h2>
+  <h2>📝 Latest Posts</h2>
   {% if site.posts.size > 0 %}
     <ul class="post-list">
       {% for post in site.posts limit: 3 %}
@@ -45,6 +45,37 @@ permalink: /
 
   <hr>
 
-  <h2>Connect</h2>
-  <p>📧 <a href="mailto:{{ site.email }}">{{ site.email }}</a></p>
+  <h2>🤝 Connect</h2>
+  
+  <!-- Email & Academic Info -->
+  <div class="contact-info">
+    <p><strong>📧 Email:</strong> <a href="mailto:{{ site.email }}">{{ site.email }}</a></p>
+    <p><strong>🎓 Academic:</strong> PhD Scholar, IIT Delhi</p>
+  </div>
+
+  <!-- Social Media Links -->
+  <div class="social-links">
+    <h3>📱 Follow Me</h3>
+    <div class="social-grid">
+      <a href="https://www.linkedin.com/in/sai-sudeep-das-1946ab130" target="_blank" class="social-link linkedin" rel="noopener">
+        <span class="social-icon">💼</span> LinkedIn
+      </a>
+      
+      <a href="https://www.facebook.com/saisudeep.das/" target="_blank" class="social-link facebook" rel="noopener">
+        <span class="social-icon">📘</span> Facebook
+      </a>
+      
+      <a href="https://www.instagram.com/i_am_so_deep_/" target="_blank" class="social-link instagram" rel="noopener">
+        <span class="social-icon">📸</span> @i_am_so_deep_
+      </a>
+      
+      <a href="https://www.instagram.com/the_quintessential_inker/" target="_blank" class="social-link instagram" rel="noopener">
+        <span class="social-icon">🖋️</span> @the_quintessential_inker
+      </a>
+      
+      <a href="http://www.youtube.com/@saisudeepdas" target="_blank" class="social-link youtube" rel="noopener">
+        <span class="social-icon">📺</span> YouTube
+      </a>
+    </div>
+  </div>
 </div>

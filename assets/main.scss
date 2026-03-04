@@ -1,6 +1,3 @@
----
----
-
 // ========================================
 // FONT IMPORTS
 // ========================================
@@ -414,7 +411,7 @@ ul, ol {
 }
 
 // ========================================
-// INTERACTIVE ABOUT SECTION - ONLY NEW ADDITIONS
+// INTERACTIVE ABOUT SECTION
 // ========================================
 
 // Summary Section
@@ -430,7 +427,8 @@ ul, ol {
     font-size: 1.1rem;
     line-height: 1.7;
     color: var(--text-primary);
-    text-align: left !important;
+    text-align: justify !important;
+    text-justify: inter-word !important;
     margin: 0;
   }
 }
@@ -462,7 +460,58 @@ ul, ol {
   }
 }
 
-// ... nav-btn styles ...
+.nav-btn {
+  background: var(--bg-card);
+  border: 2px solid var(--border-light);
+  border-radius: var(--border-radius-lg);
+  padding: var(--space-md);
+  cursor: pointer;
+  transition: var(--transition);
+  font-family: var(--font-body);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-sm);
+  text-align: center;
+  box-shadow: var(--shadow-xs);
+  
+  .btn-icon {
+    font-size: 1.8rem;
+    transition: var(--transition);
+  }
+  
+  .btn-text {
+    font-size: 0.95rem;
+    font-weight: var(--font-weight-medium);
+    color: var(--text-primary);
+    transition: var(--transition);
+  }
+  
+  &:hover {
+    border-color: var(--primary-color);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+    
+    .btn-icon {
+      transform: scale(1.1);
+    }
+    
+    .btn-text {
+      color: var(--primary-color);
+    }
+  }
+  
+  &.active {
+    background: var(--primary-color);
+    border-color: var(--primary-color);
+    color: var(--text-inverse);
+    
+    .btn-icon,
+    .btn-text {
+      color: var(--text-inverse);
+    }
+  }
+}
 
 // Content Sections
 .content-sections {
@@ -496,82 +545,18 @@ ul, ol {
   }
 }
 
-// 🎯 ADD YOUR NEW CSS CODE RIGHT HERE (after the .content-section block ends)
-
-// Fix Summary Section Justification
-.about-summary {
-  background: var(--bg-card);
-  padding: var(--space-xl);
-  margin-bottom: var(--space-2xl);
-  border-radius: var(--border-radius-lg);
-  box-shadow: var(--shadow-sm);
-  border: 1px solid var(--border-light);
-  
-  .summary-text {
-    font-size: 1.1rem;
-    line-height: 1.7;
-    color: var(--text-primary);
-    text-align: justify !important; // Force justification
-    text-justify: inter-word !important;
-    margin: 0;
-  }
-}
-
-// Fix Contact Section Justification
-.contact-info {
-  @extend .card;
-  padding: var(--space-lg);
-  margin-bottom: var(--space-xl);
-  
-  .justified-text {
-    text-align: justify !important; // Force justification
-    text-justify: inter-word !important;
-    line-height: 1.7;
-    color: var(--text-secondary);
-    margin-bottom: var(--space-md);
-    
-    &:last-child {
-      margin-bottom: 0;
-    }
-  }
-  
-  // Also handle any regular p tags in contact section
-  p {
-    text-align: justify !important;
-    text-justify: inter-word !important;
-    line-height: 1.7;
-    margin-bottom: var(--space-md);
-    
-    &:last-child {
-      margin-bottom: 0;
-    }
-  }
-}
-
-// General fix for any remaining non-justified text in about sections
-.about-content {
-  max-width: var(--content-max-width);
-  margin: 0 auto;
-  padding: 0 var(--space-md);
-  
-  // Force all paragraph text to be justified
-  p {
-    text-align: justify !important;
-    text-justify: inter-word !important;
-  }
-  
-  @media (max-width: 768px) {
-    padding: 0 var(--space-sm);
-  }
-}
-
 // ========================================
-// REST OF YOUR EXISTING STYLES (Advanced Card System, etc...)
+// SOCIAL MEDIA & CONTACT ENHANCEMENTS
 // ========================================
+.social-icons-grid,
+.social-icons-footer {
+  display: flex;
+  gap: var(--space-md);
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: var(--space-md);
+}
 
-
-// 🎯 ADD YOUR NEW CSS CODE RIGHT HERE (after line ~500)
-// This is where the .social-icon class continuation begins
 .social-icon {
   display: inline-flex;
   align-items: center;
@@ -592,12 +577,9 @@ ul, ol {
   }
 }
 
-
 // ========================================
-// REST OF YOUR EXISTING STYLES (unchanged)
+// ADVANCED CARD SYSTEM
 // ========================================
-
-// Advanced Card System
 .card {
   background: var(--bg-card);
   border-radius: var(--border-radius-lg);
@@ -621,7 +603,9 @@ ul, ol {
   }
 }
 
-// Enhanced Timeline Components
+// ========================================
+// ENHANCED TIMELINE COMPONENTS
+// ========================================
 .timeline-container {
   margin-top: var(--space-xl);
   position: relative;
@@ -944,238 +928,93 @@ ul, ol {
     margin-bottom: var(--space-md);
     padding: var(--space-md);
     border-left: 4px solid var(--primary-color);
-    
-    strong { 
-      color: var(--text-primary);
-      font-weight: var(--font-weight-semibold);
-      display: block;
-      margin-bottom: var(--space-xs);
-    }
-    
-    &:hover {
-      border-left-color: var(--accent-color);
-    }
   }
 }
 
 // ========================================
-// SOCIAL MEDIA & CONTACT ENHANCEMENTS
+// TEXT JUSTIFICATION FIXES
 // ========================================
-.social-icons-grid,
-.social-icons-footer {
-  display: flex;
-  gap: var(--space-md);
-  flex-wrap: wrap;
-  justify-content: center;
-  margin-top: var(--space-md);
+
+// Force justification for specific content areas
+.about-content p,
+.contact-info p,
+.justified-text {
+  text-align: justify !important;
+  text-justify: inter-word !important;
 }
 
-.social-icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  transition: var(--transition-bounce);
-  text-decoration: none;
-  position: relative;
-  overflow: hidden;
-  
-  &::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%);
-    transform: translateX(-100%);
-    transition: var(--transition);
-  }
-  
-  &:hover::before {
-    transform: translateX(100%);
-  }
-  
-  svg {
-    width: 24px !important;
-    height: 24px !important;
-    fill: currentColor;
-    position: relative;
-    z-index: 1;
-  }
-  
-  &:hover {
-    transform: translateY(-3px) scale(1.1);
-    box-shadow: var(--shadow-lg);
-  }
-  
-  &:focus {
-    outline: 2px solid var(--text-inverse);
-    outline-offset: 2px;
-  }
-  
-  // Enhanced Platform Colors
-  &.linkedin { 
-    background: linear-gradient(135deg, #0077b5, #005885);
-    color: var(--text-inverse);
-    
-    &:hover { 
-      background: linear-gradient(135deg, #005885, #004066);
-    }
-  }
-  
-  &.facebook { 
-    background: linear-gradient(135deg, #1877f2, #166fe5);
-    color: var(--text-inverse);
-    
-    &:hover { 
-      background: linear-gradient(135deg, #166fe5, #1565d8);
-    }
-  }
-  
-  &.instagram,
-  &.instagram-alt { 
-    background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
-    color: var(--text-inverse);
-    
-    &:hover { 
-      transform: translateY(-3px) scale(1.1) rotate(5deg);
-    }
-  }
-  
-  &.youtube { 
-    background: linear-gradient(135deg, #ff0000, #cc0000);
-    color: var(--text-inverse);
-    
-    &:hover { 
-      background: linear-gradient(135deg, #cc0000, #990000);
-    }
-  }
-}
-
-// Contact Information
-.contact-info {
-  @extend .card;
-  padding: var(--space-lg);
-  margin-bottom: var(--space-xl);
-  
-  .contact-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: var(--space-md);
-    margin-top: var(--space-md);
-  }
-  
-  .contact-item {
-    display: flex;
-    align-items: center;
-    gap: var(--space-sm);
-    padding: var(--space-sm);
-    border-radius: var(--border-radius);
-    transition: var(--transition);
-    
-    &:hover {
-      background: var(--bg-hover);
-    }
-    
-    .contact-icon {
-      width: 20px;
-      height: 20px;
-      color: var(--primary-color);
-    }
-  }
-  
-  p {
-    margin-bottom: var(--space-sm);
-    text-align: left !important;
-    
-    &:last-child {
-      margin-bottom: 0;
-    }
-    
-    a {
-      font-weight: var(--font-weight-medium);
-      
-      &:hover { 
-        text-decoration: underline;
-      }
-    }
-  }
+// Override justification for centered elements
+.intro-box,
+.intro-box p,
+.intro-box h1,
+.intro-box h2,
+.page-subtitle,
+.profile-section,
+.profile-section * {
+  text-align: center !important;
 }
 
 // ========================================
-// FOOTER ENHANCEMENTS
+// RESPONSIVE DESIGN ENHANCEMENTS
 // ========================================
-.site-footer {
-  font-family: var(--font-heading);
-  background: linear-gradient(135deg, var(--text-primary), #111827);
-  color: var(--text-inverse);
-  padding: var(--space-2xl) 0 var(--space-xl);
-  margin-top: var(--space-3xl);
-  position: relative;
-  
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-  }
-  
-  h2, h3 {
-    color: var(--text-inverse);
-  }
-  
-  a {
-    color: rgba(255, 255, 255, 0.8);
-    transition: var(--transition);
+@media (max-width: 1024px) {
+  .timeline-item {
+    margin-left: var(--space-lg);
     
-    &:hover {
-      color: var(--text-inverse);
-      text-decoration: underline;
+    &::before {
+      left: calc(-var(--space-lg) - 6px);
     }
+  }
+  
+  .timeline-container::before {
+    left: var(--space-sm);
   }
 }
 
-// ========================================
-// RESPONSIVE DESIGN
-// ========================================
 @media (max-width: 768px) {
-  .navigation-buttons {
-    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  .timeline-header {
+    flex-direction: column;
+    align-items: flex-start;
     gap: var(--space-sm);
   }
   
-  .nav-btn {
-    padding: var(--space-sm);
-    
-    .btn-icon {
-      font-size: 1.5rem;
-    }
-    
-    .btn-text {
-      font-size: 0.85rem;
+  .timeline-date {
+    white-space: normal;
+  }
+  
+  .skills-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .navigation-buttons {
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  }
+}
+
+@media (max-width: 480px) {
+  .profile-section {
+    .profile-image,
+    img {
+      width: 150px;
+      height: 150px;
     }
   }
   
-  .about-summary {
-    padding: var(--space-lg);
-    
-    .summary-text {
-      font-size: 1rem;
-    }
-  }
-  
-  .content-section {
+  .intro-box {
     padding: var(--space-lg);
   }
   
   .timeline-item {
-    margin-left: var(--space-xl);
+    margin-left: 0;
+    border-left: none;
+    border-top: 4px solid var(--primary-color);
     
     &::before {
-      left: calc(-var(--space-xl) - 6px);
+      display: none;
     }
+  }
+  
+  .timeline-container::before {
+    display: none;
   }
 }

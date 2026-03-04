@@ -45,11 +45,18 @@
   --transition: all 0.2s ease;
   --transition-fast: all 0.15s ease;
   --transition-slow: all 0.3s ease;
+  
+  // Scroll offset for perfect centering when clicking heading links
+  --scroll-offset: 120px;
 }
 
 // ========================================
-// BASE TYPOGRAPHY
+// BASE TYPOGRAPHY & SMOOTH SCROLLING
 // ========================================
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   font-family: var(--font-body);
   line-height: 1.6;
@@ -62,22 +69,90 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-// Heading Hierarchy
+// ========================================
+// UNIVERSAL HEADING SYSTEM - NO DUPLICATES
+// ========================================
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-heading);
   font-weight: 600;
   line-height: 1.3;
-  margin-bottom: 1rem;
+  margin: 2rem 0 1.5rem 0;
   color: var(--primary-color);
   text-align: left;
+  
+  // PERFECT SCROLL-TO-CENTER POSITIONING
+  scroll-margin-top: var(--scroll-offset);
+  
+  // Smooth anchor link behavior
+  &:target {
+    animation: highlightHeading 2s ease-out;
+  }
 }
 
-h1 { font-size: clamp(2rem, 4vw, 2.25rem); }
+// Responsive heading sizes
+h1 { 
+  font-size: clamp(2rem, 4vw, 2.25rem);
+  margin-top: 1rem; // Less top margin for page titles
+}
+
 h2 { font-size: clamp(1.75rem, 3.5vw, 1.875rem); }
 h3 { font-size: clamp(1.5rem, 3vw, 1.5rem); }
 h4 { font-size: 1.25rem; }
 h5 { font-size: 1.125rem; }
 h6 { font-size: 1rem; font-weight: 500; }
+
+// Heading highlight animation when jumped to via anchor link
+@keyframes highlightHeading {
+  0% { 
+    background-color: rgba(8, 37, 103, 0.1);
+    border-radius: var(--border-radius);
+  }
+  100% { 
+    background-color: transparent; 
+  }
+}
+
+// ========================================
+// PAGE LAYOUT & STRUCTURE
+// ========================================
+.page-content {
+  background: var(--bg-light);
+  min-height: calc(100vh - 200px);
+  padding-top: 2rem;
+}
+
+.wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+// DETAIL PAGES - PERFECT CENTERED CONTENT
+.detail-page {
+  max-width: 900px;
+  margin: 0 auto 3rem;
+  
+  // Remove duplicate manual H1s - use Jekyll page title
+  .detail-page-header {
+    margin-bottom: 3rem;
+    text-align: center;
+    
+    // Hide manual H1s to prevent duplicates
+    h1 {
+      display: none;
+    }
+    
+    .page-subtitle {
+      font-family: var(--font-heading);
+      font-size: 1.2rem;
+      color: var(--text-secondary);
+      text-align: center;
+      margin-bottom: 2rem;
+      font-style: italic;
+      line-height: 1.4;
+    }
+  }
+}
 
 // ========================================
 // TEXT UTILITIES
@@ -95,7 +170,7 @@ h6 { font-size: 1rem; font-weight: 500; }
 .text-right { text-align: right !important; }
 
 // ========================================
-// LAYOUT COMPONENTS
+// HEADER & NAVIGATION
 // ========================================
 .site-header {
   background: var(--bg-white);
@@ -117,15 +192,19 @@ h6 { font-size: 1rem; font-weight: 500; }
   &:hover { color: var(--primary-hover) !important; }
 }
 
-.page-content {
-  background: var(--bg-light);
-  min-height: calc(100vh - 200px);
-}
-
-.wrapper {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 1rem;
+.site-nav {
+  .page-link {
+    font-family: var(--font-heading);
+    color: var(--text-primary);
+    font-weight: 500;
+    transition: var(--transition);
+    
+    &:hover { color: var(--primary-color); }
+    &.current { 
+      color: var(--primary-color); 
+      font-weight: 600; 
+    }
+  }
 }
 
 // ========================================
@@ -167,6 +246,7 @@ h6 { font-size: 1rem; font-weight: 500; }
     color: white;
     margin-bottom: 1rem;
     text-align: center !important;
+    scroll-margin-top: unset; // Remove scroll offset for intro headings
   }
   
   h1 { 
@@ -209,29 +289,126 @@ h6 { font-size: 1rem; font-weight: 500; }
 }
 
 // ========================================
+// TIMELINE COMPONENTS
+// ========================================
+.timeline-container {
+  margin-top: 2rem;
+}
+
+.timeline-item {
+  background: var(--bg-white);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  border-radius: var(--border-radius);
+  border-left: 4px solid var(--primary-color);
+  box-shadow: var(--shadow-sm);
+  transition: var(--transition);
+  
+  &:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-1px);
+  }
+}
+
+.timeline-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 0.5rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+  
+  strong {
+    font-family: var(--font-heading);
+    color: var(--primary-color);
+    font-size: 1.1rem;
+    line-height: 1.3;
+    flex: 1;
+  }
+}
+
+.timeline-date {
+  font-family: var(--font-body);
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  font-style: italic;
+  white-space: nowrap;
+  background: var(--bg-light);
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+}
+
+.timeline-organization {
+  font-family: var(--font-body);
+  color: var(--text-primary);
+  font-weight: 500;
+  margin-bottom: 0.75rem;
+  
+  em {
+    color: var(--accent-color);
+    font-weight: 600;
+  }
+}
+
+.timeline-description {
+  font-family: var(--font-body);
+  
+  p {
+    margin-bottom: 0.5rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    text-align: justify;
+    text-justify: inter-word;
+    
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+// ========================================
 // CONTENT SECTIONS
 // ========================================
-.detail-page {
-  .about-content {
-    p:not(.intro-box p):not(.detail-page-header p) {
+.about-content {
+  p:not(.intro-box p):not(.detail-page-header p) {
+    text-align: justify;
+    text-justify: inter-word;
+    hyphens: auto;
+    -webkit-hyphens: auto;
+    -ms-hyphens: auto;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+  }
+  
+  ul, ol {
+    text-align: justify;
+    margin-bottom: 1rem;
+    
+    li {
+      margin-bottom: 0.5rem;
       text-align: justify;
       text-justify: inter-word;
       hyphens: auto;
       -webkit-hyphens: auto;
       -ms-hyphens: auto;
+      line-height: 1.5;
     }
+  }
+  
+  // Style for skill lists, publication lists, etc.
+  .skill-category,
+  .publication-item,
+  .project-item {
+    background: var(--bg-white);
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-radius: var(--border-radius);
+    border-left: 3px solid var(--primary-color);
+    box-shadow: var(--shadow-sm);
     
-    ul {
-      text-align: justify;
-      
-      li {
-        margin-bottom: 0.5rem;
-        text-align: justify;
-        text-justify: inter-word;
-        hyphens: auto;
-        -webkit-hyphens: auto;
-        -ms-hyphens: auto;
-      }
+    h3, h4 {
+      margin-top: 0;
+      margin-bottom: 0.5rem;
     }
   }
 }
@@ -340,21 +517,6 @@ h6 { font-size: 1rem; font-weight: 500; }
   }
 }
 
-.site-nav {
-  .page-link {
-    font-family: var(--font-heading);
-    color: var(--text-primary);
-    font-weight: 500;
-    transition: var(--transition);
-    
-    &:hover { color: var(--primary-color); }
-    &.current { 
-      color: var(--primary-color); 
-      font-weight: 600; 
-    }
-  }
-}
-
 .view-all {
   text-align: center;
   margin-top: 2rem;
@@ -453,6 +615,7 @@ h6 { font-size: 1rem; font-weight: 500; }
     color: white;
     margin-bottom: 1rem;
     text-align: left;
+    scroll-margin-top: unset; // Remove scroll offset for footer headings
   }
   
   .wrapper {
@@ -462,11 +625,7 @@ h6 { font-size: 1rem; font-weight: 500; }
     align-items: start;
   }
   
-  // ========================================
-  // FOOTER TEXT CENTERING
-  // ========================================
-  .footer-info,
-  .site-info {
+  .footer-info {
     text-align: center !important;
     margin-top: 2rem;
     padding-top: 2rem;
@@ -485,29 +644,6 @@ h6 { font-size: 1rem; font-weight: 500; }
         font-size: 0.9rem;
       }
     }
-  }
-  
-  // Target footer paragraphs that contain copyright or tagline
-  p {
-    font-family: var(--font-heading);
-    
-    // Center copyright and tagline text
-    &:contains("©"),
-    &:contains("All rights reserved"),
-    &:contains("Researcher"),
-    &:contains("Linguist"),
-    &:contains("Music Enthusiast") {
-      text-align: center !important;
-      width: 100%;
-      margin-top: 1rem;
-    }
-  }
-  
-  // Center the last few paragraphs in footer
-  p:nth-last-child(-n+2) {
-    text-align: center !important;
-    margin-top: 1rem;
-    grid-column: 1 / -1;
   }
 }
 
@@ -623,6 +759,12 @@ button:focus,
   outline-offset: 3px;
 }
 
+// Focus states for headings when navigated via anchor links
+h1:focus, h2:focus, h3:focus, h4:focus, h5:focus, h6:focus {
+  outline: 2px solid rgba(8, 37, 103, 0.3);
+  outline-offset: 4px;
+}
+
 // ========================================
 // ANIMATIONS
 // ========================================
@@ -649,6 +791,15 @@ button:focus,
 // RESPONSIVE DESIGN
 // ========================================
 @media (max-width: 768px) {
+  :root {
+    --scroll-offset: 80px; // Smaller offset for mobile
+  }
+  
+  .detail-page {
+    max-width: 100%;
+    padding: 0 0.5rem;
+  }
+  
   .profile-section img {
     width: 160px;
     height: 160px;
@@ -673,22 +824,36 @@ button:focus,
     margin-top: 0.5rem; 
   }
   
+  .timeline-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+    
+    strong {
+      font-size: 1rem;
+    }
+  }
+  
+  .timeline-date {
+    align-self: flex-start;
+    font-size: 0.85rem;
+  }
+  
+  .timeline-item {
+    padding: 1.25rem;
+    margin-bottom: 1.25rem;
+  }
+  
   .site-footer {
     .wrapper { 
       grid-template-columns: 1fr; 
       gap: 2rem; 
     }
     
-    .footer-info,
-    .site-info {
+    .footer-info {
       text-align: center !important;
       margin-top: 1.5rem;
       padding-top: 1.5rem;
-    }
-    
-    p:nth-last-child(-n+2) {
-      text-align: center !important;
-      margin-top: 1rem;
     }
   }
   

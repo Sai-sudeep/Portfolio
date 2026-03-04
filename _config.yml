@@ -3,17 +3,101 @@ description: PhD Scholar @ IIT Delhi | Computational Linguistics | Syntax, Phone
 author: Sai Sudeep Das
 email: huz258337@iitd.ac.in
 
+# Build settings
+markdown: kramdown
+highlighter: rouge
+permalink: pretty
+
 # Theme
 theme: minima
 plugins:
   - jekyll-feed
+  - jekyll-sitemap
+  - jekyll-seo-tag
 
-# Navigation pages - ADD THIS SECTION
+# EXPLICIT Navigation pages - GUARANTEES Home button appears
 header_pages:
   - index.md
   - about.md
 
-# Custom CSS - Force Jekyll to use our stylesheet
+# Alternative method - Force navigation structure
+minima:
+  social_links:
+    # Add social links here if needed
+  
+# Custom navigation override (backup method)
+navigation:
+  - title: "🏠 Home"
+    url: "/"
+  - title: "📋 About Me"
+    url: "/about/"
+
+# Custom CSS configuration
 sass:
   sass_dir: _sass
   style: compressed
+
+# Site URL (for GitHub Pages)
+url: "https://sai-sudeep.github.io"
+baseurl: ""
+
+# Social links (optional)
+# twitter_username: your_twitter
+# github_username: sai-sudeep
+
+# Pagination (if you plan to add more posts)
+paginate: 10
+paginate_path: "/blog/page:num/"
+
+# Exclude files from processing
+exclude:
+  - .sass-cache/
+  - .jekyll-cache/
+  - gemfiles/
+  - Gemfile
+  - Gemfile.lock
+  - node_modules/
+  - vendor/bundle/
+  - vendor/cache/
+  - vendor/gems/
+  - vendor/ruby/
+  - vendor/ruby/
+  - README.md
+
+# Collections (for future research papers/projects)
+collections:
+  research:
+    output: true
+    permalink: /:collection/:name/
+
+# Default layouts for different content types
+defaults:
+  - scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "post"
+      category: "blog"
+  - scope:
+      path: ""
+      type: "pages"
+    values:
+      layout: "page"
+  - scope:
+      path: ""
+      type: "research"
+    values:
+      layout: "page"
+
+# Timezone
+timezone: Asia/Kolkata
+
+# Encoding
+encoding: utf-8
+
+# Show excerpts on homepage
+show_excerpts: true
+
+# Date format
+minima:
+  date_format: "%b %-d, %Y"

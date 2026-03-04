@@ -15,9 +15,8 @@ plugins:
   - jekyll-sitemap
   - jekyll-seo-tag
 
-# Navigation pages
-header_pages:
-  - about.md
+# REMOVE header_pages completely to prevent theme conflicts
+# header_pages: (DELETE THIS LINE)
 
 # Custom CSS configuration
 sass:
@@ -33,3 +32,6 @@ show_excerpts: true
 
 # Timezone
 timezone: Asia/Kolkata
+
+# Encoding
+encoding: utf-8

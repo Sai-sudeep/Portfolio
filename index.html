@@ -5,56 +5,208 @@ permalink: /
 ---
 
 <div class="home">
-  <div class="intro-box">
-    <h1>Research Portfolio & Blog</h1>
-    <p>PhD Researcher specializing in Computational Linguistics. My work explores formal syntax, acoustic phonetics, and data-driven modeling for low-resource languages.</p>
-  </div>
+  <!-- Hero Section -->
+  <section class="intro-section">
+    <div class="intro-box">
+      <h1>🎓 Research Portfolio & Academic Blog</h1>
+      <p class="lead">PhD Researcher specializing in <strong>Computational Linguistics</strong> at IIT Delhi. My work explores formal syntax, acoustic phonetics, and data-driven modeling for low-resource languages.</p>
+    </div>
+  </section>
 
-  <h2>Core Research Areas</h2>
-  <ul class="research-areas">
-    <li><strong>Computational Syntax</strong> - Formal approaches to syntactic analysis and parsing</li>
-    <li><strong>Data Quality Estimation</strong> - Metrics and methods for corpus validation</li>
-    <li><strong>Acoustic Phonetics</strong> - Speech signal processing and phonetic analysis</li>
-    <li><strong>Odia NLP & Corpus Tools</strong> - Language resources for Odia language processing</li>
-    <li><strong>Musicology & Prosody</strong> - Intersection of music theory and linguistic rhythm</li>
-    <li><strong>Low-Resource Languages</strong> - NLP techniques for underrepresented languages</li>
-  </ul>
+  <!-- Research Areas -->
+  <section class="research-section">
+    <h2>🔬 Core Research Areas</h2>
+    <div class="research-grid">
+      <div class="research-item">
+        <h3>💻 Computational Syntax</h3>
+        <p>Formal approaches to syntactic analysis and parsing</p>
+      </div>
+      <div class="research-item">
+        <h3>📊 Data Quality Estimation</h3>
+        <p>Metrics and methods for corpus validation</p>
+      </div>
+      <div class="research-item">
+        <h3>🎵 Acoustic Phonetics</h3>
+        <p>Speech signal processing and phonetic analysis</p>
+      </div>
+      <div class="research-item">
+        <h3>🇮🇳 Odia NLP & Corpus Tools</h3>
+        <p>Language resources for Odia language processing</p>
+      </div>
+      <div class="research-item">
+        <h3>🎼 Musicology & Prosody</h3>
+        <p>Intersection of music theory and linguistic rhythm</p>
+      </div>
+      <div class="research-item">
+        <h3>🌍 Low-Resource Languages</h3>
+        <p>NLP techniques for underrepresented languages</p>
+      </div>
+    </div>
+  </section>
 
-  <hr>
+  <hr class="section-divider">
 
-  <h2>Latest Research Insights</h2>
-  {% if site.posts.size > 0 %}
-    <ul class="post-list">
-      {% for post in site.posts limit: 5 %}
-        <li>
-          <span class="post-meta">{{ post.date | date: '%b %-d, %Y' }}</span>
-          <h3><a href="{{ post.url | relative_url }}">{{ post.title | escape }}</a></h3>
-          <p>{{ post.excerpt | strip_html | truncatewords: 25 | strip }}</p>
-          <a href="{{ post.url | relative_url }}" class="read-more">Read more →</a>
-        </li>
-      {% endfor %}
-    </ul>
+  <!-- Latest Research -->
+  <section class="posts-section">
+    <h2>📝 Latest Research Insights</h2>
     
-    {% if site.posts.size > 5 %}
-      <div class="view-all-posts">
-        <a href="{{ '/blog/' | relative_url }}" class="btn-outline">View All Posts</a>
+    {% if site.posts.size > 0 %}
+      <div class="post-list">
+        {% for post in site.posts limit: 3 %}
+          <article class="post-preview">
+            <header class="post-header">
+              <time class="post-date">{{ post.date | date: '%B %-d, %Y' }}</time>
+              <h3><a href="{{ post.url | relative_url }}" class="post-link">{{ post.title | escape }}</a></h3>
+            </header>
+            <div class="post-excerpt">
+              <p>{{ post.excerpt | strip_html | truncatewords: 30 | strip }}</p>
+              <a href="{{ post.url | relative_url }}" class="read-more-btn">Read Full Article →</a>
+            </div>
+          </article>
+        {% endfor %}
+      </div>
+      
+      {% if site.posts.size > 3 %}
+        <div class="view-all-posts">
+          <a href="{{ '/blog/' | relative_url }}" class="btn-primary">View All Research Posts</a>
+        </div>
+      {% endif %}
+    {% else %}
+      <div class="no-posts">
+        <div class="placeholder-content">
+          <h3>🚀 Research Insights Coming Soon</h3>
+          <p>Stay tuned for updates on computational linguistics, NLP research, and academic insights!</p>
+          <p class="coming-soon">Expected topics: Odia corpus analysis, syntactic parsing methods, and acoustic phonetics research.</p>
+        </div>
       </div>
     {% endif %}
-  {% else %}
-    <div class="no-posts">
-      <p><em>Research insights coming soon. Stay tuned for updates on computational linguistics and NLP research!</em></p>
-    </div>
-  {% endif %}
+  </section>
 
-  <hr>
+  <hr class="section-divider">
 
-  <div class="contact-section">
-    <h2>Connect & Collaborate</h2>
-    <p>Interested in computational linguistics research or collaboration? Feel free to reach out:</p>
-    <div class="contact-info">
-      <p>📧 <strong>Email:</strong> <a href="mailto:{{ site.email }}">{{ site.email }}</a></p>
-      <p>🎓 <strong>Affiliation:</strong> PhD Scholar @ IIT Delhi</p>
-      <p>🔬 <strong>Focus:</strong> Computational Linguistics, Syntax & Phonetics</p>
+  <!-- Contact & Collaboration -->
+  <section class="contact-section">
+    <h2>🤝 Connect & Collaborate</h2>
+    <p class="contact-intro">Interested in computational linguistics research, academic collaboration, or discussing NLP for low-resource languages?</p>
+    
+    <div class="contact-grid">
+      <div class="contact-card">
+        <h3>📧 Email</h3>
+        <p><a href="mailto:{{ site.email }}" class="email-link">{{ site.email }}</a></p>
+      </div>
+      
+      <div class="contact-card">
+        <h3>🎓 Academic Affiliation</h3>
+        <p><strong>PhD Scholar</strong><br>Indian Institute of Technology Delhi</p>
+      </div>
+      
+      <div class="contact-card">
+        <h3>🔬 Research Focus</h3>
+        <p><strong>Computational Linguistics</strong><br>Syntax, Phonetics & NLP</p>
+      </div>
     </div>
-  </div>
+
+    <div class="collaboration-note">
+      <p><strong>Open to:</strong> Research collaborations • Conference presentations • Academic discussions • Corpus development projects</p>
+    </div>
+  </section>
 </div>
+
+<!-- Custom Styles -->
+<style>
+.intro-section { margin-bottom: 3rem; }
+.intro-box { 
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  padding: 2rem;
+  border-radius: 10px;
+  text-align: center;
+  border-left: 4px solid #007bff;
+}
+.lead { font-size: 1.2rem; color: #495057; margin-top: 1rem; }
+
+.research-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+.research-item {
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: 8px;
+  border: 1px solid #dee2e6;
+  transition: transform 0.2s ease;
+}
+.research-item:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+.research-item h3 { color: #007bff; margin-bottom: 0.5rem; font-size: 1.1rem; }
+
+.section-divider { margin: 3rem 0; border: none; height: 2px; background: linear-gradient(to right, #007bff, #6c757d, #007bff); }
+
+.post-preview {
+  background: #fff;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  border-radius: 8px;
+  border-left: 4px solid #28a745;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+.post-date { color: #6c757d; font-size: 0.9rem; }
+.post-link { color: #007bff; text-decoration: none; }
+.post-link:hover { color: #0056b3; }
+.read-more-btn { 
+  color: #28a745; 
+  text-decoration: none; 
+  font-weight: 500;
+  border-bottom: 1px solid transparent;
+}
+.read-more-btn:hover { border-bottom-color: #28a745; }
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  margin: 2rem 0;
+}
+.contact-card {
+  background: #f8f9fa;
+  padding: 1.5rem;
+  border-radius: 8px;
+  text-align: center;
+  border-top: 3px solid #007bff;
+}
+.contact-card h3 { color: #007bff; margin-bottom: 1rem; }
+.email-link { color: #007bff; text-decoration: none; font-weight: 500; }
+
+.collaboration-note {
+  background: #e7f3ff;
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin-top: 2rem;
+  border-left: 4px solid #007bff;
+}
+
+.btn-primary {
+  background: #007bff;
+  color: white;
+  padding: 0.75rem 2rem;
+  border-radius: 25px;
+  text-decoration: none;
+  display: inline-block;
+  transition: background 0.2s ease;
+}
+.btn-primary:hover { background: #0056b3; color: white; }
+
+.placeholder-content {
+  text-align: center;
+  padding: 3rem 2rem;
+  background: #f8f9fa;
+  border-radius: 10px;
+  border: 2px dashed #dee2e6;
+}
+.coming-soon { color: #6c757d; font-style: italic; margin-top: 1rem; }
+
+@media (max-width: 768px) {
+  .research-grid, .contact-grid { grid-template-columns: 1fr; }
+  .intro-box { padding: 1.5rem; }
+}
+</style>

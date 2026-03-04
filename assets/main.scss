@@ -44,6 +44,120 @@ h2 { font-size: 1.875rem; }
 h3 { font-size: 1.5rem; }
 
 // ========================================
+// IMAGE COMPONENTS (Add this to your existing CSS)
+// ========================================
+
+// Cover Image at Top
+.cover-image {
+  width: 100%;
+  margin-bottom: 2rem;
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+  
+  img {
+    width: 100%;
+    height: auto;
+    max-height: 250px;
+    object-fit: cover;
+    display: block;
+  }
+}
+
+// Enhanced Intro Box with Profile Image
+.intro-box {
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
+  color: white;
+  padding: 2rem;
+  border-radius: var(--border-radius);
+  margin-bottom: 2rem;
+  box-shadow: var(--shadow-md);
+}
+
+.intro-content {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.intro-text {
+  flex: 1;
+  
+  h1 {
+    color: white;
+    margin-bottom: 0.5rem;
+    font-size: 2.5rem;
+  }
+  
+  p {
+    margin-bottom: 0.5rem;
+    opacity: 0.95;
+    
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+.intro-image {
+  flex-shrink: 0;
+}
+
+.profile-image {
+  width: 70px !important;
+  height: 70px !important;
+  max-width: 70px !important;
+  max-height: 70px !important;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  box-shadow: var(--shadow-sm);
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+  .intro-content {
+    flex-direction: column;
+    text-align: center;
+    gap: 1rem;
+  }
+  
+  .intro-text h1 {
+    font-size: 2rem;
+  }
+  
+  .profile-image {
+    width: 60px !important;
+    height: 60px !important;
+    max-width: 60px !important;
+    max-height: 60px !important;
+  }
+  
+  .cover-image img {
+    max-height: 180px;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1200px) {
+  .profile-image {
+    width: 65px !important;
+    height: 65px !important;
+    max-width: 65px !important;
+    max-height: 65px !important;
+  }
+}
+
+@media (min-width: 1201px) {
+  .profile-image {
+    width: 75px !important;
+    height: 75px !important;
+    max-width: 75px !important;
+    max-height: 75px !important;
+  }
+}
+
+
+// ========================================
 // LAYOUT COMPONENTS
 // ========================================
 

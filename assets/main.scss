@@ -1,6 +1,3 @@
----
----
-
 /* ======================================== */
 /* FONT IMPORTS */
 /* ======================================== */
@@ -1531,5 +1528,28 @@ span:not(.intro-box span):not(.site-footer span),
 }
 
 /* ======================================== */
-/* END OF STYLESHEET */
+/* ISSUE 1 & 2: ULTIMATE SPECIFICITY FIXES  */
 /* ======================================== */
+
+/* Fix #1: Force every single element inside intro-box to be white and centered */
+.intro-box.intro-box * {
+  color: #ffffff !important;
+  text-align: center !important;
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
+/* Fix #2: Strip all white background artifacts from footer elements */
+.site-footer.site-footer * {
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
+/* Re-assert the intended semi-transparent backgrounds for footer social icons */
+/* (This has a specificity of 3 classes, naturally beating the wildcard above) */
+.site-footer .social-icons-footer .social-icon {
+  background: rgba(255, 255, 255, 0.1) !important;
+}
+.site-footer .social-icons-footer .social-icon:hover {
+  background: rgba(255, 255, 255, 0.2) !important;
+}

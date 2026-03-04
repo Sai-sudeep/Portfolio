@@ -481,10 +481,13 @@ ul li, ol li {
   background-color: transparent !important; /* NO WHITE BACKGROUND */
 }
 
-/* ALL ELEMENTS IN INTRO BOX - NO WHITE BACKGROUNDS */
+/* ALL ELEMENTS IN INTRO BOX - NO WHITE BACKGROUNDS - FIXED */
+/* FIX 1: Added color and text-align here so ALL child elements are covered */
 .intro-box * {
   background: transparent !important;
   background-color: transparent !important;
+  color: #ffffff !important;
+  text-align: center !important;
 }
 
 /* ======================================== */
@@ -1472,9 +1475,9 @@ ul li, ol li {
 /* FINAL NUCLEAR OVERRIDES */
 /* ======================================== */
 
-/* FORCE LIGHT MODE ON EVERYTHING
-   *** "div" intentionally removed — it was overriding footer and intro-box
-       transparent background rules set earlier in this file ***          */
+/* FORCE LIGHT MODE ON EVERYTHING */
+/* FIX 2: "div" removed — it was firing after .site-footer * transparent rule,
+   overriding it and causing white background boxes in the footer            */
 html,
 body,
 main,
@@ -1504,28 +1507,71 @@ article {
 }
 
 /* FORCE SAPPHIRE BLUE ON HEADINGS (EXCEPT IN INTRO BOX AND FOOTER) */
-h1:not(.intro-box h1):not(.site-footer h1), 
-h2:not(.intro-box h2):not(.site-footer h2), 
-h3:not(.intro-box h3):not(.site-footer h3), 
-h4:not(.intro-box h4):not(.site-footer h4), 
-h5:not(.intro-box h5):not(.site-footer h5), 
-h6:not(.intro-box h6):not(.site-footer h6),
+/* FIX 3: Replaced invalid :not(.intro-box h1) descendant selectors —
+   browsers treated them as plain h1{} overriding everything.
+   Now using valid specificity: .intro-box h1 and .site-footer h1 below
+   have higher specificity (0,1,1) than h1 (0,0,1) so they correctly win */
+h1, h2, h3, h4, h5, h6,
 .heading, .title, .section-title,
 .timeline-header strong,
 .publication-title {
   color: #082567 !important;
 }
 
-/* FORCE BLACK ON ALL BODY TEXT (EXCEPT IN INTRO BOX AND FOOTER) */
-p:not(.intro-box p):not(.site-footer p), 
-li:not(.intro-box li):not(.site-footer li), 
-span:not(.intro-box span):not(.site-footer span), 
+/* Restore footer headings */
+.site-footer h1,
+.site-footer h2,
+.site-footer h3,
+.site-footer h4,
+.site-footer h5,
+.site-footer h6 {
+  color: #ffffff !important;
+}
+
+/* Restore intro-box headings */
+.intro-box h1,
+.intro-box h2,
+.intro-box h3,
+.intro-box h4,
+.intro-box h5,
+.intro-box h6 {
+  color: #ffffff !important;
+}
+
+/* FORCE BLACK ON ALL BODY TEXT */
+/* FIX 3 continued: Replaced invalid :not() descendant selectors with
+   simple rule + higher-specificity overrides below */
+p, li, span,
 .text-content, .description,
 .timeline-description p,
 .justified-text,
 .summary-text,
 .post-excerpt {
   color: #000000 !important;
+}
+
+/* Restore footer text */
+.site-footer p,
+.site-footer li,
+.site-footer span {
+  color: rgba(255, 255, 255, 0.9) !important;
+}
+
+.site-footer .footer-text,
+.site-footer .copyright {
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+
+.site-footer a {
+  color: rgba(255, 255, 255, 0.8) !important;
+}
+
+/* Restore intro-box text — higher specificity wins over plain p/li/span above */
+.intro-box p,
+.intro-box li,
+.intro-box span,
+.intro-box a {
+  color: #ffffff !important;
 }
 
 /* ======================================== */

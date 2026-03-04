@@ -19,7 +19,7 @@ $text-color: #2c3e50;
 $light-gray: #f5f7fa;
 $border-color: #e1e5e9;
 
-// Body Typography
+// ===== BODY & BASE TYPOGRAPHY =====
 body {
   font-family: 'Courier New', 'Courier', monospace !important;
   font-size: 16px !important;
@@ -33,7 +33,7 @@ p {
   line-height: 1.6 !important;
 }
 
-// Site Header
+// ===== SITE HEADER & NAVIGATION =====
 .site-header {
   .site-title {
     font-family: 'Libre Baskerville', serif !important;
@@ -41,7 +41,6 @@ p {
   }
 }
 
-// Navigation
 .site-nav {
   .page-link {
     font-family: 'Libre Baskerville', serif !important;
@@ -61,7 +60,7 @@ p {
   }
 }
 
-// Intro Box
+// ===== INTRO BOX =====
 .intro-box {
   padding: 2rem;
   background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
@@ -84,7 +83,167 @@ p {
   }
 }
 
-// Research List
+// ===== COLLAPSED SECTIONS STYLING =====
+.section-link {
+  color: $brand-color !important;
+  text-decoration: none;
+  font-family: 'Libre Baskerville', serif !important;
+  font-weight: 700 !important;
+  transition: color 0.3s ease;
+  cursor: pointer;
+  
+  &:hover {
+    color: darken($brand-color, 15%) !important;
+    text-decoration: underline;
+  }
+}
+
+.collapsed-list {
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0;
+  
+  li {
+    padding: 0.75rem 0;
+    border-bottom: 1px solid lighten($border-color, 5%);
+    font-family: 'Courier New', monospace !important;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    
+    &:last-child {
+      border-bottom: none;
+    }
+    
+    strong {
+      color: $brand-color;
+      font-weight: 600;
+      flex: 1;
+      min-width: 200px;
+    }
+  }
+}
+
+.item-date {
+  color: #6c757d;
+  font-style: italic;
+  font-size: 0.9rem;
+  margin-left: 1rem;
+  white-space: nowrap;
+  
+  @media (max-width: 768px) {
+    margin-left: 0;
+    display: block;
+    width: 100%;
+    margin-top: 0.25rem;
+  }
+}
+
+// ===== EXPANDED DETAIL PAGES STYLING =====
+.detail-page {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem 0;
+}
+
+.detail-page-header {
+  text-align: center;
+  margin-bottom: 2rem;
+  
+  h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  p {
+    font-size: 1.1rem;
+    color: #6c757d;
+  }
+}
+
+// ===== EXPERIENCE/QUALIFICATIONS TIMELINE =====
+.timeline-item {
+  margin-bottom: 2.5rem;
+  padding-bottom: 2rem;
+  border-left: 3px solid $brand-color;
+  padding-left: 2rem;
+  position: relative;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    left: -10px;
+    top: 0;
+    width: 18px;
+    height: 18px;
+    background: white;
+    border: 3px solid $brand-color;
+    border-radius: 50%;
+  }
+  
+  &:last-child {
+    border-left: 3px solid $border-color;
+    
+    &::before {
+      border-color: $border-color;
+    }
+  }
+}
+
+.timeline-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 0.5rem;
+  flex-wrap: wrap;
+  
+  strong {
+    color: $brand-color;
+    font-family: 'Libre Baskerville', serif !important;
+    font-size: 1.1rem;
+    flex: 1;
+    min-width: 200px;
+  }
+}
+
+.timeline-date {
+  color: #6c757d;
+  font-style: italic;
+  font-size: 0.95rem;
+  white-space: nowrap;
+  margin-left: 1rem;
+  
+  @media (max-width: 768px) {
+    margin-left: 0;
+    display: block;
+    width: 100%;
+    margin-top: 0.5rem;
+  }
+}
+
+.timeline-organization {
+  color: $text-color;
+  font-weight: 500;
+  margin: 0.5rem 0;
+  font-family: 'Libre Baskerville', serif !important;
+}
+
+.timeline-description {
+  color: #495057;
+  margin-top: 1rem;
+  line-height: 1.8;
+  
+  ul {
+    margin: 0.5rem 0 0 1.5rem;
+    
+    li {
+      margin-bottom: 0.5rem;
+    }
+  }
+}
+
+// ===== RESEARCH AREAS SECTION =====
 .research-list {
   list-style: none;
   padding: 0;
@@ -100,6 +259,7 @@ p {
     
     &:hover {
       transform: translateX(5px);
+      background: lighten($light-gray, 2%);
     }
     
     strong {
@@ -109,7 +269,239 @@ p {
   }
 }
 
-// Post List
+.research-detail {
+  padding: 1.5rem;
+  background: $light-gray;
+  border-radius: 8px;
+  margin: 2rem 0;
+  
+  h3 {
+    color: $brand-color;
+    margin-top: 0;
+    font-family: 'Libre Baskerville', serif !important;
+  }
+  
+  p {
+    margin: 0.5rem 0;
+  }
+}
+
+// ===== PROJECTS SECTION =====
+.project-item {
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  background: $light-gray;
+  border-left: 4px solid $brand-color;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    box-shadow: 0 4px 15px rgba(0, 86, 179, 0.1);
+    transform: translateY(-2px);
+  }
+  
+  strong {
+    color: $brand-color;
+    font-family: 'Libre Baskerville', serif !important;
+    font-size: 1.1rem;
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+  
+  p {
+    margin: 0.75rem 0 0 0;
+    color: #495057;
+  }
+}
+
+.project-date {
+  color: #6c757d;
+  font-style: italic;
+  font-size: 0.9rem;
+  float: right;
+  margin-left: 1rem;
+  
+  @media (max-width: 768px) {
+    float: none;
+    display: block;
+    margin-left: 0;
+    margin-top: 0.5rem;
+  }
+}
+
+// ===== SKILLS & EXPERTISE SECTION =====
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin: 1.5rem 0;
+}
+
+.skill-category {
+  padding: 1.5rem;
+  background: $light-gray;
+  border-radius: 8px;
+  border-left: 4px solid $brand-color;
+  transition: transform 0.2s ease;
+  
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 15px rgba(0, 86, 179, 0.1);
+  }
+  
+  h3 {
+    color: $brand-color;
+    margin-top: 0;
+    font-family: 'Libre Baskerville', serif !important;
+    font-size: 1.1rem;
+  }
+  
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    
+    li {
+      padding: 0.5rem 0;
+      border-bottom: 1px solid $border-color;
+      
+      &:last-child {
+        border-bottom: none;
+      }
+      
+      strong {
+        color: $brand-color;
+      }
+    }
+  }
+}
+
+// ===== CERTIFICATIONS SECTION =====
+.certifications-list {
+  ul {
+    list-style: none;
+    padding: 0;
+    
+    li {
+      padding: 1rem;
+      margin-bottom: 0.75rem;
+      background: $light-gray;
+      border-left: 4px solid $brand-color;
+      border-radius: 4px;
+      transition: transform 0.2s ease;
+      
+      &:hover {
+        transform: translateX(5px);
+      }
+      
+      strong {
+        color: $brand-color;
+        font-family: 'Libre Baskerville', serif !important;
+      }
+    }
+  }
+}
+
+// ===== PUBLICATIONS SECTION =====
+.publications-list {
+  list-style: none;
+  padding: 0;
+  margin: 1.5rem 0;
+  
+  li {
+    padding: 1.2rem;
+    margin-bottom: 1rem;
+    background: $light-gray;
+    border-left: 4px solid $brand-color;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    
+    &:hover {
+      background: lighten($light-gray, 2%);
+      transform: translateX(5px);
+    }
+    
+    .publication-title {
+      color: $brand-color;
+      font-family: 'Libre Baskerville', serif !important;
+      font-weight: 600;
+      font-size: 1.05rem;
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+    
+    .publication-venue {
+      color: #495057;
+      font-style: italic;
+      margin-bottom: 0.5rem;
+    }
+    
+    .publication-date {
+      color: #6c757d;
+      font-size: 0.9rem;
+      float: right;
+    }
+  }
+}
+
+// ===== TESTIMONIALS SECTION =====
+.testimonials {
+  margin: 2rem 0;
+  
+  .testimonial-item {
+    padding: 1.5rem;
+    background: $light-gray;
+    border-radius: 8px;
+    margin: 1rem 0;
+    border-left: 4px solid $brand-color;
+    position: relative;
+    
+    &::before {
+      content: '"';
+      font-size: 3rem;
+      color: $brand-color;
+      position: absolute;
+      top: -0.5rem;
+      left: 1rem;
+      font-family: 'Libre Baskerville', serif;
+    }
+    
+    .testimonial-text {
+      margin: 1rem 0;
+      font-style: italic;
+      color: #495057;
+    }
+    
+    .testimonial-author {
+      color: $brand-color;
+      font-weight: 600;
+      font-family: 'Libre Baskerville', serif !important;
+      text-align: right;
+      margin-top: 1rem;
+    }
+  }
+}
+
+// ===== IMAGE PLACEHOLDER =====
+.image-placeholder {
+  min-height: 200px;
+  background: linear-gradient(135deg, lighten($light-gray, 2%) 0%, $light-gray 100%);
+  border: 2px dashed $border-color;
+  border-radius: 8px;
+  margin: 2rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #999;
+  font-style: italic;
+  font-family: 'Source Sans Pro', sans-serif !important;
+  
+  &::before {
+    content: "📷 Space reserved for professional images";
+  }
+}
+
+// ===== POST LIST =====
 .post-list {
   list-style: none;
   padding: 0;
@@ -140,7 +532,6 @@ p {
   }
 }
 
-// Post Meta
 .post-date {
   color: #6c757d;
   font-size: 0.9rem;
@@ -148,7 +539,7 @@ p {
   font-family: 'Source Sans Pro', sans-serif !important;
 }
 
-// Headings
+// ===== HEADINGS =====
 h1, h2, h3, h4, h5, h6 {
   color: $brand-color !important;
   font-family: 'Libre Baskerville', serif !important;
@@ -162,7 +553,11 @@ h2 {
   margin-bottom: 1rem;
 }
 
-// View All Link
+h3 {
+  margin-top: 1.5rem;
+}
+
+// ===== VIEW ALL LINK =====
 .view-all {
   text-align: center;
   margin-top: 1.5rem;
@@ -171,6 +566,7 @@ h2 {
     color: $brand-color;
     text-decoration: none;
     font-weight: 600;
+    font-family: 'Libre Baskerville', serif !important;
     
     &:hover {
       text-decoration: underline;
@@ -256,7 +652,7 @@ h2 {
   }
 }
 
-// Platform-Specific Icon Hover Colors
+// ===== PLATFORM-SPECIFIC ICON HOVER COLORS =====
 .social-icon.linkedin:hover {
   background: #0077b5;
   border-color: #0077b5;
@@ -319,6 +715,24 @@ h2 {
   .social-icons-grid {
     gap: 1.2rem;
   }
+  
+  .skills-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .timeline-item {
+    padding-left: 1.5rem;
+    
+    &::before {
+      left: -8px;
+      width: 14px;
+      height: 14px;
+    }
+  }
+  
+  .detail-page-header h1 {
+    font-size: 2rem;
+  }
 }
 
 @media (max-width: 480px) {
@@ -334,5 +748,12 @@ h2 {
       width: 20px;
       height: 20px;
     }
+  }
+  
+  .project-item,
+  .timeline-item,
+  .research-detail,
+  .skill-category {
+    padding: 1rem;
   }
 }

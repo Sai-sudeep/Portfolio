@@ -1553,6 +1553,16 @@ span:not(.intro-box span):not(.site-footer span),
   background-color: transparent !important;
 }
 
+/* INTRO BOX FULL TEXT FIX - highest specificity, must be last */
+.intro-box p,
+.intro-box p *,
+.about-content .intro-box p,
+.about-content .intro-box p * {
+  color: #ffffff !important;
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
 /* ======================================== */
 /* END OF STYLESHEET */
 /* ======================================== */

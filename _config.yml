@@ -1,3 +1,4 @@
+# Site settings
 title: Sai Sudeep Das
 description: PhD Scholar @ IIT Delhi | Computational Linguistics | Syntax, Phonetics & Odia NLP
 author: Sai Sudeep Das
@@ -15,8 +16,8 @@ plugins:
   - jekyll-sitemap
   - jekyll-seo-tag
 
-# REMOVE header_pages completely to prevent theme conflicts
-# header_pages: (DELETE THIS LINE)
+# Navigation - FIXED: Empty array prevents theme conflicts
+header_pages: []
 
 # Custom CSS configuration
 sass:
@@ -35,3 +36,7 @@ timezone: Asia/Kolkata
 
 # Encoding
 encoding: utf-8
+
+# Minima customization
+minima:
+  skin: classic

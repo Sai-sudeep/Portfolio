@@ -1564,6 +1564,26 @@ span:not(.intro-box span):not(.site-footer span),
   text-align: center !important;
 }
 
+/* FOOTER FULL TEXT FIX - highest specificity, must be last */
+.site-footer,
+.site-footer *,
+.site-footer p,
+.site-footer p *,
+.site-footer h1,
+.site-footer h2,
+.site-footer h3,
+.site-footer h4,
+.site-footer h5,
+.site-footer h6,
+.site-footer a,
+.site-footer span,
+.site-footer div,
+.site-footer li {
+  color: #ffffff !important;
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
 /* ======================================== */
 /* END OF STYLESHEET */
 /* ======================================== */

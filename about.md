@@ -28,35 +28,35 @@ permalink: /about/
     <div class="know-more-section">
       <h3 class="know-more-title">Know More</h3>
       <div class="navigation-buttons">
-        <button class="nav-btn" data-section="journey">
+        <button class="nav-btn">
           <span class="btn-icon">🌟</span>
           <span class="btn-text">My Journey</span>
         </button>
-        <button class="nav-btn" data-section="research">
+        <button class="nav-btn">
           <span class="btn-icon">🔬</span>
           <span class="btn-text">Research & Experience</span>
         </button>
-        <button class="nav-btn" data-section="music">
+        <button class="nav-btn">
           <span class="btn-icon">🎵</span>
           <span class="btn-text">Artistic Dimension</span>
         </button>
-        <button class="nav-btn" data-section="technical">
+        <button class="nav-btn">
           <span class="btn-icon">🛠️</span>
           <span class="btn-text">Technical Skills</span>
         </button>
-        <button class="nav-btn" data-section="languages">
+        <button class="nav-btn">
           <span class="btn-icon">🌍</span>
           <span class="btn-text">Languages & Culture</span>
         </button>
-        <button class="nav-btn" data-section="current-research">
+        <button class="nav-btn">
           <span class="btn-icon">💡</span>
           <span class="btn-text">Current Research</span>
         </button>
-        <button class="nav-btn" data-section="vision">
+        <button class="nav-btn">
           <span class="btn-icon">🎯</span>
           <span class="btn-text">Vision & Goals</span>
         </button>
-        <button class="nav-btn" data-section="interests">
+        <button class="nav-btn">
           <span class="btn-icon">🌟</span>
           <span class="btn-text">Personal Interests</span>
         </button>
@@ -67,7 +67,7 @@ permalink: /about/
     <div class="content-sections">
       
       <!-- My Journey Section -->
-      <div id="journey" class="content-section" style="display: none;">
+      <div class="content-section">
         <h3>🌟 My Journey</h3>
         <p class="justified-text">
           Born and raised in the culturally rich state of Odisha, I have always been drawn to the intricate relationships between language, technology, and human expression. My path began with a deep appreciation for both linguistic diversity and musical traditions, which naturally evolved into scholarly work spanning computational linguistics, language technology, and classical music performance. I am currently pursuing doctoral research at the Indian Institute of Technology Delhi, focusing on developing natural language processing methods for low-resource languages, particularly my native Odia.
@@ -78,7 +78,7 @@ permalink: /about/
       </div>
 
       <!-- Research & Experience Section -->
-      <div id="research" class="content-section" style="display: none;">
+      <div class="content-section">
         <h3>🔬 Research & Professional Experience</h3>
         <p class="justified-text">
           My professional journey in language technology began at AI4Bharat, IIT Madras, where I spent over three years progressing from Project Associate to Language Team Lead for Odia. During this period, I worked on language resource development projects, designed conversational AI systems across domains including banking, fintech, science, and media, and collaborated with teams to create linguistic datasets. My responsibilities included prompt engineering, data quality assessment, and workflow optimization to improve project delivery.
@@ -89,7 +89,7 @@ permalink: /about/
       </div>
 
       <!-- Artistic Dimension Section -->
-      <div id="music" class="content-section" style="display: none;">
+      <div class="content-section">
         <h3>🎵 The Artistic Dimension</h3>
         <p class="justified-text">
           Music has been an integral part of my life since childhood, deeply influencing my understanding of sound, rhythm, and structural patterns. I have trained in Hindustani Classical and Semiclassical vocal music under respected gurus including Sri Kshiti Prakash Mohapatra – Eminent Hindustani Classical Vocalist, Sri Amit Kumar Rath – Eminent Hindustani Classical Vocalist, Pandit Harihar Rath – Eminent Hindustani Classical Vocalist, and Dr. Aranya Kumar – Eminent Hindustani Classical Sitarist; Versatile Multi-Instrumentalist and Vocalist. I have also studied Odissi music traditions with masters like Sri Tukuna Paikera, Smt. Rashmi Ranjita Jena, and Sri Pitabas Nayak, gaining insights into regional musical forms and their linguistic connections.
@@ -106,7 +106,7 @@ permalink: /about/
       </div>
 
       <!-- Technical Skills Section -->
-      <div id="technical" class="content-section" style="display: none;">
+      <div class="content-section">
         <h3>🛠️ Technical Skills & Innovation</h3>
         <p class="justified-text">
           My technical background encompasses Python programming, data analysis, machine learning applications, and specialized tools for computer-assisted translation (CAT). I work with deep learning frameworks and have experience with conversational AI platforms, including ChatGPT integration and custom chatbot development. My knowledge of audio engineering and studio production complements my research in speech processing and acoustic analysis, enabling me to approach vocal research from both theoretical and practical angles.
@@ -117,7 +117,7 @@ permalink: /about/
       </div>
 
       <!-- Languages & Culture Section -->
-      <div id="languages" class="content-section" style="display: none;">
+      <div class="content-section">
         <h3>🌍 Languages & Cultural Connections</h3>
         <p class="justified-text">
           As a native speaker of Odia with professional proficiency in English and Hindi, I work at the intersection of traditional and contemporary knowledge systems. My elementary understanding of Bengali and foundational knowledge of Sanskrit provide additional perspectives on Indo-Aryan language families and historical linguistic patterns. This multilingual background informs my research on low-resource language processing and cross-linguistic computational methods.
@@ -125,7 +125,7 @@ permalink: /about/
       </div>
 
       <!-- Current Research Section -->
-      <div id="current-research" class="content-section" style="display: none;">
+      <div class="content-section">
         <h3>💡 Current Research Focus</h3>
         <p class="justified-text">
           My doctoral research centers on developing linguistically informed computational models for Odia language processing, with particular attention to morpho-syntactic analysis, dependency parsing, and data quality evaluation. Current projects include analysis of the Odia C4 corpus using mixed-method approaches, investigation of differential object marking phenomena in Odia and Hindi, and work in vocal acoustics analysis of Indian classical music genres. I am also developing dependency grammar-based evaluation metrics for machine translation systems, contributing to both theoretical understanding and practical applications.
@@ -133,7 +133,7 @@ permalink: /about/
       </div>
 
       <!-- Vision & Goals Section -->
-      <div id="vision" class="content-section" style="display: none;">
+      <div class="content-section">
         <h3>🎯 Vision & Goals</h3>
         <p class="justified-text">
           I am working toward a future where language technology better serves linguistic diversity and cultural preservation. My research aims to create computational tools that process regional languages effectively while respecting their cultural contexts and community needs. Through interdisciplinary collaboration between linguistics, computer science, and musicology, I hope to contribute to a more inclusive technological landscape that supports rather than diminishes linguistic heritage.
@@ -144,7 +144,7 @@ permalink: /about/
       </div>
 
       <!-- Personal Interests Section -->
-      <div id="interests" class="content-section" style="display: none;">
+      <div class="content-section">
         <h3>🌟 Personal Interests & Creative Pursuits</h3>
         <p class="justified-text">
           When not focused on research, I dedicate time to musical practice and performance, playing multiple instruments including piano, harmonium, tabla, violin, melodica, and cajón. I enjoy exploring connections between traditional and contemporary musical expressions, often experimenting with compositions that blend classical ragas with modern harmonies. Photography and videography serve as creative outlets that complement my technical work, helping me document cultural events, musical performances, and research presentations.
@@ -165,3 +165,48 @@ permalink: /about/
 
   </div>
 </div>
+
+<script>
+// About Page Interactive Navigation
+document.addEventListener('DOMContentLoaded', function() {
+    const navButtons = document.querySelectorAll('.nav-btn');
+    const contentSections = document.querySelectorAll('.content-section');
+    
+    // Hide all sections initially except the first one
+    contentSections.forEach((section, index) => {
+        if (index !== 0) {
+            section.style.display = 'none';
+        }
+    });
+    
+    // Add click event listeners to navigation buttons
+    navButtons.forEach((button, index) => {
+        button.addEventListener('click', function() {
+            // Remove active class from all buttons
+            navButtons.forEach(btn => btn.classList.remove('active'));
+            
+            // Add active class to clicked button
+            this.classList.add('active');
+            
+            // Hide all content sections
+            contentSections.forEach(section => {
+                section.style.display = 'none';
+            });
+            
+            // Show the corresponding content section
+            if (contentSections[index]) {
+                contentSections[index].style.display = 'block';
+                contentSections[index].scrollIntoView({ 
+                    behavior: 'smooth', 
+                    block: 'nearest' 
+                });
+            }
+        });
+    });
+    
+    // Set the first button as active by default
+    if (navButtons.length > 0) {
+        navButtons[0].classList.add('active');
+    }
+});
+</script>

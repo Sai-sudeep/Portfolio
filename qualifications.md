@@ -6,7 +6,6 @@ permalink: /qualifications/
 
 <div class="detail-page">
   <div class="detail-page-header">
-    <p class="page-subtitle">🎓 Comprehensive academic journey with dual specializations in Linguistics and Music</p>
   </div>
 
   <div class="timeline-container">

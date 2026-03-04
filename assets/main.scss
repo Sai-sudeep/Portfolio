@@ -178,9 +178,7 @@ h2 {
   }
 }
 
-// ===== NEW SOCIAL MEDIA & CONTACT STYLING =====
-
-// Contact Info Section
+// ===== CONTACT INFO SECTION =====
 .contact-info {
   background: linear-gradient(135deg, $light-gray 0%, #e9ecef 100%);
   padding: 1.5rem;
@@ -210,7 +208,7 @@ h2 {
   }
 }
 
-// Social Media Links
+// ===== ICON-ONLY SOCIAL MEDIA =====
 .social-links {
   margin: 2rem 0;
   text-align: center;
@@ -223,67 +221,80 @@ h2 {
   }
 }
 
-.social-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 1rem;
-  max-width: 900px;
+.social-icons-grid {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  max-width: 400px;
   margin: 0 auto;
 }
 
-.social-link {
+.social-icon {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.75rem;
-  padding: 1rem 1.25rem;
-  border: 2px solid $border-color;
-  border-radius: 10px;
-  text-decoration: none;
-  font-weight: 600;
-  font-family: 'Courier New', monospace !important;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
   background: white;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-  color: $text-color;
+  border: 2px solid $border-color;
+  color: #666;
+  text-decoration: none;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
   
   &:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    transform: translateY(-3px) scale(1.1);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.2);
     text-decoration: none;
   }
   
-  .social-icon {
-    font-size: 1.4rem;
+  svg {
+    width: 24px;
+    height: 24px;
   }
 }
 
-// Platform-Specific Hover Colors
-.social-link.linkedin:hover {
+// Platform-Specific Icon Hover Colors
+.social-icon.linkedin:hover {
   background: #0077b5;
   border-color: #0077b5;
   color: white;
 }
 
-.social-link.facebook:hover {
+.social-icon.facebook:hover {
   background: #1877f2;
   border-color: #1877f2;
   color: white;
 }
 
-.social-link.instagram:hover {
+.social-icon.instagram:hover,
+.social-icon.instagram-alt:hover {
   background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
   border-color: #bc1888;
   color: white;
 }
 
-.social-link.youtube:hover {
+.social-icon.youtube:hover {
   background: #ff0000;
   border-color: #ff0000;
   color: white;
 }
 
-// Responsive Design
+.social-icon.tiktok:hover {
+  background: #000000;
+  border-color: #000000;
+  color: white;
+}
+
+.social-icon.twitter:hover {
+  background: #1da1f2;
+  border-color: #1da1f2;
+  color: white;
+}
+
+// ===== RESPONSIVE DESIGN =====
 @media (max-width: 768px) {
   .intro-box {
     padding: 1.5rem;
@@ -301,30 +312,27 @@ h2 {
     font-size: 1.5rem !important;
   }
   
-  // Social Media Mobile Adjustments
-  .social-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 0.8rem;
-  }
-  
-  .social-link {
-    padding: 0.9rem 1rem;
-    font-size: 0.95rem;
-  }
-  
   .contact-info {
     padding: 1.2rem;
+  }
+  
+  .social-icons-grid {
+    gap: 1.2rem;
   }
 }
 
 @media (max-width: 480px) {
-  .social-grid {
-    grid-template-columns: 1fr;
+  .social-icons-grid {
     gap: 1rem;
   }
   
-  .social-link {
-    padding: 1rem;
+  .social-icon {
+    width: 45px;
+    height: 45px;
+    
+    svg {
+      width: 20px;
+      height: 20px;
+    }
   }
 }
-// ===== END SOCIAL MEDIA STYLING =====

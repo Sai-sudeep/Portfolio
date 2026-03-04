@@ -8,6 +8,11 @@ theme: minima
 plugins:
   - jekyll-feed
 
+# Navigation pages - ADD THIS SECTION
+header_pages:
+  - index.md
+  - about.md
+
 # Custom CSS - Force Jekyll to use our stylesheet
 sass:
   sass_dir: _sass

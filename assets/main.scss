@@ -10,7 +10,7 @@
 /* ======================================== */
 :root {
   /* Enhanced Color System - FORCED LIGHT MODE */
-  --primary-color: #082567;
+  --primary-color: #082567; /* Sapphire Blue - KEEP THIS */
   --primary-hover: #061a4d;
   --primary-light: #1e3a8a;
   --secondary-color: #64748b;
@@ -21,17 +21,17 @@
   --error-color: #ef4444;
   
   /* Text Colors - ALWAYS LIGHT MODE */
-  --text-primary: #000000 !important;
-  --text-secondary: #333333 !important;
-  --text-muted: #666666 !important;
-  --text-inverse: #ffffff !important;
+  --text-primary: #000000 !important; /* BLACK for body text - FORCED */
+  --text-secondary: #333333 !important; /* Dark gray for secondary text - FORCED */
+  --text-muted: #666666 !important; /* Medium gray for muted text - FORCED */
+  --text-inverse: #ffffff !important; /* WHITE for inverse text - FORCED */
   
   /* Background Colors - ALWAYS OFF-WHITE - FORCED */
-  --bg-light: #fafafa !important;
-  --bg-white: #ffffff !important;
+  --bg-light: #fafafa !important; /* OFF-WHITE for main background - FORCED */
+  --bg-white: #ffffff !important; /* Pure white for cards - FORCED */
   --bg-overlay: rgba(255, 255, 255, 0.1) !important;
-  --bg-card: #ffffff !important;
-  --bg-hover: #f5f5f5 !important;
+  --bg-card: #ffffff !important; /* Pure white for cards - FORCED */
+  --bg-hover: #f5f5f5 !important; /* Light gray for hover states - FORCED */
   
   /* Border & Effects - ALWAYS LIGHT MODE */
   --border-light: #e5e7eb !important;
@@ -84,6 +84,7 @@
 /* ======================================== */
 @media (prefers-color-scheme: dark) {
   :root {
+    /* FORCE LIGHT MODE COLORS EVEN IN DARK MODE PREFERENCE */
     --text-primary: #000000 !important;
     --text-secondary: #333333 !important;
     --text-muted: #666666 !important;
@@ -111,7 +112,7 @@ html {
 html {
   scroll-behavior: smooth;
   font-size: 16px;
-  background: #fafafa !important;
+  background: #fafafa !important; /* FORCE OFF-WHITE BACKGROUND */
 }
 
 @media (max-width: 768px) {
@@ -130,8 +131,8 @@ body {
   font-family: var(--font-body);
   font-weight: var(--font-weight-normal);
   line-height: 1.6;
-  color: #000000 !important;
-  background: #fafafa !important;
+  color: #000000 !important; /* FORCE BLACK text */
+  background: #fafafa !important; /* FORCE OFF-WHITE background */
   text-align: justify;
   text-justify: inter-word;
   font-size: 1rem;
@@ -148,7 +149,7 @@ main,
 .content,
 .wrapper,
 .container {
-  background: #fafafa !important;
+  background: #fafafa !important; /* FORCE OFF-WHITE */
 }
 
 /* ======================================== */
@@ -159,7 +160,7 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: var(--font-weight-semibold);
   line-height: 1.3;
   margin: var(--space-xl) 0 var(--space-lg) 0;
-  color: #082567 !important;
+  color: #082567 !important; /* FORCE SAPPHIRE BLUE headings */
   text-align: left;
   scroll-margin-top: var(--scroll-offset);
   letter-spacing: -0.025em;
@@ -183,6 +184,7 @@ h6:target {
   animation: highlightHeading 2.5s ease-out;
 }
 
+/* Responsive and Scalable Heading Sizes */
 h1 { 
   font-size: clamp(2rem, 4vw, 2.5rem);
   font-weight: var(--font-weight-bold);
@@ -212,27 +214,29 @@ h5 {
 h6 { 
   font-size: 1rem;
   font-weight: var(--font-weight-medium);
-  color: #333333 !important;
+  color: #333333 !important; /* FORCE DARK GRAY */
 }
 
+/* Enhanced Text Elements */
 p {
   margin-bottom: var(--space-md);
   line-height: 1.7;
-  color: #000000 !important;
+  color: #000000 !important; /* FORCE BLACK body text */
 }
 
 p:last-child {
   margin-bottom: 0;
 }
 
+/* Links with Enhanced States */
 a {
-  color: #082567 !important;
+  color: #082567 !important; /* FORCE SAPPHIRE BLUE */
   text-decoration: none;
   transition: var(--transition);
 }
 
 a:hover {
-  color: #061a4d !important;
+  color: #061a4d !important; /* FORCE DARKER BLUE on hover */
   text-decoration: underline;
 }
 
@@ -242,6 +246,7 @@ a:focus {
   border-radius: 2px;
 }
 
+/* Enhanced List Styles */
 ul, ol {
   margin-bottom: var(--space-md);
   padding-left: var(--space-xl);
@@ -252,7 +257,7 @@ ul li, ol li {
   line-height: 1.6;
   text-align: justify;
   text-justify: inter-word;
-  color: #000000 !important;
+  color: #000000 !important; /* FORCE BLACK list text */
 }
 
 /* ======================================== */
@@ -319,7 +324,7 @@ ul li, ol li {
 /* LAYOUT SYSTEM */
 /* ======================================== */
 .page-content {
-  background: #fafafa !important;
+  background: #fafafa !important; /* FORCE OFF-WHITE */
   min-height: calc(100vh - 200px);
   padding-top: var(--space-xl);
 }
@@ -329,7 +334,7 @@ ul li, ol li {
   max-width: var(--container-max-width);
   margin: 0 auto;
   padding: 0 var(--space-md);
-  background: #fafafa !important;
+  background: #fafafa !important; /* FORCE OFF-WHITE */
 }
 
 @media (max-width: 768px) {
@@ -339,10 +344,11 @@ ul li, ol li {
   }
 }
 
+/* Enhanced Detail Pages */
 .detail-page {
   max-width: var(--content-max-width);
   margin: 0 auto var(--space-2xl);
-  background: #fafafa !important;
+  background: #fafafa !important; /* FORCE OFF-WHITE */
 }
 
 .detail-page-header {
@@ -357,7 +363,7 @@ ul li, ol li {
 .page-subtitle {
   font-family: var(--font-heading);
   font-size: 1.2rem;
-  color: #333333 !important;
+  color: #333333 !important; /* FORCE DARK GRAY */
   text-align: center;
   margin-bottom: var(--space-xl);
   font-style: italic;
@@ -370,11 +376,13 @@ ul li, ol li {
 /* ======================================== */
 /* ENHANCED COMPONENT SYSTEM */
 /* ======================================== */
+
+/* Hero/Profile Section with Advanced Styling */
 .profile-section {
   text-align: center;
   margin: var(--space-2xl) 0;
   animation: fadeInUp 0.6s ease-out;
-  background: #fafafa !important;
+  background: #fafafa !important; /* FORCE OFF-WHITE */
 }
 
 .profile-section .profile-image,
@@ -383,7 +391,7 @@ ul li, ol li {
   height: 200px;
   border-radius: 50%;
   object-fit: cover;
-  border: 4px solid #082567;
+  border: 4px solid #082567; /* SAPPHIRE BLUE border */
   box-shadow: var(--shadow-lg);
   display: block;
   margin: 0 auto;
@@ -394,7 +402,7 @@ ul li, ol li {
 .profile-section img:hover {
   transform: scale(1.05) rotate(2deg);
   box-shadow: var(--shadow-2xl);
-  border-color: #f59e0b;
+  border-color: #f59e0b; /* ACCENT COLOR */
 }
 
 .profile-section .profile-image:focus,
@@ -404,11 +412,11 @@ ul li, ol li {
 }
 
 /* ======================================== */
-/* INTRO BOX - FIXED: ALL TEXT WHITE & CENTERED */
+/* FIXED INTRO BOX - NO WHITE BACKGROUND ON TEXT */
 /* ======================================== */
 .intro-box {
-  background: linear-gradient(135deg, #082567 0%, #061a4d 100%) !important;
-  color: #ffffff !important;
+  background: linear-gradient(135deg, #082567 0%, #061a4d 100%) !important; /* SAPPHIRE GRADIENT - KEEP */
+  color: #ffffff !important; /* WHITE TEXT - KEEP */
   padding: var(--space-2xl);
   border-radius: var(--border-radius-xl);
   margin-bottom: var(--space-2xl);
@@ -430,27 +438,7 @@ ul li, ol li {
   pointer-events: none;
 }
 
-/* FIX #1: Nuclear white-text + centered override for EVERY element inside .intro-box */
-.intro-box,
-.intro-box *,
-.intro-box *::before,
-.intro-box *::after {
-  color: #ffffff !important;
-  text-align: center !important;
-  background-color: transparent !important;
-  background: transparent !important;
-}
-
-/* Restore the gradient background on the box itself (overridden above) */
-.intro-box {
-  background: linear-gradient(135deg, #082567 0%, #061a4d 100%) !important;
-}
-
-/* Restore the decorative pseudo-element */
-.intro-box::before {
-  background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.05) 50%, transparent 70%) !important;
-}
-
+/* INTRO BOX TEXT - NO WHITE BACKGROUNDS - FIXED */
 .intro-box h1, 
 .intro-box h2,
 .intro-box h3,
@@ -458,7 +446,11 @@ ul li, ol li {
 .intro-box h5,
 .intro-box h6 {
   font-family: var(--font-heading);
+  color: #ffffff !important; /* WHITE TEXT */
+  background: transparent !important; /* NO WHITE BACKGROUND */
+  background-color: transparent !important; /* NO WHITE BACKGROUND */
   margin-bottom: var(--space-md);
+  text-align: center !important;
   scroll-margin-top: unset;
   position: relative;
   z-index: 1;
@@ -481,56 +473,53 @@ ul li, ol li {
   opacity: 0.95;
   font-size: 1.1rem;
   line-height: 1.6;
+  text-align: center !important;
   position: relative;
   z-index: 1;
-}
-
-.intro-box a {
-  color: #ffffff !important;
-  text-decoration: underline;
-  opacity: 0.9;
-}
-
-.intro-box a:hover {
-  color: #f59e0b !important;
-  opacity: 1;
+  color: #ffffff !important; /* WHITE TEXT */
+  background: transparent !important; /* NO WHITE BACKGROUND */
+  background-color: transparent !important; /* NO WHITE BACKGROUND */
 }
 
 /* ======================================== */
 /* INTERACTIVE ABOUT SECTION */
 /* ======================================== */
+
+/* Summary Section */
 .about-summary {
-  background: #ffffff !important;
+  background: #ffffff !important; /* FORCE WHITE CARD */
   padding: var(--space-xl);
   margin-bottom: var(--space-2xl);
   border-radius: var(--border-radius-lg);
   box-shadow: var(--shadow-sm);
-  border: 1px solid #e5e7eb !important;
+  border: 1px solid #e5e7eb !important; /* FORCE LIGHT BORDER */
 }
 
 .summary-text {
   font-size: 1.1rem;
   line-height: 1.7;
-  color: #000000 !important;
+  color: #000000 !important; /* FORCE BLACK text */
   text-align: justify !important;
   text-justify: inter-word !important;
   margin: 0;
 }
 
+/* Know More Section */
 .know-more-section {
   margin-bottom: var(--space-xl);
-  background: #fafafa !important;
+  background: #fafafa !important; /* FORCE OFF-WHITE */
 }
 
 .know-more-title {
   text-align: center;
-  color: #082567 !important;
+  color: #082567 !important; /* FORCE SAPPHIRE BLUE */
   font-family: var(--font-heading);
   font-size: 1.5rem;
   font-weight: var(--font-weight-semibold);
   margin-bottom: var(--space-lg);
 }
 
+/* Navigation Buttons */
 .navigation-buttons {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -546,8 +535,8 @@ ul li, ol li {
 }
 
 .nav-btn {
-  background: #ffffff !important;
-  border: 2px solid #e5e7eb !important;
+  background: #ffffff !important; /* FORCE WHITE BACKGROUND */
+  border: 2px solid #e5e7eb !important; /* FORCE LIGHT BORDER */
   border-radius: var(--border-radius-lg);
   padding: var(--space-md);
   cursor: pointer;
@@ -564,58 +553,59 @@ ul li, ol li {
 .nav-btn .btn-icon {
   font-size: 1.8rem;
   transition: var(--transition);
-  color: #000000 !important;
+  color: #000000 !important; /* FORCE BLACK ICON */
 }
 
 .nav-btn .btn-text {
   font-size: 0.95rem;
   font-weight: var(--font-weight-medium);
-  color: #000000 !important;
+  color: #000000 !important; /* FORCE BLACK text */
   transition: var(--transition);
 }
 
 .nav-btn:hover {
-  border-color: #082567 !important;
+  border-color: #082567 !important; /* SAPPHIRE BLUE border on hover */
   transform: translateY(-2px);
   box-shadow: var(--shadow-md);
 }
 
 .nav-btn:hover .btn-icon {
   transform: scale(1.1);
-  color: #082567 !important;
+  color: #082567 !important; /* SAPPHIRE BLUE on hover */
 }
 
 .nav-btn:hover .btn-text {
-  color: #082567 !important;
+  color: #082567 !important; /* SAPPHIRE BLUE on hover */
 }
 
 .nav-btn.active {
-  background: #082567 !important;
+  background: #082567 !important; /* SAPPHIRE BLUE when active */
   border-color: #082567 !important;
   color: #ffffff !important;
 }
 
 .nav-btn.active .btn-icon,
 .nav-btn.active .btn-text {
-  color: #ffffff !important;
+  color: #ffffff !important; /* WHITE when active */
 }
 
+/* Content Sections */
 .content-sections {
   position: relative;
-  background: #fafafa !important;
+  background: #fafafa !important; /* FORCE OFF-WHITE */
 }
 
 .content-section {
-  background: #ffffff !important;
+  background: #ffffff !important; /* FORCE WHITE CARD */
   border-radius: var(--border-radius-lg);
   padding: var(--space-xl);
   box-shadow: var(--shadow-sm);
-  border: 1px solid #e5e7eb !important;
+  border: 1px solid #e5e7eb !important; /* FORCE LIGHT BORDER */
   animation: fadeInUp 0.4s ease-out;
 }
 
 .content-section h3 {
-  color: #082567 !important;
+  color: #082567 !important; /* FORCE SAPPHIRE BLUE headings */
   margin-top: 0;
   margin-bottom: var(--space-lg);
 }
@@ -624,7 +614,7 @@ ul li, ol li {
   text-align: justify;
   text-justify: inter-word;
   line-height: 1.7;
-  color: #000000 !important;
+  color: #000000 !important; /* FORCE BLACK text */
   margin-bottom: var(--space-md);
 }
 
@@ -632,12 +622,13 @@ ul li, ol li {
   margin-bottom: 0;
 }
 
+/* Fix Contact Section Justification */
 .contact-info {
-  background: #ffffff !important;
+  background: #ffffff !important; /* FORCE WHITE CARD */
   border-radius: var(--border-radius-lg);
   box-shadow: var(--shadow-sm);
   transition: var(--transition);
-  border: 1px solid #e5e7eb !important;
+  border: 1px solid #e5e7eb !important; /* FORCE LIGHT BORDER */
   padding: var(--space-lg);
   margin-bottom: var(--space-xl);
 }
@@ -652,7 +643,7 @@ ul li, ol li {
   text-align: justify !important;
   text-justify: inter-word !important;
   line-height: 1.7;
-  color: #000000 !important;
+  color: #000000 !important; /* FORCE BLACK text */
   margin-bottom: var(--space-md);
 }
 
@@ -665,24 +656,25 @@ ul li, ol li {
   text-justify: inter-word !important;
   line-height: 1.7;
   margin-bottom: var(--space-md);
-  color: #000000 !important;
+  color: #000000 !important; /* FORCE BLACK text */
 }
 
 .contact-info p:last-child {
   margin-bottom: 0;
 }
 
+/* General fix for any remaining non-justified text in about sections */
 .about-content {
   max-width: var(--content-max-width);
   margin: 0 auto;
   padding: 0 var(--space-md);
-  background: #fafafa !important;
+  background: #fafafa !important; /* FORCE OFF-WHITE */
 }
 
 .about-content p {
   text-align: justify !important;
   text-justify: inter-word !important;
-  color: #000000 !important;
+  color: #000000 !important; /* FORCE BLACK text */
 }
 
 @media (max-width: 768px) {
@@ -710,15 +702,15 @@ ul li, ol li {
   width: 48px;
   height: 48px;
   border-radius: var(--border-radius);
-  background: #f5f5f5 !important;
-  color: #333333 !important;
+  background: #f5f5f5 !important; /* FORCE LIGHT GRAY BACKGROUND */
+  color: #333333 !important; /* FORCE DARK GRAY TEXT */
   transition: var(--transition-bounce);
-  border: 1px solid #e5e7eb !important;
+  border: 1px solid #e5e7eb !important; /* FORCE LIGHT BORDER */
 }
 
 .social-icon:hover {
-  background: #082567 !important;
-  color: #ffffff !important;
+  background: #082567 !important; /* SAPPHIRE BLUE on hover */
+  color: #ffffff !important; /* WHITE text on hover */
   transform: translateY(-2px) scale(1.05);
   box-shadow: var(--shadow-md);
 }
@@ -727,11 +719,11 @@ ul li, ol li {
 /* ENHANCED CARD SYSTEM */
 /* ======================================== */
 .card {
-  background: #ffffff !important;
+  background: #ffffff !important; /* FORCE WHITE CARD */
   border-radius: var(--border-radius-lg);
   box-shadow: var(--shadow-sm);
   transition: var(--transition);
-  border: 1px solid #e5e7eb !important;
+  border: 1px solid #e5e7eb !important; /* FORCE LIGHT BORDER */
 }
 
 .card:hover {
@@ -753,7 +745,7 @@ ul li, ol li {
 /* NAVIGATION & HEADER ENHANCEMENTS */
 /* ======================================== */
 .site-header {
-  background: #ffffff !important;
+  background: #ffffff !important; /* FORCE PURE WHITE BACKGROUND */
   border-bottom: 1px solid #e5e7eb !important;
   box-shadow: var(--shadow-sm);
   position: sticky;
@@ -766,19 +758,19 @@ ul li, ol li {
   font-family: var(--font-heading);
   font-size: 1.5rem;
   font-weight: var(--font-weight-bold);
-  color: #082567 !important;
+  color: #082567 !important; /* FORCE SAPPHIRE BLUE - readable on white */
   text-decoration: none;
   transition: var(--transition);
 }
 
 .site-title:hover { 
-  color: #061a4d !important;
+  color: #061a4d !important; /* FORCE DARKER BLUE on hover */
   transform: translateY(-1px);
 }
 
 .site-nav .page-link {
   font-family: var(--font-heading);
-  color: #000000 !important;
+  color: #000000 !important; /* FORCE BLACK text - perfect contrast on white */
   font-weight: var(--font-weight-medium);
   transition: var(--transition);
   padding: var(--space-sm) var(--space-md);
@@ -787,14 +779,14 @@ ul li, ol li {
 }
 
 .site-nav .page-link:hover { 
-  color: #082567 !important;
-  background: #f5f5f5 !important;
+  color: #082567 !important; /* FORCE SAPPHIRE BLUE on hover */
+  background: #f5f5f5 !important; /* FORCE LIGHT GRAY background on hover */
 }
 
 .site-nav .page-link.current { 
-  color: #082567 !important;
+  color: #082567 !important; /* FORCE SAPPHIRE BLUE for current page */
   font-weight: var(--font-weight-semibold);
-  background: #f5f5f5 !important;
+  background: #f5f5f5 !important; /* FORCE LIGHT GRAY background */
 }
 
 /* ======================================== */
@@ -803,17 +795,17 @@ ul li, ol li {
 .post-list {
   list-style: none;
   padding: 0;
-  background: #fafafa !important;
+  background: #fafafa !important; /* FORCE OFF-WHITE */
 }
 
 .post-list li {
   font-family: var(--font-body);
-  background: #ffffff !important;
+  background: #ffffff !important; /* FORCE WHITE CARD */
   padding: var(--space-lg);
   margin-bottom: var(--space-md);
   border-radius: var(--border-radius-lg);
   box-shadow: var(--shadow-sm);
-  border: 1px solid #e5e7eb !important;
+  border: 1px solid #e5e7eb !important; /* FORCE LIGHT BORDER */
   transition: var(--transition);
 }
 
@@ -825,45 +817,45 @@ ul li, ol li {
 
 .post-list li h3 {
   font-family: var(--font-heading);
-  color: #082567 !important;
+  color: #082567 !important; /* FORCE SAPPHIRE BLUE headings */
   margin: var(--space-sm) 0;
 }
 
 .post-list li h3 a {
-  color: #082567 !important;
+  color: #082567 !important; /* FORCE SAPPHIRE BLUE */
   text-decoration: none;
 }
 
 .post-list li h3 a:hover { 
-  color: #061a4d !important;
+  color: #061a4d !important; /* FORCE DARKER BLUE on hover */
   text-decoration: underline;
 }
 
 .post-list li p {
-  color: #000000 !important;
+  color: #000000 !important; /* FORCE BLACK body text */
 }
 
 .post-meta {
-  color: #666666 !important;
+  color: #666666 !important; /* FORCE MEDIUM GRAY */
   font-size: 0.9rem;
   margin-bottom: var(--space-sm);
 }
 
 .post-excerpt {
-  color: #000000 !important;
+  color: #000000 !important; /* FORCE BLACK body text */
   line-height: 1.6;
 }
 
 .collapsed-list li {
   font-family: var(--font-body);
-  background: #ffffff !important;
+  background: #ffffff !important; /* FORCE WHITE CARD */
   margin-bottom: var(--space-md);
   padding: var(--space-md);
   border-radius: var(--border-radius);
   box-shadow: var(--shadow-sm);
-  border: 1px solid #e5e7eb !important;
-  border-left: 4px solid #082567 !important;
-  color: #000000 !important;
+  border: 1px solid #e5e7eb !important; /* FORCE LIGHT BORDER */
+  border-left: 4px solid #082567 !important; /* FORCE SAPPHIRE BLUE accent */
+  color: #000000 !important; /* FORCE BLACK text */
 }
 
 /* ======================================== */
@@ -872,7 +864,7 @@ ul li, ol li {
 .timeline-container {
   margin-top: var(--space-xl);
   position: relative;
-  background: #fafafa !important;
+  background: #fafafa !important; /* FORCE OFF-WHITE */
 }
 
 .timeline-container::before {
@@ -888,15 +880,15 @@ ul li, ol li {
 }
 
 .timeline-item {
-  background: #ffffff !important;
+  background: #ffffff !important; /* FORCE WHITE CARD */
   border-radius: var(--border-radius-lg);
   box-shadow: var(--shadow-sm);
   transition: var(--transition);
-  border: 1px solid #e5e7eb !important;
+  border: 1px solid #e5e7eb !important; /* FORCE LIGHT BORDER */
   padding: var(--space-lg);
   margin-bottom: var(--space-lg);
   margin-left: var(--space-2xl);
-  border-left: 4px solid #082567 !important;
+  border-left: 4px solid #082567 !important; /* FORCE SAPPHIRE BLUE accent */
   position: relative;
   animation: slideInLeft 0.6s ease-out;
 }
@@ -914,19 +906,19 @@ ul li, ol li {
   top: var(--space-lg);
   width: 12px;
   height: 12px;
-  background: #082567 !important;
+  background: #082567 !important; /* FORCE SAPPHIRE BLUE */
   border-radius: 50%;
-  border: 3px solid #ffffff !important;
+  border: 3px solid #ffffff !important; /* FORCE WHITE border */
   box-shadow: var(--shadow-sm);
   z-index: 1;
 }
 
 .timeline-item:hover {
-  border-left-color: #f59e0b !important;
+  border-left-color: #f59e0b !important; /* FORCE ACCENT COLOR on hover */
 }
 
 .timeline-item:hover::before {
-  background: #f59e0b !important;
+  background: #f59e0b !important; /* FORCE ACCENT COLOR on hover */
   transform: scale(1.2);
 }
 
@@ -941,7 +933,7 @@ ul li, ol li {
 
 .timeline-header strong {
   font-family: var(--font-heading);
-  color: #082567 !important;
+  color: #082567 !important; /* FORCE SAPPHIRE BLUE */
   font-size: 1.1rem;
   font-weight: var(--font-weight-semibold);
   line-height: 1.3;
@@ -950,26 +942,26 @@ ul li, ol li {
 
 .timeline-date {
   font-family: var(--font-body);
-  color: #333333 !important;
+  color: #333333 !important; /* FORCE DARK GRAY */
   font-size: 0.9rem;
   font-style: italic;
   font-weight: var(--font-weight-medium);
   white-space: nowrap;
-  background: #f5f5f5 !important;
+  background: #f5f5f5 !important; /* FORCE LIGHT GRAY background */
   padding: var(--space-xs) var(--space-md);
   border-radius: 20px;
-  border: 1px solid #e5e7eb !important;
+  border: 1px solid #e5e7eb !important; /* FORCE LIGHT BORDER */
 }
 
 .timeline-organization {
   font-family: var(--font-body);
-  color: #000000 !important;
+  color: #000000 !important; /* FORCE BLACK text */
   font-weight: var(--font-weight-medium);
   margin-bottom: var(--space-md);
 }
 
 .timeline-organization em {
-  color: #f59e0b !important;
+  color: #f59e0b !important; /* FORCE ACCENT COLOR */
   font-weight: var(--font-weight-semibold);
   font-style: normal;
 }
@@ -980,7 +972,7 @@ ul li, ol li {
 
 .timeline-description p {
   margin-bottom: var(--space-sm);
-  color: #000000 !important;
+  color: #000000 !important; /* FORCE BLACK text */
   line-height: 1.6;
   text-align: justify;
   text-justify: inter-word;
@@ -996,25 +988,27 @@ ul li, ol li {
 }
 
 .timeline-description li {
-  color: #000000 !important;
+  color: #000000 !important; /* FORCE BLACK text */
   margin-bottom: var(--space-xs);
 }
 
 /* ======================================== */
 /* ACADEMIC & PROFESSIONAL SECTIONS */
 /* ======================================== */
+
+/* Achievement Cards */
 .achievement-item,
 .publication-item,
 .project-item,
 .skill-category {
-  background: #ffffff !important;
+  background: #ffffff !important; /* FORCE WHITE CARD */
   border-radius: var(--border-radius-lg);
   box-shadow: var(--shadow-sm);
   transition: var(--transition);
-  border: 1px solid #e5e7eb !important;
+  border: 1px solid #e5e7eb !important; /* FORCE LIGHT BORDER */
   padding: var(--space-lg);
   margin-bottom: var(--space-md);
-  border-left: 4px solid #082567 !important;
+  border-left: 4px solid #082567 !important; /* FORCE SAPPHIRE BLUE accent */
 }
 
 .achievement-item:hover,
@@ -1024,7 +1018,7 @@ ul li, ol li {
   box-shadow: var(--shadow-md);
   transform: translateY(-2px);
   border-color: #d1d5db !important;
-  border-left-color: #f59e0b !important;
+  border-left-color: #f59e0b !important; /* FORCE ACCENT COLOR on hover */
 }
 
 .achievement-item h3,
@@ -1037,55 +1031,57 @@ ul li, ol li {
 .skill-category h4 {
   margin-top: 0;
   margin-bottom: var(--space-sm);
-  color: #082567 !important;
+  color: #082567 !important; /* FORCE SAPPHIRE BLUE headings */
 }
 
 .achievement-item p,
 .publication-item p,
 .project-item p,
 .skill-category p {
-  color: #000000 !important;
+  color: #000000 !important; /* FORCE BLACK body text */
 }
 
 .item-meta {
   font-size: 0.9rem;
-  color: #666666 !important;
+  color: #666666 !important; /* FORCE MEDIUM GRAY */
   margin-bottom: var(--space-sm);
   font-style: italic;
 }
 
+/* Enhanced Research & Publications */
 .publication-item {
-  border-left-color: #10b981 !important;
+  border-left-color: #10b981 !important; /* FORCE SUCCESS COLOR */
 }
 
 .publication-item:hover {
-  border-left-color: #f59e0b !important;
+  border-left-color: #f59e0b !important; /* FORCE ACCENT COLOR on hover */
 }
 
 .publication-title {
   font-weight: var(--font-weight-semibold);
-  color: #082567 !important;
+  color: #082567 !important; /* FORCE SAPPHIRE BLUE */
   margin-bottom: var(--space-xs);
 }
 
 .publication-authors {
-  color: #000000 !important;
+  color: #000000 !important; /* FORCE BLACK text */
   font-size: 0.95rem;
   margin-bottom: var(--space-xs);
 }
 
 .publication-venue {
   font-style: italic;
-  color: #666666 !important;
+  color: #666666 !important; /* FORCE MEDIUM GRAY */
   font-size: 0.9rem;
 }
 
+/* Skills Grid System */
 .skills-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: var(--space-md);
   margin-top: var(--space-md);
-  background: #fafafa !important;
+  background: #fafafa !important; /* FORCE OFF-WHITE */
 }
 
 .skill-category h4 {
@@ -1108,28 +1104,28 @@ ul li, ol li {
 }
 
 .skill-list li {
-  background: #f5f5f5 !important;
+  background: #f5f5f5 !important; /* FORCE LIGHT GRAY background */
   padding: var(--space-xs) var(--space-sm);
   border-radius: var(--border-radius);
   font-size: 0.9rem;
-  color: #000000 !important;
-  border: 1px solid #e5e7eb !important;
+  color: #000000 !important; /* FORCE BLACK text */
+  border: 1px solid #e5e7eb !important; /* FORCE LIGHT BORDER */
   transition: var(--transition);
 }
 
 .skill-list li:hover {
-  background: #082567 !important;
-  color: #ffffff !important;
+  background: #082567 !important; /* FORCE SAPPHIRE BLUE on hover */
+  color: #ffffff !important; /* FORCE WHITE text on hover */
   transform: translateY(-1px);
 }
 
 /* ======================================== */
-/* ENHANCED FOOTER - FIXED: NO WHITE BG ARTIFACTS */
+/* ENHANCED FOOTER - FIXED CONTRAST - BLUE BACKGROUND */
 /* ======================================== */
 .site-footer {
   font-family: var(--font-heading);
-  background: #082567 !important;
-  color: #ffffff !important;
+  background: #082567 !important; /* FORCE BLUE BACKGROUND */
+  color: #ffffff !important; /* FORCE WHITE text */
   padding: var(--space-2xl) 0 var(--space-xl);
   margin-top: var(--space-3xl);
   position: relative;
@@ -1152,51 +1148,35 @@ ul li, ol li {
   padding: 0 var(--space-md);
 }
 
-/* FIX #2: Every element inside footer gets transparent background and white text.
-   Using html body .site-footer chain for maximum specificity to beat Minima theme. */
-html body .site-footer,
-html body .site-footer *,
-html body .site-footer *::before,
-html body .site-footer *::after {
-  background: transparent !important;
-  background-color: transparent !important;
-  color: #ffffff !important;
-}
-
-/* Restore the footer's own solid blue background (overridden by * above) */
-html body .site-footer {
-  background: #082567 !important;
-}
-
-/* Restore the decorative top-border pseudo-element gradient */
-html body .site-footer::before {
-  background: linear-gradient(90deg, transparent, #f59e0b, transparent) !important;
-}
-
-html body .site-footer h1,
-html body .site-footer h2, 
-html body .site-footer h3,
-html body .site-footer h4,
-html body .site-footer h5,
-html body .site-footer h6 {
+.site-footer h1,
+.site-footer h2, 
+.site-footer h3,
+.site-footer h4,
+.site-footer h5,
+.site-footer h6 {
+  color: #ffffff !important; /* FORCE WHITE headings in footer */
+  background: transparent !important; /* NO WHITE BACKGROUND */
+  background-color: transparent !important; /* NO WHITE BACKGROUND */
   text-align: center;
   margin-bottom: var(--space-md);
 }
 
-html body .site-footer p {
+.site-footer p {
   text-align: center;
   max-width: 600px;
   margin: 0 auto var(--space-md);
-  color: rgba(255, 255, 255, 0.9) !important;
+  color: rgba(255, 255, 255, 0.9) !important; /* FORCE LIGHT WHITE for readability */
+  background: transparent !important; /* NO WHITE BACKGROUND */
+  background-color: transparent !important; /* NO WHITE BACKGROUND */
 }
 
-html body .site-footer a {
-  color: rgba(255, 255, 255, 0.8) !important;
+.site-footer a {
+  color: rgba(255, 255, 255, 0.8) !important; /* FORCE LIGHT WHITE links */
   transition: var(--transition);
 }
 
-html body .site-footer a:hover {
-  color: #ffffff !important;
+.site-footer a:hover {
+  color: #ffffff !important; /* FORCE PURE WHITE on hover */
   text-decoration: underline;
 }
 
@@ -1205,21 +1185,22 @@ html body .site-footer a:hover {
   margin: var(--space-lg) 0;
 }
 
-html body .site-footer .social-icons-footer .social-icon {
-  background: rgba(255, 255, 255, 0.1) !important;
-  color: rgba(255, 255, 255, 0.8) !important;
-  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+.site-footer .social-icons-footer .social-icon {
+  background: rgba(255, 255, 255, 0.1) !important; /* FORCE TRANSPARENT WHITE background */
+  color: rgba(255, 255, 255, 0.8) !important; /* FORCE LIGHT WHITE text */
+  border: 1px solid rgba(255, 255, 255, 0.2) !important; /* FORCE TRANSPARENT WHITE border */
 }
 
-html body .site-footer .social-icons-footer .social-icon:hover {
-  background: rgba(255, 255, 255, 0.2) !important;
-  color: #ffffff !important;
-  border-color: rgba(255, 255, 255, 0.4) !important;
+.site-footer .social-icons-footer .social-icon:hover {
+  background: rgba(255, 255, 255, 0.2) !important; /* FORCE LIGHTER TRANSPARENT WHITE on hover */
+  color: #ffffff !important; /* FORCE WHITE text on hover */
+  border-color: rgba(255, 255, 255, 0.4) !important; /* FORCE LIGHTER TRANSPARENT WHITE border on hover */
 }
 
-html body .site-footer .footer-text,
-html body .site-footer .copyright {
-  color: rgba(255, 255, 255, 0.7) !important;
+/* Footer copyright/bottom text */
+.site-footer .footer-text,
+.site-footer .copyright {
+  color: rgba(255, 255, 255, 0.7) !important; /* FORCE LIGHT WHITE */
   font-size: 0.9rem;
   margin-top: var(--space-lg);
   text-align: center;
@@ -1250,7 +1231,7 @@ html body .site-footer .copyright {
   .timeline-item {
     margin-left: 0;
     border-left: none;
-    border-top: 4px solid #082567 !important;
+    border-top: 4px solid #082567 !important; /* FORCE SAPPHIRE BLUE */
   }
   
   .timeline-item::before {
@@ -1298,11 +1279,12 @@ html body .site-footer .copyright {
     left: calc(-1 * var(--space-xl) - 6px);
   }
   
+  /* Mobile navigation fix */
   .site-nav .page-link {
     padding: var(--space-xs) var(--space-sm);
     margin: var(--space-xs) 0;
     display: block;
-    color: #000000 !important;
+    color: #000000 !important; /* FORCE BLACK on mobile too */
   }
 }
 
@@ -1346,13 +1328,15 @@ html body .site-footer .copyright {
   }
 }
 
+/* Focus indicators for keyboard navigation */
 .nav-btn:focus,
 .social-icon:focus,
 .site-nav .page-link:focus {
-  outline: 2px solid #082567 !important;
+  outline: 2px solid #082567 !important; /* FORCE SAPPHIRE BLUE focus outline */
   outline-offset: 2px;
 }
 
+/* High contrast mode support */
 @media (prefers-contrast: high) {
   :root {
     --primary-color: #000080 !important;
@@ -1404,6 +1388,7 @@ html body .site-footer .copyright {
   animation: slideInLeft 0.6s ease-out;
 }
 
+/* Screen reader only content */
 .sr-only {
   position: absolute;
   width: 1px;
@@ -1472,19 +1457,14 @@ html body .site-footer .copyright {
 }
 
 /* ======================================== */
-/* FINAL NUCLEAR OVERRIDES                  */
-/* NOTE: Scoped to avoid breaking footer    */
-/* and intro-box which need their own rules */
+/* FINAL NUCLEAR OVERRIDES */
 /* ======================================== */
 
-/* Force off-white background on layout containers only — NOT on every div,
-   which was the root cause of footer white-box artifacts */
+/* FORCE LIGHT MODE ON EVERYTHING
+   CRITICAL FIX: "div" removed from this list — it was overriding
+   .site-footer * and .intro-box * transparent background rules   */
 html,
-body {
-  background: #fafafa !important;
-  color: #000000 !important;
-}
-
+body,
 main,
 .main,
 .page-content,
@@ -1511,36 +1491,23 @@ article {
   background: #ffffff !important;
 }
 
-/* FORCE SAPPHIRE BLUE ON HEADINGS outside intro-box and footer */
-h1, h2, h3, h4, h5, h6,
+/* FORCE SAPPHIRE BLUE ON HEADINGS (EXCEPT IN INTRO BOX AND FOOTER) */
+h1:not(.intro-box h1):not(.site-footer h1), 
+h2:not(.intro-box h2):not(.site-footer h2), 
+h3:not(.intro-box h3):not(.site-footer h3), 
+h4:not(.intro-box h4):not(.site-footer h4), 
+h5:not(.intro-box h5):not(.site-footer h5), 
+h6:not(.intro-box h6):not(.site-footer h6),
 .heading, .title, .section-title,
 .timeline-header strong,
 .publication-title {
   color: #082567 !important;
 }
 
-/* Restore footer heading color (overridden above) */
-html body .site-footer h1,
-html body .site-footer h2,
-html body .site-footer h3,
-html body .site-footer h4,
-html body .site-footer h5,
-html body .site-footer h6 {
-  color: #ffffff !important;
-}
-
-/* Restore intro-box heading color (overridden above) */
-.intro-box h1,
-.intro-box h2,
-.intro-box h3,
-.intro-box h4,
-.intro-box h5,
-.intro-box h6 {
-  color: #ffffff !important;
-}
-
-/* FORCE BLACK ON ALL BODY TEXT outside intro-box and footer */
-p, li, span,
+/* FORCE BLACK ON ALL BODY TEXT (EXCEPT IN INTRO BOX AND FOOTER) */
+p:not(.intro-box p):not(.site-footer p), 
+li:not(.intro-box li):not(.site-footer li), 
+span:not(.intro-box span):not(.site-footer span), 
 .text-content, .description,
 .timeline-description p,
 .justified-text,
@@ -1549,18 +1516,78 @@ p, li, span,
   color: #000000 !important;
 }
 
-/* Restore footer body text (overridden above) */
-html body .site-footer p,
-html body .site-footer li,
-html body .site-footer span {
+/* ======================================== */
+/* TARGETED FIXES - PLACED LAST TO WIN CASCADE */
+/* ======================================== */
+
+/* FIX 1: Every child of .intro-box gets white text, centered, transparent bg.
+   Placed AFTER the nuclear block so it wins the !important + position cascade. */
+.intro-box *,
+.intro-box *::before,
+.intro-box *::after {
+  color: #ffffff !important;
+  text-align: center !important;
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
+/* FIX 2: Every child of .site-footer gets transparent bg and white text.
+   Placed AFTER the nuclear block so it wins the !important + position cascade. */
+.site-footer *,
+.site-footer *::before,
+.site-footer *::after {
+  background: transparent !important;
+  background-color: transparent !important;
+  color: #ffffff !important;
+}
+
+/* Restore footer's own solid blue (the * above made it transparent) */
+.site-footer {
+  background: #082567 !important;
+}
+
+/* Restore footer's decorative top gradient line */
+.site-footer::before {
+  background: linear-gradient(90deg, transparent, #f59e0b, transparent) !important;
+}
+
+/* Restore footer social icons — they need semi-transparent white, not solid white */
+.site-footer .social-icons-footer .social-icon {
+  background: rgba(255, 255, 255, 0.1) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+}
+
+.site-footer .social-icons-footer .social-icon:hover {
+  background: rgba(255, 255, 255, 0.2) !important;
+  border-color: rgba(255, 255, 255, 0.4) !important;
+}
+
+/* Restore footer muted text */
+.site-footer .footer-text,
+.site-footer .copyright {
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+
+.site-footer p {
   color: rgba(255, 255, 255, 0.9) !important;
 }
 
-/* Restore intro-box body text (overridden above) */
-.intro-box p,
-.intro-box li,
-.intro-box span {
+.site-footer a {
+  color: rgba(255, 255, 255, 0.8) !important;
+}
+
+.site-footer a:hover {
   color: #ffffff !important;
+}
+
+/* Restore intro-box gradient (the * above made it transparent) */
+.intro-box {
+  background: linear-gradient(135deg, #082567 0%, #061a4d 100%) !important;
+}
+
+/* Restore intro-box decorative shimmer line */
+.intro-box::before {
+  background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.05) 50%, transparent 70%) !important;
 }
 
 /* ======================================== */

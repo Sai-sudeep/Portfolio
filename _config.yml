@@ -15,89 +15,21 @@ plugins:
   - jekyll-sitemap
   - jekyll-seo-tag
 
-# EXPLICIT Navigation pages - GUARANTEES Home button appears
+# Navigation pages
 header_pages:
-  - index.md
   - about.md
-
-# Alternative method - Force navigation structure
-minima:
-  social_links:
-    # Add social links here if needed
-  
-# Custom navigation override (backup method)
-navigation:
-  - title: "🏠 Home"
-    url: "/"
-  - title: "📋 About Me"
-    url: "/about/"
 
 # Custom CSS configuration
 sass:
   sass_dir: _sass
   style: compressed
 
-# Site URL (for GitHub Pages)
+# Site URL
 url: "https://sai-sudeep.github.io"
 baseurl: ""
 
-# Social links (optional)
-# twitter_username: your_twitter
-# github_username: sai-sudeep
-
-# Pagination (if you plan to add more posts)
-paginate: 10
-paginate_path: "/blog/page:num/"
-
-# Exclude files from processing
-exclude:
-  - .sass-cache/
-  - .jekyll-cache/
-  - gemfiles/
-  - Gemfile
-  - Gemfile.lock
-  - node_modules/
-  - vendor/bundle/
-  - vendor/cache/
-  - vendor/gems/
-  - vendor/ruby/
-  - vendor/ruby/
-  - README.md
-
-# Collections (for future research papers/projects)
-collections:
-  research:
-    output: true
-    permalink: /:collection/:name/
-
-# Default layouts for different content types
-defaults:
-  - scope:
-      path: ""
-      type: "posts"
-    values:
-      layout: "post"
-      category: "blog"
-  - scope:
-      path: ""
-      type: "pages"
-    values:
-      layout: "page"
-  - scope:
-      path: ""
-      type: "research"
-    values:
-      layout: "page"
+# Show excerpts
+show_excerpts: true
 
 # Timezone
 timezone: Asia/Kolkata
-
-# Encoding
-encoding: utf-8
-
-# Show excerpts on homepage
-show_excerpts: true
-
-# Date format
-minima:
-  date_format: "%b %-d, %Y"

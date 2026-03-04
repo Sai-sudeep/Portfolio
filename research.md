@@ -12,10 +12,10 @@ permalink: /research/
   <div class="timeline-container">
     <div class="timeline-item">
       <div class="timeline-header">
-        <strong>Computational Syntax</strong>
+        <strong>Indic & Odia NLP</strong>
       </div>
       <div class="timeline-description">
-        <p>Formal syntactic analysis and parsing for low-resource languages</p>
+        <p>Development of language resources, tools, and NLP techniques for Indic languages, with a focus on Odia</p>
       </div>
     </div>
 
@@ -24,7 +24,25 @@ permalink: /research/
         <strong>Data Quality Estimation</strong>
       </div>
       <div class="timeline-description">
-        <p>Corpus validation methods and linguistic data assessment</p>
+        <p>Corpus validation methods and assessment of linguistic data reliability</p>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-header">
+        <strong>Computational Morpho-Syntax</strong>
+      </div>
+      <div class="timeline-description">
+        <p>Modeling morphological and syntactic structures using computational approaches</p>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-header">
+        <strong>Historical Phonology</strong>
+      </div>
+      <div class="timeline-description">
+        <p>Study of sound change patterns and phonological evolution in languages</p>
       </div>
     </div>
 
@@ -33,7 +51,7 @@ permalink: /research/
         <strong>Acoustic Phonetics</strong>
       </div>
       <div class="timeline-description">
-        <p>Speech signal processing and vocal acoustics analysis</p>
+        <p>Analysis of speech signals and vocal acoustics</p>
       </div>
     </div>
 
@@ -42,25 +60,25 @@ permalink: /research/
         <strong>Computational Musicology</strong>
       </div>
       <div class="timeline-description">
-        <p>Intersection of music theory and computational analysis</p>
+        <p>Applying computational methods to analyze music structure and theory</p>
       </div>
     </div>
 
     <div class="timeline-item">
       <div class="timeline-header">
-        <strong>Odia NLP</strong>
+        <strong>Low-Resource Languages NLP</strong>
       </div>
       <div class="timeline-description">
-        <p>Language resources and tools for Odia language documentation</p>
+        <p>Natural language processing techniques for underrepresented and low-resource languages</p>
       </div>
     </div>
 
     <div class="timeline-item">
       <div class="timeline-header">
-        <strong>Low-Resource Languages</strong>
+        <strong>Language Documentation & Corpus Creation</strong>
       </div>
       <div class="timeline-description">
-        <p>NLP methodologies for underrepresented languages</p>
+        <p>Collection, annotation, and archiving of linguistic data for research and preservation</p>
       </div>
     </div>
   </div>

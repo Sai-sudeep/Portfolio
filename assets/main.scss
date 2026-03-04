@@ -481,6 +481,12 @@ ul li, ol li {
   background-color: transparent !important; /* NO WHITE BACKGROUND */
 }
 
+/* ALL ELEMENTS IN INTRO BOX - NO WHITE BACKGROUNDS */
+.intro-box * {
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
 /* ======================================== */
 /* INTERACTIVE ABOUT SECTION */
 /* ======================================== */
@@ -1206,6 +1212,12 @@ ul li, ol li {
   text-align: center;
 }
 
+/* ALL ELEMENTS IN FOOTER - NO WHITE BACKGROUNDS */
+.site-footer * {
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
 /* ======================================== */
 /* RESPONSIVE DESIGN ENHANCEMENTS */
 /* ======================================== */
@@ -1461,8 +1473,8 @@ ul li, ol li {
 /* ======================================== */
 
 /* FORCE LIGHT MODE ON EVERYTHING
-   CRITICAL FIX: "div" removed from this list — it was overriding
-   .site-footer * and .intro-box * transparent background rules   */
+   *** "div" intentionally removed — it was overriding footer and intro-box
+       transparent background rules set earlier in this file ***          */
 html,
 body,
 main,
@@ -1514,80 +1526,6 @@ span:not(.intro-box span):not(.site-footer span),
 .summary-text,
 .post-excerpt {
   color: #000000 !important;
-}
-
-/* ======================================== */
-/* TARGETED FIXES - PLACED LAST TO WIN CASCADE */
-/* ======================================== */
-
-/* FIX 1: Every child of .intro-box gets white text, centered, transparent bg.
-   Placed AFTER the nuclear block so it wins the !important + position cascade. */
-.intro-box *,
-.intro-box *::before,
-.intro-box *::after {
-  color: #ffffff !important;
-  text-align: center !important;
-  background: transparent !important;
-  background-color: transparent !important;
-}
-
-/* FIX 2: Every child of .site-footer gets transparent bg and white text.
-   Placed AFTER the nuclear block so it wins the !important + position cascade. */
-.site-footer *,
-.site-footer *::before,
-.site-footer *::after {
-  background: transparent !important;
-  background-color: transparent !important;
-  color: #ffffff !important;
-}
-
-/* Restore footer's own solid blue (the * above made it transparent) */
-.site-footer {
-  background: #082567 !important;
-}
-
-/* Restore footer's decorative top gradient line */
-.site-footer::before {
-  background: linear-gradient(90deg, transparent, #f59e0b, transparent) !important;
-}
-
-/* Restore footer social icons — they need semi-transparent white, not solid white */
-.site-footer .social-icons-footer .social-icon {
-  background: rgba(255, 255, 255, 0.1) !important;
-  border: 1px solid rgba(255, 255, 255, 0.2) !important;
-}
-
-.site-footer .social-icons-footer .social-icon:hover {
-  background: rgba(255, 255, 255, 0.2) !important;
-  border-color: rgba(255, 255, 255, 0.4) !important;
-}
-
-/* Restore footer muted text */
-.site-footer .footer-text,
-.site-footer .copyright {
-  color: rgba(255, 255, 255, 0.7) !important;
-}
-
-.site-footer p {
-  color: rgba(255, 255, 255, 0.9) !important;
-}
-
-.site-footer a {
-  color: rgba(255, 255, 255, 0.8) !important;
-}
-
-.site-footer a:hover {
-  color: #ffffff !important;
-}
-
-/* Restore intro-box gradient (the * above made it transparent) */
-.intro-box {
-  background: linear-gradient(135deg, #082567 0%, #061a4d 100%) !important;
-}
-
-/* Restore intro-box decorative shimmer line */
-.intro-box::before {
-  background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.05) 50%, transparent 70%) !important;
 }
 
 /* ======================================== */

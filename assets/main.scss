@@ -1,10 +1,10 @@
 ---
 ---
 
-// Google Fonts Import (BEFORE minima import)
-@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Source+Sans+Pro:ital,wght@0,400;0,600;0,700;1,400&display=swap');
+// Google Fonts Import
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Source+Sans+Pro:ital,wght@0,400;0,600;0,700&display=swap');
 
-// Font Variables (BEFORE minima import)
+// Font Variables
 $base-font-family: 'Courier New', 'Courier', monospace;
 $heading-font-family: 'Libre Baskerville', 'Times New Roman', serif;
 $base-font-size: 16px;
@@ -19,73 +19,7 @@ $text-color: #2c3e50;
 $light-gray: #f5f7fa;
 $border-color: #e1e5e9;
 
-// 🏠 ENHANCED NAVIGATION WITH HOME BUTTON
-.site-nav {
-  .page-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-family: 'Libre Baskerville', serif !important;
-    font-weight: 400 !important;
-    font-size: 16px !important;
-    transition: color 0.3s ease;
-    
-    // Home icon for home links
-    &[href="/"], 
-    &[href="/index.html"], 
-    &[href="index.html"],
-    &[href="{{ site.baseurl }}/"] {
-      &::before {
-        content: "🏠";
-        font-size: 1.1em;
-        margin-right: 0.3rem;
-      }
-    }
-    
-    // Hover effects
-    &:hover {
-      color: $brand-color !important;
-      text-decoration: none;
-    }
-  }
-  
-  // Navigation spacing
-  .page-link {
-    margin-left: 20px;
-    
-    &:first-child {
-      margin-left: 0;
-    }
-  }
-  
-  // Mobile navigation enhancements
-  @media (max-width: 600px) {
-    .trigger {
-      .page-link {
-        display: flex;
-        align-items: center;
-        padding: 0.8rem 0;
-        border-bottom: 1px solid #e8e8e8;
-        font-family: 'Libre Baskerville', serif !important;
-        
-        &:last-child {
-          border-bottom: none;
-        }
-        
-        // Mobile home icon
-        &[href="/"], &[href="/index.html"] {
-          &::before {
-            content: "🏠";
-            font-size: 1.1em;
-            margin-right: 0.5rem;
-          }
-        }
-      }
-    }
-  }
-}
-
-// Override body typography
+// Body Typography
 body {
   font-family: 'Courier New', 'Courier', monospace !important;
   font-size: 16px !important;
@@ -93,41 +27,48 @@ body {
   font-weight: 400;
 }
 
-// Ensure paragraphs use Courier
 p {
   font-family: 'Courier New', 'Courier', monospace !important;
   font-size: 16px !important;
   line-height: 1.6 !important;
 }
 
-// Site header styling
+// Site Header
 .site-header {
   .site-title {
     font-family: 'Libre Baskerville', serif !important;
     font-weight: 700 !important;
   }
-  
-  .site-nav {
-    .menu-icon {
-      font-family: 'Libre Baskerville', serif !important;
+}
+
+// Navigation
+.site-nav {
+  .page-link {
+    font-family: 'Libre Baskerville', serif !important;
+    font-weight: 400 !important;
+    font-size: 16px !important;
+    transition: color 0.3s ease;
+    margin-left: 20px;
+    
+    &:first-child {
+      margin-left: 0;
     }
     
-    .trigger {
-      .page-link {
-        font-family: 'Libre Baskerville', serif !important;
-      }
+    &:hover {
+      color: $brand-color !important;
+      text-decoration: none;
     }
   }
 }
 
-// Intro Box Styling
+// Intro Box
 .intro-box {
-  padding: 3.5rem;
+  padding: 2rem;
   background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-  border-left: 6px solid $brand-color;
-  border-radius: 6px;
-  margin-bottom: 3.5rem;
-  box-shadow: 0 4px 12px rgba(0, 86, 179, 0.08);
+  border-left: 4px solid $brand-color;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+  text-align: center;
   
   h1 {
     margin-top: 0;
@@ -138,48 +79,44 @@ p {
   
   p {
     margin-bottom: 0;
-    font-size: 16px;
-    line-height: 1.6;
-    font-family: 'Courier New', 'Courier', monospace !important;
+    font-size: 18px;
+    color: #495057;
   }
 }
 
-// Research Areas Grid
-.research-areas {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2rem;
+// Research List
+.research-list {
   list-style: none;
   padding: 0;
-  margin: 2rem 0;
+  margin: 1.5rem 0;
   
   li {
-    padding: 1.8rem;
+    padding: 1rem;
+    margin-bottom: 1rem;
     background: $light-gray;
-    border-left: 5px solid $brand-color;
-    border-radius: 5px;
-    transition: all 0.35s ease;
-    font-size: 15px;
-    font-weight: 400;
-    font-family: 'Courier New', 'Courier', monospace !important;
+    border-left: 4px solid $brand-color;
+    border-radius: 4px;
+    transition: transform 0.2s ease;
     
     &:hover {
-      background: #eef2f7;
-      transform: translateX(8px);
-      box-shadow: 0 6px 15px rgba(0, 86, 179, 0.12);
+      transform: translateX(5px);
+    }
+    
+    strong {
+      color: $brand-color;
+      font-family: 'Libre Baskerville', serif !important;
     }
   }
 }
 
-// Blog Post List
+// Post List
 .post-list {
   list-style: none;
   padding: 0;
-  margin: 2rem 0;
   
   li {
-    margin-bottom: 3rem;
-    padding-bottom: 2rem;
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
     border-bottom: 1px solid $border-color;
     
     &:last-child {
@@ -189,10 +126,7 @@ p {
   
   h3 {
     margin: 0.5rem 0 1rem 0;
-    font-size: 1.8rem;
-    color: $brand-color;
-    font-family: 'Libre Baskerville', serif !important;
-    font-weight: 700 !important;
+    font-size: 1.4rem;
     
     a {
       color: $brand-color;
@@ -204,231 +138,61 @@ p {
       }
     }
   }
-  
-  p {
-    font-family: 'Courier New', 'Courier', monospace !important;
-    font-size: 15px !important;
-  }
 }
 
-// Post Content
-.post-content {
-  font-family: 'Courier New', 'Courier', monospace !important;
-  line-height: 1.6;
-  font-size: 16px;
-  
-  p, li, blockquote {
-    font-family: 'Courier New', 'Courier', monospace !important;
-    font-size: 16px !important;
-    line-height: 1.6 !important;
-  }
-}
-
-// Post Metadata
-.post-meta {
+// Post Meta
+.post-date {
   color: #6c757d;
   font-size: 0.9rem;
   font-style: italic;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
   font-family: 'Source Sans Pro', sans-serif !important;
 }
 
-// Heading Styles - ALL LIBRE BASKERVILLE
+// Headings
 h1, h2, h3, h4, h5, h6 {
   color: $brand-color !important;
   font-family: 'Libre Baskerville', serif !important;
   font-weight: 700 !important;
 }
 
-h1 {
-  font-size: 2.2rem !important;
-}
-
 h2 {
-  border-bottom: 3px solid $brand-color;
-  padding-bottom: 1rem;
-  margin-top: 2.5rem;
-  margin-bottom: 1.5rem;
-  font-size: 1.8rem !important;
-}
-
-h3 {
-  font-size: 1.5rem !important;
+  border-bottom: 2px solid $brand-color;
+  padding-bottom: 0.5rem;
   margin-top: 2rem;
   margin-bottom: 1rem;
 }
 
-h4 {
-  font-size: 1.3rem !important;
+// View All Link
+.view-all {
+  text-align: center;
   margin-top: 1.5rem;
-  margin-bottom: 0.8rem;
-}
-
-// Footer
-.site-footer {
-  font-family: 'Source Sans Pro', sans-serif !important;
-}
-
-// Page Content Styling
-.page-content {
-  font-family: 'Courier New', 'Courier', monospace !important;
   
-  .wrapper {
-    font-family: 'Courier New', 'Courier', monospace !important;
-  }
-  
-  p {
-    font-family: 'Courier New', 'Courier', monospace !important;
-    font-size: 16px !important;
-    line-height: 1.6 !important;
-    margin-bottom: 1.5rem;
-  }
-  
-  h1, h2, h3, h4, h5, h6 {
-    color: $brand-color !important;
-    font-family: 'Libre Baskerville', serif !important;
-    font-weight: 700 !important;
-    margin-top: 2rem;
-    margin-bottom: 1rem;
-  }
-  
-  ul, ol {
-    font-family: 'Courier New', 'Courier', monospace !important;
-    font-size: 16px !important;
-    line-height: 1.6 !important;
-    
-    li {
-      margin-bottom: 0.8rem;
-      font-family: 'Courier New', 'Courier', monospace !important;
-    }
-  }
-  
-  // Highlight sections
-  .highlight-section {
-    padding: 2rem;
-    background: $light-gray;
-    border-left: 5px solid $brand-color;
-    border-radius: 5px;
-    margin: 2rem 0;
-    
-    p {
-      margin-bottom: 0;
-      font-family: 'Courier New', 'Courier', monospace !important;
-    }
-  }
-}
-
-// Page Header Styling
-.page-heading {
-  color: $brand-color !important;
-  font-family: 'Libre Baskerville', serif !important;
-  font-weight: 700 !important;
-  border-bottom: 3px solid $brand-color;
-  padding-bottom: 1rem;
-  margin-bottom: 2rem;
-}
-
-// Content Areas
-.site-main, .wrapper {
-  font-family: 'Courier New', 'Courier', monospace !important;
-}
-
-// Article Styling
-article {
-  font-family: 'Courier New', 'Courier', monospace !important;
-  
-  p, li, blockquote {
-    font-family: 'Courier New', 'Courier', monospace !important;
-    font-size: 16px !important;
-    line-height: 1.6 !important;
-  }
-  
-  h1, h2, h3, h4, h5, h6 {
-    font-family: 'Libre Baskerville', serif !important;
-    font-weight: 700 !important;
-    color: $brand-color !important;
-  }
-}
-
-// Lists
-ul, ol {
-  font-family: 'Courier New', 'Courier', monospace !important;
-  font-size: 16px !important;
-  line-height: 1.6 !important;
-  
-  li {
-    font-family: 'Courier New', 'Courier', monospace !important;
-    margin-bottom: 0.5rem;
-  }
-}
-
-// Blockquotes
-blockquote {
-  font-family: 'Courier New', 'Courier', monospace !important;
-  font-size: 16px !important;
-  line-height: 1.6 !important;
-  font-style: normal;
-  border-left: 4px solid $brand-color;
-  padding-left: 1.5rem;
-  margin: 1.5rem 0;
-  background: #f8f9fa;
-  padding: 1rem 1.5rem;
-}
-
-// Code blocks
-code, pre {
-  font-family: 'Courier New', 'Courier', monospace !important;
-}
-
-// Table styling
-table {
-  font-family: 'Courier New', 'Courier', monospace !important;
-  font-size: 15px;
-  
-  th {
-    font-family: 'Libre Baskerville', serif !important;
-    font-weight: 700 !important;
-    background: $light-gray;
+  a {
     color: $brand-color;
-  }
-  
-  td {
-    font-family: 'Courier New', 'Courier', monospace !important;
+    text-decoration: none;
+    font-weight: 600;
+    
+    &:hover {
+      text-decoration: underline;
+    }
   }
 }
 
 // Responsive Design
 @media (max-width: 768px) {
-  .research-areas {
-    grid-template-columns: 1fr;
-  }
-  
   .intro-box {
-    padding: 2rem;
+    padding: 1.5rem;
   }
   
-  body {
-    font-size: 15px !important;
-  }
-  
-  .page-content p {
-    font-size: 15px !important;
-  }
-  
-  article p, article li {
+  body, p {
     font-size: 15px !important;
   }
   
   h1 {
-    font-size: 1.9rem !important;
+    font-size: 1.8rem !important;
   }
   
   h2 {
-    font-size: 1.6rem !important;
-  }
-  
-  h3 {
-    font-size: 1.4rem !important;
+    font-size: 1.5rem !important;
   }
 }

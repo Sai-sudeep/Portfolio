@@ -1,54 +1,4 @@
-// ========================================
-// GLOBAL SLIDESHOW SETTINGS & UTILITIES
-// ========================================
-
-// Function to configure slideshow settings
-window.configureSlideshowSettings = function(settings = {}) {
-    const defaults = {
-        autoSlideInterval: 5000,
-        pauseAfterInteraction: 8000,
-        transitionDuration: 500,
-        swipeThreshold: 50
-    };
-    
-    window.SLIDESHOW_SETTINGS = { ...defaults, ...settings };
-    console.log('Slideshow settings updated:', window.SLIDESHOW_SETTINGS);
-};
-
-// Initialize default settings immediately
-window.configureSlideshowSettings();
-
-// Function to manually control slideshow (can be called from HTML/Console)
-window.controlSlideshow = function(slideshowId, action, slideIndex) {
-    const slideshow = document.getElementById(slideshowId);
-    if (!slideshow) return;
-    
-    const event = new CustomEvent('slideshowControl', {
-        detail: { action, slideIndex }
-    });
-    slideshow.dispatchEvent(event);
-};
-
-// Function to get slideshow status
-window.getSlideshowStatus = function(slideshowId) {
-    const slideshow = document.getElementById(slideshowId);
-    if (!slideshow) return null;
-    
-    const images = slideshow.querySelectorAll('.slideshow-wrapper img');
-    const activeDot = slideshow.querySelector('.dot.active');
-    const currentIndex = activeDot ? parseInt(activeDot.getAttribute('data-slide')) : 0;
-    
-    return {
-        totalSlides: images.length,
-        currentSlide: currentIndex + 1,
-        isPlaying: slideshow.classList.contains('playing')
-    };
-};
-
-
-// ========================================
-// DOM LOADED: NAVIGATION & SLIDESHOW CORE
-// ========================================
+// About Page Interactive Navigation & Slideshow
 document.addEventListener('DOMContentLoaded', function() {
     
     // ========================================
@@ -60,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function() {
         containers.forEach(wrapper => {
             // Only generate if container is empty or has placeholder comment
             if (wrapper.children.length === 0 || 
-                wrapper.innerHTML.trim().includes('') ||
+                wrapper.innerHTML.trim().includes('<!-- Images will be dynamically loaded here -->') ||
                 wrapper.innerHTML.trim() === '') {
                 
                 wrapper.innerHTML = '';
@@ -128,12 +78,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // ========================================
     const slideshows = document.querySelectorAll('.slideshow-container');
     
-    slideshows.forEach((slideshow, index) => {
-        // Ensure slideshow has an ID for the utility functions to work
-        if (!slideshow.id) {
-            slideshow.id = `slideshow-${index + 1}`;
-        }
-
+    slideshows.forEach(slideshow => {
         const wrapper = slideshow.querySelector('.slideshow-wrapper');
         const images = slideshow.querySelectorAll('.slideshow-wrapper img');
         const dotsContainer = slideshow.querySelector('.slideshow-dots');
@@ -204,8 +149,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Auto-play functionality
         function startSlideshow() {
             if (images.length > 1) {
-                // Wired to SETTINGS
-                slideInterval = setInterval(nextSlide, window.SLIDESHOW_SETTINGS.autoSlideInterval); 
+                slideInterval = setInterval(nextSlide, 5000); // 5 seconds (matching original)
                 isPlaying = true;
                 slideshow.classList.add('playing');
             }
@@ -224,8 +168,7 @@ document.addEventListener('DOMContentLoaded', function() {
             stopSlideshow();
             setTimeout(() => {
                 startSlideshow();
-            // Wired to SETTINGS
-            }, window.SLIDESHOW_SETTINGS.pauseAfterInteraction); 
+            }, 8000); // 8 second pause after user interaction (matching original)
         }
         
         // Screen reader announcement
@@ -269,8 +212,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         
         function handleSwipe() {
-            // Wired to SETTINGS
-            const swipeThreshold = window.SLIDESHOW_SETTINGS.swipeThreshold; 
+            const swipeThreshold = 50;
             const diff = touchStartX - touchEndX;
             
             if (Math.abs(diff) > swipeThreshold) {
@@ -370,32 +312,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 observer.observe(slideshow);
             }
         }
-
-        // Custom Event Listener for Utility Functions
-        slideshow.addEventListener('slideshowControl', function(e) {
-            const action = e.detail.action;
-            const slideIndex = e.detail.slideIndex;
-
-            switch(action) {
-                case 'play':
-                    startSlideshow();
-                    break;
-                case 'pause':
-                    stopSlideshow();
-                    break;
-                case 'next':
-                    nextSlide();
-                    resetInterval();
-                    break;
-                case 'prev':
-                    prevSlide();
-                    resetInterval();
-                    break;
-                case 'goto':
-                    if (slideIndex !== undefined) goToSlide(slideIndex);
-                    break;
-            }
-        });
         
         // Initialize slideshow
         function initSlideshow() {
@@ -407,10 +323,7 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // Set up image grid for smooth transitions
             wrapper.style.display = 'flex';
-            // Wired to SETTINGS (converted from ms to s)
-            const transitionSecs = window.SLIDESHOW_SETTINGS.transitionDuration / 1000;
-            wrapper.style.transition = `transform ${transitionSecs}s ease-in-out`;
-            
+            wrapper.style.transition = 'transform 0.5s ease-in-out';
             images.forEach(img => {
                 img.style.flexShrink = '0';
                 img.style.width = '100%';
@@ -493,3 +406,50 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+
+// ========================================
+// UTILITY FUNCTIONS
+// ========================================
+
+// Function to manually control slideshow (can be called from HTML)
+window.controlSlideshow = function(slideshowId, action, slideIndex) {
+    const slideshow = document.getElementById(slideshowId);
+    if (!slideshow) return;
+    
+    const event = new CustomEvent('slideshowControl', {
+        detail: { action, slideIndex }
+    });
+    slideshow.dispatchEvent(event);
+};
+
+// Function to get slideshow status
+window.getSlideshowStatus = function(slideshowId) {
+    const slideshow = document.getElementById(slideshowId);
+    if (!slideshow) return null;
+    
+    const images = slideshow.querySelectorAll('.slideshow-wrapper img');
+    const activeDot = slideshow.querySelector('.dot.active');
+    const currentIndex = activeDot ? parseInt(activeDot.getAttribute('data-slide')) : 0;
+    
+    return {
+        totalSlides: images.length,
+        currentSlide: currentIndex + 1,
+        isPlaying: slideshow.classList.contains('playing')
+    };
+};
+
+// Function to configure slideshow settings
+window.configureSlideshowSettings = function(settings = {}) {
+    const defaults = {
+        autoSlideInterval: 5000,
+        pauseAfterInteraction: 8000,
+        transitionDuration: 500,
+        swipeThreshold: 50
+    };
+    
+    window.SLIDESHOW_SETTINGS = { ...defaults, ...settings };
+    console.log('Slideshow settings updated:', window.SLIDESHOW_SETTINGS);
+};
+
+// Initialize default settings
+window.configureSlideshowSettings();

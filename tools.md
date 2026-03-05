@@ -1,6 +1,6 @@
 <div class="intro-box">
   <h2>🛠️ Tools & Applications</h2>
-  <p>I made this page because I often found myself depending on different websites and tools for small day-to-day tasks. Sometimes a site wouldn’t load, sometimes I’d forget which one I had used before, and things just became a bit inconvenient. So I started building a few simple tools for myself and keeping them in one place. This page is a small collection of those tools. Hopefully you’ll find them interesting and useful.</p>
+  <p>I built this page because I used to rely on different websites and tools for small day-to-day tasks. Sometimes a site would have server issues, other times I would forget which one I had used earlier. So I started putting together a few simple tools in one place to make things easier. Hope you find these tools interesting and useful.</p>
 </div>
 
 <div class="tools-grid">
@@ -10,7 +10,7 @@
     <div class="tool-icon">🎵</div>
     <div class="tool-info">
       <h3>Alankar / Palta Maker</h3>
-      <p>A simple tool to generate Hindustani music practice patterns (alankars and paltas) using different swaras.</p>
+      <p>Generate classical Hindustani music practice patterns (alankars and paltas) across swaras. Useful for vocalists and instrumentalists at all levels.</p>
     </div>
     <div class="tool-actions">
       <button class="tool-btn tool-btn-preview" onclick="openTool('palta-maker')">👁️ Preview Here</button>

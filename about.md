@@ -176,139 +176,166 @@ permalink: /about/
 </div>
 
 <script>
-// About Page Interactive Navigation
-document.addEventListener('DOMContentLoaded', function() {
-    const navButtons = document.querySelectorAll('.nav-btn');
-    const contentSections = document.querySelectorAll('.content-section');
-    let slideshowInitialized = false;
+// ─── NAVIGATION ───────────────────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', function () {
+    var navButtons      = document.querySelectorAll('.nav-btn');
+    var contentSections = document.querySelectorAll('.content-section');
+    var slideshowReady  = false;
 
-    // Hide all sections initially except the first one
-    contentSections.forEach((section, index) => {
-        if (index !== 0) {
-            section.style.display = 'none';
-        }
+    // Hide every section except the first on load
+    contentSections.forEach(function (section, i) {
+        if (i !== 0) section.style.display = 'none';
     });
 
-    // Add click event listeners to navigation buttons
-    navButtons.forEach((button, index) => {
-        button.addEventListener('click', function() {
-            // Remove active class from all buttons
-            navButtons.forEach(btn => btn.classList.remove('active'));
+    // First button active by default
+    if (navButtons.length > 0) navButtons[0].classList.add('active');
 
-            // Add active class to clicked button
+    navButtons.forEach(function (button, index) {
+        button.addEventListener('click', function () {
+
+            navButtons.forEach(function (btn) { btn.classList.remove('active'); });
             this.classList.add('active');
 
-            // Hide all content sections
-            contentSections.forEach(section => {
-                section.style.display = 'none';
-            });
+            contentSections.forEach(function (section) { section.style.display = 'none'; });
 
-            // Show the corresponding content section
             if (contentSections[index]) {
                 contentSections[index].style.display = 'block';
-                contentSections[index].scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'nearest'
-                });
+                contentSections[index].scrollIntoView({ behavior: 'smooth', block: 'nearest' });
             }
 
-            // Index 2 = Artistic Dimension — initialize slideshow only once,
-            // and only AFTER the section is visible (so wrapper has real pixel width)
-            if (index === 2 && !slideshowInitialized) {
-                slideshowInitialized = true;
-                setTimeout(initializeSlideshow, 50);
+            // Artistic Dimension is index 2 — init slideshow once, after section is visible
+            if (index === 2 && !slideshowReady) {
+                slideshowReady = true;
+                setTimeout(initSlideshow, 100);  // single timeout, 100 ms is enough
             }
         });
     });
-
-    // Set the first button as active by default
-    if (navButtons.length > 0) {
-        navButtons[0].classList.add('active');
-    }
-
-    // NOTE: initializeSlideshow() is NOT called on page load.
-    // It runs the first time the user clicks "Artistic Dimension".
 });
 
-// Image Slideshow Configuration
-const SLIDESHOW_CONFIG = {
-  images: Array.from({length: 29}, (_, i) => `${i + 1}.jpg`),
-  autoSlideInterval: 5000,
-  imagePath: '/images/'
-};
+// ─── SLIDESHOW ────────────────────────────────────────────────────────────────
+function initSlideshow() {
+    var TOTAL      = 29;
+    var BASE_PATH  = '/images/';
+    var DURATION   = 5000;   // ms each slide is shown
+    var TRANSITION = 800;    // ms CSS transition (must match CSS)
+    var PAUSE_MS   = 8000;   // ms to pause after user interaction
 
-// Slideshow Implementation
-function initializeSlideshow() {
-  const container = document.querySelector('.slideshow-wrapper');
-  const dotsContainer = document.querySelector('.slideshow-dots');
+    var container = document.querySelector('.slideshow-container');
+    var track     = document.querySelector('.slideshow-wrapper');
+    var dotsWrap  = document.querySelector('.slideshow-dots');
 
-  if (!container || !dotsContainer || SLIDESHOW_CONFIG.images.length === 0) return;
+    if (!container || !track || !dotsWrap) return;
 
-  let currentSlide = 0;
-  let slideInterval;
+    var current   = 0;
+    var total     = TOTAL;
+    var timer     = null;   // single interval reference — never create a second one
+    var animating = false;  // guard: block new slide while transition plays
 
-  // Set up flex layout now that the section is visible and has real width
-  container.style.display = 'flex';
-  container.style.transition = 'transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+    // ── 1. Give the track a fixed pixel width = container × total images
+    //       This is the correct approach: each image is container-width wide,
+    //       the track is total × container-width, and we move it by
+    //       multiples of container.offsetWidth — never a percentage of the track.
+    var slideWidth = container.offsetWidth;
+    track.style.display   = 'none'; // hide while we build, avoids flash
+    track.style.width     = (slideWidth * total) + 'px';
+    track.style.position  = 'relative';
+    track.style.transform = 'translateX(0)';
+    // Disable transition temporarily while we build
+    track.style.transition = 'none';
 
-  // Load images and dots
-  function loadImages() {
-    container.innerHTML = '';
-    dotsContainer.innerHTML = '';
+    // ── 2. Build images
+    track.innerHTML  = '';
+    dotsWrap.innerHTML = '';
 
-    SLIDESHOW_CONFIG.images.forEach((imageName, index) => {
-      const img = document.createElement('img');
-      img.src = `${SLIDESHOW_CONFIG.imagePath}${imageName}`;
-      img.alt = `Musical performance ${index + 1}`;
-      img.loading = index === 0 ? 'eager' : 'lazy';
-      img.style.flexShrink = '0';
-      img.style.width = '100%';
-      img.style.objectFit = 'cover';
-      container.appendChild(img);
+    for (var i = 0; i < total; i++) {
+        var img       = document.createElement('img');
+        img.src       = BASE_PATH + (i + 1) + '.jpg';
+        img.alt       = 'Musical performance ' + (i + 1);
+        img.loading   = i === 0 ? 'eager' : 'lazy';
+        // Each image is exactly slideWidth px wide — no flex, no percentages
+        img.style.cssText = [
+            'display:inline-block',
+            'width:' + slideWidth + 'px',
+            'height:400px',
+            'object-fit:cover',
+            'vertical-align:top',
+            'flex-shrink:0'
+        ].join(';');
+        track.appendChild(img);
 
-      const dot = document.createElement('span');
-      dot.className = index === 0 ? 'dot active' : 'dot';
-      dot.addEventListener('click', () => {
-        goToSlide(index);
-        pauseSlideshow();
-      });
-      dotsContainer.appendChild(dot);
+        // dot
+        var dot = document.createElement('span');
+        dot.className = i === 0 ? 'dot active' : 'dot';
+        dot.setAttribute('data-index', i);
+        dotsWrap.appendChild(dot);
+    }
+
+    // ── 3. Show track, enable transition
+    track.style.display    = 'flex';
+    track.style.transition = 'transform ' + TRANSITION + 'ms cubic-bezier(0.25,0.46,0.45,0.94)';
+
+    // ── 4. Go to a slide using absolute pixel offset — 100% reliable
+    function goTo(idx) {
+        if (animating) return;
+        animating = true;
+        current = (idx + total) % total;
+        track.style.transform = 'translateX(-' + (current * slideWidth) + 'px)';
+
+        // Update dots
+        dotsWrap.querySelectorAll('.dot').forEach(function (d, j) {
+            d.classList.toggle('active', j === current);
+        });
+
+        // Release guard after transition completes
+        setTimeout(function () { animating = false; }, TRANSITION);
+    }
+
+    // ── 5. Auto-play — ONE interval, always stopped before starting
+    function stopTimer() {
+        if (timer) {
+            clearInterval(timer);
+            timer = null;
+        }
+    }
+
+    function startTimer() {
+        stopTimer(); // always clear first — prevents double intervals
+        timer = setInterval(function () {
+            goTo(current + 1);
+        }, DURATION);
+    }
+
+    // ── 6. Dot clicks
+    dotsWrap.addEventListener('click', function (e) {
+        var dot = e.target;
+        if (!dot.classList.contains('dot')) return;
+        var idx = parseInt(dot.getAttribute('data-index'), 10);
+        goTo(idx);
+        stopTimer();
+        setTimeout(startTimer, PAUSE_MS);
     });
-  }
 
-  // Navigate to specific slide
-  function goToSlide(slideIndex) {
-    currentSlide = slideIndex;
-    container.style.transform = `translateX(${-slideIndex * 100}%)`;
-    document.querySelectorAll('.dot').forEach((dot, index) => {
-      dot.classList.toggle('active', index === slideIndex);
+    // ── 7. Hover pause / resume — no double intervals possible
+    container.addEventListener('mouseenter', stopTimer);
+    container.addEventListener('mouseleave', startTimer);
+
+    // ── 8. Handle window resize — recalculate pixel offsets
+    window.addEventListener('resize', function () {
+        slideWidth = container.offsetWidth;
+        track.style.width     = (slideWidth * total) + 'px';
+        track.style.transition = 'none'; // snap without animation on resize
+        track.querySelectorAll('img').forEach(function (img) {
+            img.style.width = slideWidth + 'px';
+        });
+        track.style.transform = 'translateX(-' + (current * slideWidth) + 'px)';
+        // Re-enable transition after reflow
+        setTimeout(function () {
+            track.style.transition = 'transform ' + TRANSITION + 'ms cubic-bezier(0.25,0.46,0.45,0.94)';
+        }, 50);
     });
-  }
 
-  function nextSlide() {
-    currentSlide = (currentSlide + 1) % SLIDESHOW_CONFIG.images.length;
-    goToSlide(currentSlide);
-  }
-
-  function startSlideshow() {
-    slideInterval = setInterval(nextSlide, SLIDESHOW_CONFIG.autoSlideInterval);
-  }
-
-  function pauseSlideshow() {
-    clearInterval(slideInterval);
-    setTimeout(startSlideshow, 8000);
-  }
-
-  // Load images then start after a brief delay so flex layout is painted
-  loadImages();
-  setTimeout(() => {
-    goToSlide(0);
-    startSlideshow();
-  }, 50);
-
-  // Pause on hover, resume on leave
-  container.addEventListener('mouseenter', () => clearInterval(slideInterval));
-  container.addEventListener('mouseleave', () => startSlideshow());
-  dotsContainer.addEventListener('click', pauseSlideshow);
+    // ── 9. Start
+    goTo(0);
+    startTimer();
 }
 </script>

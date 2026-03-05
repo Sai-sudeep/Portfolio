@@ -47,6 +47,7 @@ minima:
 header_pages:
   - index.md
   - about.md
+  - tools.md
   - research.md
   - qualifications.md
   - experience.md

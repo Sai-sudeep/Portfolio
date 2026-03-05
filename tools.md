@@ -1,10 +1,6 @@
 <div class="intro-box">
   <h2>🛠️ Tools & Applications</h2>
-  <p>
-    I made this page because I often found myself depending on different websites and tools for small day-to-day tasks. Sometimes a site wouldn’t load, sometimes I’d forget which one I had used before, and it just became a bit inconvenient.
-    <br><br>
-    So I started building a few simple tools for myself and keeping them in one place. This page is a small collection of those tools. Hopefully you’ll find them interesting and useful too.
-  </p>
+  <p>I made this page because I often found myself depending on different websites and tools for small day-to-day tasks. Sometimes a site wouldn’t load, sometimes I’d forget which one I had used before, and things just became a bit inconvenient. So I started building a few simple tools for myself and keeping them in one place. This page is a small collection of those tools. Hopefully you’ll find them interesting and useful.</p>
 </div>
 
 <div class="tools-grid">

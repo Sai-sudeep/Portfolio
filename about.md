@@ -228,84 +228,71 @@ function initSlideshow() {
 
     var current   = 0;
     var total     = TOTAL;
-    var timer     = null;   // single interval reference — never create a second one
-    var animating = false;  // guard: block new slide while transition plays
+    var timer     = null;
+    var animating = false;
 
-    // ── 1. Give the track a fixed pixel width = container × total images
-    //       This is the correct approach: each image is container-width wide,
-    //       the track is total × container-width, and we move it by
-    //       multiples of container.offsetWidth — never a percentage of the track.
     var slideWidth = container.offsetWidth;
-    track.style.display   = 'none'; // hide while we build, avoids flash
-    track.style.width     = (slideWidth * total) + 'px';
-    track.style.position  = 'relative';
-    track.style.transform = 'translateX(0)';
-    // Disable transition temporarily while we build
+    track.style.display    = 'none';
+    track.style.width      = (slideWidth * total) + 'px';
+    track.style.position   = 'relative';
+    track.style.transform  = 'translateX(0)';
     track.style.transition = 'none';
 
-    // ── 2. Build images
-    track.innerHTML  = '';
+    // ── Build images
+    track.innerHTML    = '';
     dotsWrap.innerHTML = '';
 
     for (var i = 0; i < total; i++) {
-        var img       = document.createElement('img');
-        img.src       = BASE_PATH + (i + 1) + '.jpg';
-        img.alt       = 'Musical performance ' + (i + 1);
-        img.loading   = i === 0 ? 'eager' : 'lazy';
-        // Each image is exactly slideWidth px wide — no flex, no percentages
+        var img     = document.createElement('img');
+        img.src     = BASE_PATH + (i + 1) + '.jpg';
+        img.alt     = 'Musical performance ' + (i + 1);
+        img.loading = i === 0 ? 'eager' : 'lazy';
+        // ← ONLY CHANGE: height now equals slideWidth so each slide is square
         img.style.cssText = [
             'display:inline-block',
-            'width:' + slideWidth + 'px',
-            'height:400px',
+            'width:'  + slideWidth + 'px',
+            'height:' + slideWidth + 'px',
             'object-fit:cover',
             'vertical-align:top',
             'flex-shrink:0'
         ].join(';');
         track.appendChild(img);
 
-        // dot
         var dot = document.createElement('span');
         dot.className = i === 0 ? 'dot active' : 'dot';
         dot.setAttribute('data-index', i);
         dotsWrap.appendChild(dot);
     }
 
-    // ── 3. Show track, enable transition
+    // ── Show track, enable transition
     track.style.display    = 'flex';
     track.style.transition = 'transform ' + TRANSITION + 'ms cubic-bezier(0.25,0.46,0.45,0.94)';
 
-    // ── 4. Go to a slide using absolute pixel offset — 100% reliable
+    // ── Go to slide using absolute pixel offset
     function goTo(idx) {
         if (animating) return;
         animating = true;
         current = (idx + total) % total;
         track.style.transform = 'translateX(-' + (current * slideWidth) + 'px)';
 
-        // Update dots
         dotsWrap.querySelectorAll('.dot').forEach(function (d, j) {
             d.classList.toggle('active', j === current);
         });
 
-        // Release guard after transition completes
         setTimeout(function () { animating = false; }, TRANSITION);
     }
 
-    // ── 5. Auto-play — ONE interval, always stopped before starting
+    // ── Auto-play — ONE interval, always stopped before starting
     function stopTimer() {
-        if (timer) {
-            clearInterval(timer);
-            timer = null;
-        }
+        if (timer) { clearInterval(timer); timer = null; }
     }
 
     function startTimer() {
-        stopTimer(); // always clear first — prevents double intervals
-        timer = setInterval(function () {
-            goTo(current + 1);
-        }, DURATION);
+        stopTimer();
+        timer = setInterval(function () { goTo(current + 1); }, DURATION);
     }
 
-    // ── 6. Dot clicks
+    // ── Dot clicks
     dotsWrap.addEventListener('click', function (e) {
         var dot = e.target;
         if (!dot.classList.contains('dot')) return;
@@ -315,26 +302,26 @@ function initSlideshow() {
         setTimeout(startTimer, PAUSE_MS);
     });
 
-    // ── 7. Hover pause / resume — no double intervals possible
+    // ── Hover pause / resume
     container.addEventListener('mouseenter', stopTimer);
     container.addEventListener('mouseleave', startTimer);
 
-    // ── 8. Handle window resize — recalculate pixel offsets
+    // ── Resize — recalculate pixel offsets and image heights
     window.addEventListener('resize', function () {
         slideWidth = container.offsetWidth;
-        track.style.width     = (slideWidth * total) + 'px';
-        track.style.transition = 'none'; // snap without animation on resize
+        track.style.width      = (slideWidth * total) + 'px';
+        track.style.transition = 'none';
         track.querySelectorAll('img').forEach(function (img) {
-            img.style.width = slideWidth + 'px';
+            img.style.width  = slideWidth + 'px';
+            img.style.height = slideWidth + 'px';
         });
         track.style.transform = 'translateX(-' + (current * slideWidth) + 'px)';
-        // Re-enable transition after reflow
         setTimeout(function () {
             track.style.transition = 'transform ' + TRANSITION + 'ms cubic-bezier(0.25,0.46,0.45,0.94)';
         }, 50);
     });
 
-    // ── 9. Start
+    // ── Start
     goTo(0);
     startTimer();
 }

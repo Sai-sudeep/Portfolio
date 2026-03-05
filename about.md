@@ -65,7 +65,7 @@ permalink: /about/
 
     <!-- Dynamic Content Area -->
     <div class="content-sections">
-      
+
       <!-- My Journey Section -->
       <div class="content-section">
         <h3>🌟 My Journey</h3>
@@ -91,15 +91,15 @@ permalink: /about/
       <!-- Artistic Dimension Section -->
       <div class="content-section">
         <h3>🎵 The Artistic Dimension</h3>
-        
+
         <!-- Image Slideshow Container -->
-        <div class="slideshow-container">
+        <div class="slideshow-container" role="region" aria-label="Musical performance image slideshow" tabindex="0">
           <div class="slideshow-wrapper">
-            <!-- Images will be dynamically loaded here -->
+            <!-- Images injected by about.js -->
           </div>
           <div class="slideshow-dots"></div>
         </div>
-        
+
         <p class="justified-text">
           Music has been an integral part of my life since childhood, deeply influencing my understanding of sound, rhythm, and structural patterns. I have trained in Hindustani Classical and Semiclassical vocal music under respected gurus including Sri Kshiti Prakash Mohapatra – Eminent Hindustani Classical Vocalist, Sri Amit Kumar Rath – Eminent Hindustani Classical Vocalist, Pandit Harihar Rath – Eminent Hindustani Classical Vocalist, and Dr. Aranya Kumar – Eminent Hindustani Classical Sitarist; Versatile Multi-Instrumentalist and Vocalist. I have also studied Odissi music traditions with masters like Sri Tukuna Paikera, Smt. Rashmi Ranjita Jena, and Sri Pitabas Nayak, gaining insights into regional musical forms and their linguistic connections.
         </p>
@@ -174,129 +174,3 @@ permalink: /about/
 
   </div>
 </div>
-
-<script>
-// About Page Interactive Navigation
-document.addEventListener('DOMContentLoaded', function() {
-    const navButtons = document.querySelectorAll('.nav-btn');
-    const contentSections = document.querySelectorAll('.content-section');
-    
-    // Hide all sections initially except the first one
-    contentSections.forEach((section, index) => {
-        if (index !== 0) {
-            section.style.display = 'none';
-        }
-    });
-    
-    // Add click event listeners to navigation buttons
-    navButtons.forEach((button, index) => {
-        button.addEventListener('click', function() {
-            // Remove active class from all buttons
-            navButtons.forEach(btn => btn.classList.remove('active'));
-            
-            // Add active class to clicked button
-            this.classList.add('active');
-            
-            // Hide all content sections
-            contentSections.forEach(section => {
-                section.style.display = 'none';
-            });
-            
-            // Show the corresponding content section
-            if (contentSections[index]) {
-                contentSections[index].style.display = 'block';
-                contentSections[index].scrollIntoView({ 
-                    behavior: 'smooth', 
-                    block: 'nearest' 
-                });
-            }
-        });
-    });
-    
-    // Set the first button as active by default
-    if (navButtons.length > 0) {
-        navButtons[0].classList.add('active');
-    }
-
-    // Initialize slideshow
-    initializeSlideshow();
-});
-
-// Image Slideshow Configuration
-const SLIDESHOW_CONFIG = {
-  // 🎯 Auto-generates array from 1.jpg to 29.jpg
-  images: Array.from({length: 29}, (_, i) => `${i + 1}.jpg`),
-  
-  autoSlideInterval: 5000, // 5 seconds
-  imagePath: '/images/' // Your folder path
-};
-
-// Slideshow Implementation
-function initializeSlideshow() {
-  const container = document.querySelector('.slideshow-wrapper');
-  const dotsContainer = document.querySelector('.slideshow-dots');
-  
-  if (!container || !dotsContainer || SLIDESHOW_CONFIG.images.length === 0) return;
-  
-  let currentSlide = 0;
-  let slideInterval;
-  
-  // Load images dynamically
-  function loadImages() {
-    container.innerHTML = '';
-    dotsContainer.innerHTML = '';
-    
-    SLIDESHOW_CONFIG.images.forEach((imageName, index) => {
-      // Create image element
-      const img = document.createElement('img');
-      img.src = `${SLIDESHOW_CONFIG.imagePath}${imageName}`;
-      img.alt = `Musical performance ${index + 1}`;
-      img.loading = 'lazy';
-      container.appendChild(img);
-      
-      // Create navigation dot
-      const dot = document.createElement('span');
-      dot.className = index === 0 ? 'dot active' : 'dot';
-      dot.addEventListener('click', () => goToSlide(index));
-      dotsContainer.appendChild(dot);
-    });
-  }
-  
-  // Navigate to specific slide
-  function goToSlide(slideIndex) {
-    currentSlide = slideIndex;
-    const translateX = -slideIndex * 100;
-    container.style.transform = `translateX(${translateX}%)`;
-    
-    // Update active dot
-    document.querySelectorAll('.dot').forEach((dot, index) => {
-      dot.classList.toggle('active', index === slideIndex);
-    });
-  }
-  
-  // Auto advance slides
-  function nextSlide() {
-    currentSlide = (currentSlide + 1) % SLIDESHOW_CONFIG.images.length;
-    goToSlide(currentSlide);
-  }
-  
-  // Start auto slideshow
-  function startSlideshow() {
-    slideInterval = setInterval(nextSlide, SLIDESHOW_CONFIG.autoSlideInterval);
-  }
-  
-  // Stop slideshow on user interaction
-  function pauseSlideshow() {
-    clearInterval(slideInterval);
-    setTimeout(startSlideshow, 8000); // Restart after 8 seconds
-  }
-  
-  // Initialize
-  loadImages();
-  startSlideshow();
-  
-  // Pause on hover
-  container.addEventListener('mouseenter', pauseSlideshow);
-  dotsContainer.addEventListener('click', pauseSlideshow);
-}
-</script>

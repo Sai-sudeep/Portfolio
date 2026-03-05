@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alankar / Palta Maker</title>
+    <style>
+        body {
+            background-color: #e0e5ec;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+            color: #333;
+        }
+
+        .main-box {
+            background-color: #e0e5ec;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 10px 10px 20px rgba(163,177,198,0.5), -10px -10px 20px rgba(255,255,255, 0.8);
+            max-width: 950px;
+            width: 100%;
+        }
+
+        h2 { text-align: center; color: #2c3e50; margin-top: 0; margin-bottom: 20px; }
+
+        .layout-container {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 15px;
+        }
+
+        .left-panel { flex: 0.45; display: flex; flex-direction: column; gap: 15px; }
+        .right-panel { flex: 0.55; }
+
+        .input-group {
+            display: flex;
+            align-items: center;
+        }
+
+        .input-group label {
+            width: 110px;
+            font-weight: bold;
+            font-size: 14px;
+            color: #555;
+        }
+
+        input[type="text"], select {
+            flex: 1;
+            background-color: #e0e5ec;
+            border: none;
+            border-radius: 8px;
+            box-shadow: inset 4px 4px 8px rgba(163,177,198, 0.7), inset -4px -4px 8px rgba(255,255,255, 0.8);
+            padding: 10px 15px;
+            color: #333;
+            font-weight: 500;
+            font-family: monospace;
+            font-size: 16px;
+            outline: none;
+            height: 45px;
+            box-sizing: border-box;
+        }
+
+        textarea {
+            width: 100%;
+            background-color: #e0e5ec;
+            border: none;
+            border-radius: 8px;
+            box-shadow: inset 4px 4px 8px rgba(163,177,198, 0.7), inset -4px -4px 8px rgba(255,255,255, 0.8);
+            padding: 15px;
+            color: #333;
+            font-weight: 500;
+            font-family: monospace;
+            font-size: 14px;
+            outline: none;
+            height: 250px;
+            resize: vertical;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #e0e5ec;
+            border: none;
+            border-radius: 10px;
+            box-shadow: 6px 6px 12px rgba(163,177,198,0.6), -6px -6px 12px rgba(255,255,255, 0.5);
+            font-weight: bold;
+            color: #2c3e50;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            outline: none;
+        }
+
+        button:active {
+            box-shadow: inset 4px 4px 8px rgba(163,177,198, 0.7), inset -4px -4px 8px rgba(255,255,255, 0.8);
+        }
+
+        .btn-generate { width: 100%; height: 50px; margin: 10px 0; font-size: 16px; }
+        .btn-copy { width: 100%; padding: 12px; margin-top: 10px; font-size: 15px; }
+
+        /* Keyboard */
+        .keyboard-box {
+            background-color: #e0e5ec;
+            padding: 15px;
+            border-radius: 12px;
+            box-shadow: inset 4px 4px 8px rgba(163,177,198, 0.5), inset -4px -4px 8px rgba(255,255,255, 0.8);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            box-sizing: border-box;
+        }
+
+        .kbd-title { text-align: center; font-weight: bold; color: #555; margin-bottom: 10px; font-size: 14px; }
+        .kbd-row { display: flex; gap: 8px; margin-bottom: 8px; align-items: center; justify-content: center; }
+        .kbd-label { font-weight: bold; width: 60px; text-align: right; padding-right: 5px; color: #666; font-size: 12px; }
+        
+        .kbd-btn {
+            width: 36px; height: 36px;
+            font-size: 15px;
+            border-radius: 6px;
+        }
+        .kbd-ctrl { width: auto; padding: 0 12px; font-size: 13px; color: #c0392b; height: 36px;}
+
+        .copyright { text-align: center; font-size: 12px; color: #7f8c8d; margin-top: 20px; }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .layout-container { flex-direction: column; }
+            .input-group { flex-direction: column; align-items: flex-start; }
+            .input-group label { margin-bottom: 5px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="main-box">
+    <h2>🎶 Alankar / Palta Maker 🎶</h2>
+
+    <div class="layout-container">
+        <div class="left-panel">
+            <div class="input-group">
+                <label>Presets:</label>
+                <select id="presetSelect" onchange="loadPreset()"></select>
+            </div>
+            <div class="input-group">
+                <label>Aaroh Scale:</label>
+                <input type="text" id="aarohInput" value="S R G M P D N">
+            </div>
+            <div class="input-group">
+                <label>Avroh Scale:</label>
+                <input type="text" id="avrohInput" value="S R G M P D N">
+            </div>
+            <div class="input-group">
+                <label>Pattern:</label>
+                <input type="text" id="patternInput" value="14123" placeholder="e.g. 123 or S G R">
+            </div>
+        </div>
+
+        <div class="right-panel">
+            <div class="keyboard-box" id="keyboardContainer">
+                </div>
+        </div>
+    </div>
+
+    <button class="btn-generate" onclick="generateAlankar()">✨ Generate Alankar ✨</button>
+    
+    <textarea id="outputText" readonly>Your generated Alankar will appear here.</textarea>
+    
+    <button class="btn-copy" id="copyBtn" onclick="copyOutput()">📋 Copy Output</button>
+
+    <div class="copyright">&copy; Sai Sudeep Das (2026)</div>
+</div>
+
+<script>
+    // ==========================================
+    // 1. DATA DICTIONARIES
+    // ==========================================
+    const presets = {
+        "Custom": {aaroh: "S R G M P D N", avroh: "S R G M P D N"},
+        "Bilawal (All Shuddha)": {aaroh: "S R G M P D N", avroh: "S R G M P D N"},
+        "Kalyan (Tivra Ma)": {aaroh: "S R G M̍ P D N", avroh: "S R G M̍ P D N"},
+        "Khamaj (Komal Ni)": {aaroh: "S R G M P D Ṉ", avroh: "S R G M P D Ṉ"},
+        "Kafi (Komal Ga, Ni)": {aaroh: "S R G̱ M P D Ṉ", avroh: "S R G̱ M P D Ṉ"},
+        "Bhairav (Komal Re, Dha)": {aaroh: "S Ṟ G M P Ḏ N", avroh: "S Ṟ G M P Ḏ N"},
+        "Asavari (Komal Ga, Dha, Ni)": {aaroh: "S R G̱ M P Ḏ Ṉ", avroh: "S R G̱ M P Ḏ Ṉ"},
+        "Bhairavi (All Komal)": {aaroh: "S Ṟ G̱ M P Ḏ Ṉ", avroh: "S Ṟ G̱ M P Ḏ Ṉ"},
+        "Poorvi (Komal R,D / Tivra M)": {aaroh: "S Ṟ G M̍ P Ḏ N", avroh: "S Ṟ G M̍ P Ḏ N"},
+        "Marwa (Komal R / Tivra M)": {aaroh: "S Ṟ G M̍ P D N", "avroh": "S Ṟ G M̍ P D N"},
+        "Todi (Komal R,G,D / Tivra M)": {aaroh: "S Ṟ G̱ M̍ P Ḏ N", "avroh": "S Ṟ G̱ M̍ P Ḏ N"}
+    };
+
+    const mandraMap = {'S':'Ṣ', 'R':'Ṛ', 'G':'G̣', 'M':'Ṃ', 'P':'P̣', 'D':'Ḍ', 'N':'Ṇ'};
+    const taarMap = {'S':'Ṡ', 'R':'Ṙ', 'G':'Ġ', 'M':'Ṁ', 'P':'Ṗ', 'D':'Ḋ', 'N':'Ṅ'};
+
+    // ==========================================
+    // 2. INITIALIZATION & UI SETUP
+    // ==========================================
+    window.onload = function() {
+        // Populate Presets
+        const select = document.getElementById('presetSelect');
+        for (let p in presets) {
+            let opt = document.createElement('option');
+            opt.value = p;
+            opt.innerHTML = p;
+            select.appendChild(opt);
+        }
+
+        // Build Keyboard
+        buildKeyboard();
+    };
+
+    function loadPreset() {
+        const val = document.getElementById('presetSelect').value;
+        document.getElementById('aarohInput').value = presets[val].aaroh;
+        document.getElementById('avrohInput').value = presets[val].avroh;
+    }
+
+    // ==========================================
+    // 3. KEYBOARD LOGIC
+    // ==========================================
+    let lastActiveInput = null;
+    document.addEventListener('focusin', function(e) {
+        if(e.target && e.target.tagName === 'INPUT' && e.target.type === 'text') {
+            lastActiveInput = e.target;
+        }
+    });
+
+    function getTarget() {
+        return lastActiveInput || document.getElementById('aarohInput');
+    }
+
+    function insSwar(char) {
+        let input = getTarget();
+        let start = input.selectionStart;
+        let text = input.value;
+        input.value = text.substring(0, start) + char + text.substring(input.selectionEnd);
+        input.selectionStart = input.selectionEnd = start + char.length;
+        input.focus();
+    }
+
+    function backspaceSwar() {
+        let input = getTarget();
+        if(input.selectionStart === 0) return;
+        let start = input.selectionStart;
+        let text = input.value;
+        input.value = text.substring(0, start - 1) + text.substring(input.selectionEnd);
+        input.selectionStart = input.selectionEnd = start - 1;
+        input.focus();
+    }
+
+    function clearInput() {
+        let input = getTarget();
+        input.value = '';
+        input.focus();
+    }
+
+    function buildKeyboard() {
+        const swaras = [
+            {cat: 'Lower', notes: ['Ṣ','Ṛ','G̣','Ṃ','P̣','Ḍ','Ṇ']},
+            {cat: 'Middle', notes: ['S','R','G','M','P','D','N']},
+            {cat: 'Upper', notes: ['Ṡ','Ṙ','Ġ','Ṁ','Ṗ','Ḋ','Ṅ']},
+            {cat: 'Sharp', notes: ['M̍']},
+            {cat: 'Flat', notes: ['Ṟ','G̱','Ḏ','Ṉ']},
+            {cat: 'Kan', notes: ['ˢ','ᴿ','ᴳ','ᴹ','ᴾ','ᴰ','ᴺ']}
+        ];
+        const diacritics = {'̣': 'Dot↓', '̇': 'Dot↑', '̱': 'Line', '̍': 'Tivra'};
+
+        let html = '<div class="kbd-title">🎹 Swara Keyboard</div>';
+        
+        swaras.forEach(row => {
+            html += `<div class="kbd-row"><div class="kbd-label">${row.cat}</div>`;
+            row.notes.forEach(char => {
+                html += `<button class="kbd-btn" onmousedown="event.preventDefault()" onclick="insSwar('${char}')">${char}</button>`;
+            });
+            html += `</div>`;
+        });
+
+        html += `<div class="kbd-row" style="margin-top:10px;"><div class="kbd-label">Controls</div>
+                 <button class="kbd-btn kbd-ctrl" onmousedown="event.preventDefault()" onclick="insSwar(' ')">Space</button>
+                 <button class="kbd-btn kbd-ctrl" onmousedown="event.preventDefault()" onclick="backspaceSwar()">⌫ Back</button>
+                 <button class="kbd-btn kbd-ctrl" onmousedown="event.preventDefault()" onclick="clearInput()">Clear</button></div>`;
+
+        html += `<div class="kbd-row"><div class="kbd-label">Marks</div>`;
+        for(let sym in diacritics) {
+            html += `<button class="kbd-btn" onmousedown="event.preventDefault()" onclick="insSwar('${sym}')">◌${sym}</button>`;
+        }
+        html += `</div>`;
+        
+        document.getElementById('keyboardContainer').innerHTML = html;
+    }
+
+    // ==========================================
+    // 4. CORE ALANKAR LOGIC
+    // ==========================================
+    function getMandra(note) {
+        return mandraMap[note] || (note + '\u0323');
+    }
+
+    function getTaar(note) {
+        return taarMap[note] || (note + '\u0307');
+    }
+
+    function extractNotes(str) {
+        let nfd = str.normalize('NFD').toUpperCase();
+        let matches = nfd.match(/[SRGMPDN][^SRGMPDN\s]*/g);
+        if(!matches) return [];
+        return matches.map(m => m.normalize('NFC'));
+    }
+
+    function getBaseLetter(n) {
+        return n.normalize('NFD').charAt(0).toUpperCase();
+    }
+
+    function cleanScale(scaleInput) {
+        let rawNotes = extractNotes(scaleInput);
+        if(!rawNotes.length) return [];
+        
+        let uniqueNotes = [];
+        let seenBases = new Set();
+        
+        rawNotes.forEach(n => {
+            // Strip dots
+            let nfd = n.normalize('NFD').replace(/[\u0307\u0323]/g, '');
+            let madhyaNote = nfd.normalize('NFC');
+            let baseLetter = getBaseLetter(madhyaNote);
+            
+            if(!seenBases.has(baseLetter)) {
+                uniqueNotes.push(madhyaNote);
+                seenBases.add(baseLetter);
+            }
+        });
+
+        // FIX APPLIED HERE: S is now 1 instead of 0
+        const order = {'S':1, 'R':2, 'G':3, 'M':4, 'P':5, 'D':6, 'N':7};
+        uniqueNotes.sort((a, b) => (order[getBaseLetter(a)] || 99) - (order[getBaseLetter(b)] || 99));
+        
+        return uniqueNotes;
+    }
+
+    function buildOctaves(scaleNotes) {
+        let atiMandra = scaleNotes.map(n => getMandra(getMandra(n)));
+        let mandra = scaleNotes.map(n => getMandra(n));
+        let madhya = [...scaleNotes];
+        let taar = scaleNotes.map(n => getTaar(n));
+        let atiTaar = scaleNotes.map(n => getTaar(getTaar(n)));
+        
+        let swaras = atiMandra.concat(mandra, madhya, taar, atiTaar);
+        let baseIdx = atiMandra.length + mandra.length;
+        let taarSOffset = scaleNotes.length;
+        
+        return { swaras, baseIdx, taarSOffset };
+    }
+
+    function generateAlankar() {
+        let inputPattern = document.getElementById('patternInput').value.trim();
+        let aarohInput = document.getElementById('aarohInput').value;
+        let avrohInput = document.getElementById('avrohInput').value;
+        let outputBox = document.getElementById('outputText');
+
+        let aarohScale = cleanScale(aarohInput);
+        let avrohScale = cleanScale(avrohInput);
+
+        if(!aarohScale.length || !avrohScale.length) {
+            outputBox.value = "⚠️ Error: Please enter valid scale notes.";
+            return;
+        }
+
+        let aarohData = buildOctaves(aarohScale);
+        let avrohData = buildOctaves(avrohScale);
+
+        let offsets = [];
+        let patternNoSpaces = inputPattern.replace(/\s+/g, '');
+        
+        if(/^\d+$/.test(patternNoSpaces)) {
+            offsets = patternNoSpaces.split('').map(p => parseInt(p) - 1);
+        } else {
+            let notes = extractNotes(inputPattern);
+            for(let p of notes) {
+                let cleaned = cleanScale(p)[0];
+                let idx = aarohScale.indexOf(cleaned);
+                if(idx === -1) {
+                    outputBox.value = `⚠️ Error: Unrecognized swara "${p}". Use notes from: ${aarohScale.join(' ')}`;
+                    return;
+                }
+                offsets.push(idx);
+            }
+        }
+
+        function phraseToString(phrase, swaraList, baseIndex) {
+            return phrase.map(note => swaraList[baseIndex + note]).join("   ");
+        }
+
+        // Aaroh
+        let aarohList = [];
+        let b = 0;
+        while(true) {
+            let phrase = offsets.map(off => b + off);
+            aarohList.push(phrase);
+            if(phrase[phrase.length - 1] === aarohData.taarSOffset) break;
+            b++;
+        }
+
+        // Avroh
+        let avrohList = [];
+        let avrohOffsets = offsets.map(off => -off);
+        b = avrohData.taarSOffset;
+        while(true) {
+            let phrase = avrohOffsets.map(off => b + off);
+            avrohList.push(phrase);
+            if(phrase[phrase.length - 1] === 0) break;
+            b--;
+        }
+
+        let aarohStr = aarohList.map(p => " " + phraseToString(p, aarohData.swaras, aarohData.baseIdx)).join(" ,\n");
+        let avrohStr = avrohList.map(p => " " + phraseToString(p, avrohData.swaras, avrohData.baseIdx)).join(" ,\n");
+
+        outputBox.value = `Input: ${inputPattern}\nScale: ${aarohScale.join(' ')}\n\nAaroh:\n${aarohStr}\n\nAvroh:\n${avrohStr}`;
+    }
+
+    // ==========================================
+    // 5. COPY BUTTON LOGIC (Fixed for offline files)
+    // ==========================================
+    function copyOutput() {
+        let textArea = document.getElementById('outputText');
+        let btn = document.getElementById('copyBtn');
+        let originalText = btn.innerHTML;
+
+        // 1. Select the text
+        textArea.select();
+        textArea.setSelectionRange(0, 99999); // Ensures it works on mobile devices too
+
+        try {
+            // 2. Execute the classic copy command (allows offline local copying)
+            document.execCommand('copy');
+            btn.innerHTML = '✅ Copied to Clipboard!';
+        } catch (err) {
+            // Fallback if browser entirely blocks copying
+            btn.innerHTML = '❌ Press Ctrl+C to copy';
+        }
+
+        // 3. Deselect the text
+        window.getSelection().removeAllRanges();
+
+        // 4. Reset the button text
+        setTimeout(() => btn.innerHTML = originalText, 2000);
+    }
+</script>
+</body>
+</html>

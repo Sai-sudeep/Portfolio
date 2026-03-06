@@ -27,6 +27,19 @@ permalink: /tools/
         </div>
       </div>
 
+      <!-- WORDLE Regex Solver Card -->
+      <div class="tool-card">
+        <div class="tool-icon">🎮</div>
+        <div class="tool-info">
+          <h3>WORDLE Regex Solver</h3>
+          <p>Solve Wordle puzzles step by step using regex patterns. Enter your guess, mark each letter grey / yellow / green, and watch the candidate list narrow down to the answer.</p>
+        </div>
+        <div class="tool-actions">
+          <button class="tool-btn tool-btn-preview" onclick="openTool('wordle-regex-solver')">👁️ Preview Here</button>
+          <a class="tool-btn tool-btn-newpage" href="/assets/tools/wordle-regex-solver.html" target="_blank">↗ Open in New Page</a>
+        </div>
+      </div>
+
       <!-- Add more tool cards here in future -->
 
     </div>
@@ -197,6 +210,10 @@ var tools = {
   'palta-maker': {
     title: '🎵 Alankar / Palta Maker',
     src: '/assets/tools/palta-maker.html'
+  },
+  'wordle-regex-solver': {
+    title: '🎮 WORDLE Regex Solver',
+    src: '/assets/tools/wordle-regex-solver.html'
   }
 };
 

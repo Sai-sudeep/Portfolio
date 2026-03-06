@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WORDLE Regex Solver</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #e0e5ec;
+    --shadow-light: #ffffff;
+    --shadow-dark: #a3b1c6;
+    --accent: #1e40af;
+    --accent2: #3b82f6;
+    --grey-col: #4b5563;
+    --yellow-col: #d97706;
+    --green-col: #059669;
+    --text: #1f2937;
+    --text-muted: #6b7280;
+    --panel-dark: #0f172a;
+    --panel-mid: #1f2937;
+    --neu-raised: 6px 6px 14px var(--shadow-dark), -6px -6px 14px var(--shadow-light);
+    --neu-inset: inset 4px 4px 10px var(--shadow-dark), inset -4px -4px 10px var(--shadow-light);
+    --neu-flat: 3px 3px 8px var(--shadow-dark), -3px -3px 8px var(--shadow-light);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    padding: 24px 16px;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 60%, #2563eb 100%);
+    border-radius: 20px;
+    padding: 28px 32px;
+    text-align: center;
+    box-shadow: var(--neu-raised);
+    margin-bottom: 20px;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    top: -40px; right: -40px;
+    width: 160px; height: 160px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.05);
+  }
+  .header h1 {
+    font-family: 'Space Mono', monospace;
+    font-size: clamp(1.4rem, 3vw, 2.1rem);
+    color: #fff;
+    letter-spacing: -0.5px;
+    margin-bottom: 8px;
+  }
+  .header .meta {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .header .badge {
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 20px;
+    padding: 4px 14px;
+    font-size: 0.85rem;
+    color: #dbeafe;
+    font-weight: 500;
+  }
+  #step-badge { transition: background 0.3s; }
+
+  /* ── INSTRUCTIONS ── */
+  .instructions {
+    background: var(--bg);
+    border-radius: 16px;
+    padding: 20px 24px;
+    box-shadow: var(--neu-raised);
+    margin-bottom: 20px;
+    border-left: 4px solid var(--accent);
+  }
+  .instructions h3 {
+    color: var(--accent);
+    font-size: 1rem;
+    margin-bottom: 10px;
+    font-weight: 700;
+  }
+  .instructions ol {
+    padding-left: 18px;
+    color: var(--text);
+    line-height: 2;
+    font-size: 0.92rem;
+  }
+  .instructions li strong { color: var(--accent); }
+
+  /* ── LOADING ── */
+  #loading-msg {
+    text-align: center;
+    padding: 20px;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+  }
+  .spinner {
+    display: inline-block;
+    width: 18px; height: 18px;
+    border: 2px solid var(--shadow-dark);
+    border-top-color: var(--accent);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    vertical-align: middle;
+    margin-right: 8px;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* ── MAIN 3-COL LAYOUT ── */
+  .main-layout {
+    display: grid;
+    grid-template-columns: 1fr minmax(320px, 560px) 1fr;
+    gap: 20px;
+    align-items: start;
+  }
+  @media (max-width: 960px) {
+    .main-layout {
+      grid-template-columns: 1fr;
+    }
+    .side-panel { max-height: 300px; }
+  }
+
+  /* ── SIDE PANELS ── */
+  .side-panel {
+    background: var(--panel-dark);
+    border-radius: 18px;
+    padding: 20px;
+    height: 520px;
+    overflow-y: auto;
+    box-shadow: var(--neu-raised);
+    scrollbar-width: thin;
+    scrollbar-color: #374151 transparent;
+  }
+  .side-panel::-webkit-scrollbar { width: 5px; }
+  .side-panel::-webkit-scrollbar-thumb { background: #374151; border-radius: 10px; }
+
+  .panel-title {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #fff;
+    text-align: center;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #1e293b;
+  }
+  .panel-placeholder {
+    text-align: center;
+    color: #64748b;
+    margin-top: 60px;
+    font-size: 0.9rem;
+    line-height: 1.8;
+  }
+
+  /* suggestions panel */
+  #suggestions-panel { background: var(--panel-dark); }
+  .word-grid { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
+  .word-chip {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: #fff;
+    border-radius: 8px;
+    padding: 6px 12px;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    transition: background 0.2s;
+  }
+  .solution-box {
+    background: #059669;
+    border: 3px solid #10b981;
+    border-radius: 16px;
+    padding: 30px;
+    text-align: center;
+    margin-top: 40px;
+    color: white;
+    font-family: 'Space Mono', monospace;
+    font-size: 2rem;
+    font-weight: 700;
+    box-shadow: 0 4px 20px rgba(5,150,105,0.4);
+    animation: popIn 0.4s cubic-bezier(0.175,0.885,0.32,1.275);
+  }
+  @keyframes popIn {
+    from { transform: scale(0.8); opacity: 0; }
+    to   { transform: scale(1);   opacity: 1; }
+  }
+  .count-line {
+    color: #94a3b8;
+    font-size: 0.8rem;
+    text-align: center;
+    margin-bottom: 12px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+  }
+
+  /* regex panel */
+  #regex-panel { background: var(--panel-mid); }
+  .regex-card {
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 12px;
+    border: 1px solid rgba(255,255,255,0.15);
+    animation: slideIn 0.3s ease;
+  }
+  @keyframes slideIn {
+    from { transform: translateY(8px); opacity: 0; }
+    to   { transform: translateY(0);   opacity: 1; }
+  }
+  .regex-card-title {
+    font-weight: 700;
+    font-size: 0.95rem;
+    margin-bottom: 10px;
+    color: #fff;
+  }
+  .regex-code {
+    background: rgba(0,0,0,0.35);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 8px;
+    padding: 10px 12px;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.78rem;
+    color: #fff;
+    word-break: break-all;
+    margin-bottom: 8px;
+  }
+  .regex-match { font-size: 0.85rem; color: #fff; font-weight: 600; }
+
+  /* ── CENTER PANEL ── */
+  .center-panel {
+    background: var(--bg);
+    border-radius: 20px;
+    padding: 24px 20px;
+    box-shadow: var(--neu-raised);
+  }
+
+  /* Input row */
+  .input-row {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+  .guess-input {
+    flex: 1;
+    max-width: 300px;
+    height: 50px;
+    border: none;
+    border-radius: 12px;
+    background: var(--bg);
+    box-shadow: var(--neu-inset);
+    padding: 0 16px;
+    font-family: 'Space Mono', monospace;
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: 4px;
+    color: var(--accent);
+    outline: none;
+    text-transform: uppercase;
+    transition: box-shadow 0.2s;
+  }
+  .guess-input:focus {
+    box-shadow: var(--neu-inset), 0 0 0 2px var(--accent2);
+  }
+  .guess-input::placeholder {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.8rem;
+    letter-spacing: 0;
+    color: var(--text-muted);
+    font-weight: 400;
+  }
+
+  /* ── GRID ── */
+  #grid-wrapper {
+    min-height: 60px;
+    margin-bottom: 16px;
+  }
+  .grid-section {
+    background: var(--bg);
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: var(--neu-inset);
+  }
+  .grid-row-label {
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-align: center;
+    margin: 14px 0 8px;
+    letter-spacing: 0.5px;
+  }
+  .grid-row-label.grey-label  { color: var(--grey-col); }
+  .grid-row-label.yellow-label { color: var(--yellow-col); }
+  .grid-row-label.green-label  { color: var(--green-col); }
+
+  .letter-row {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 4px;
+  }
+
+  .letter-btn {
+    width: 58px;
+    height: 58px;
+    border: none;
+    border-radius: 12px;
+    font-family: 'Space Mono', monospace;
+    font-size: 1.2rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    position: relative;
+    color: #fff;
+  }
+  .letter-btn.grey-btn   { background: var(--grey-col);   box-shadow: 3px 3px 8px rgba(0,0,0,0.2), -1px -1px 4px rgba(255,255,255,0.05); }
+  .letter-btn.yellow-btn { background: var(--yellow-col); box-shadow: 3px 3px 8px rgba(0,0,0,0.2), -1px -1px 4px rgba(255,255,255,0.05); }
+  .letter-btn.green-btn  { background: var(--green-col);  box-shadow: 3px 3px 8px rgba(0,0,0,0.2), -1px -1px 4px rgba(255,255,255,0.05); }
+
+  .letter-btn:hover { transform: scale(1.06); }
+  .letter-btn:active { transform: scale(0.97); }
+
+  .letter-btn.selected {
+    background: var(--accent) !important;
+    box-shadow: 0 0 0 3px #93c5fd, 0 4px 12px rgba(30,64,175,0.4) !important;
+    transform: scale(1.1);
+  }
+  .letter-btn.selected::after {
+    content: '✓';
+    position: absolute;
+    top: -6px; right: -6px;
+    background: #22c55e;
+    color: #fff;
+    width: 16px; height: 16px;
+    border-radius: 50%;
+    font-size: 0.55rem;
+    display: flex; align-items: center; justify-content: center;
+    font-family: sans-serif;
+    font-weight: 900;
+  }
+
+  /* ── ACTION BUTTONS ── */
+  .btn-row {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 16px;
+  }
+  .neu-btn {
+    height: 46px;
+    border: none;
+    border-radius: 12px;
+    background: var(--bg);
+    box-shadow: var(--neu-raised);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
+    font-size: 0.88rem;
+    cursor: pointer;
+    padding: 0 20px;
+    color: var(--text);
+    transition: all 0.15s ease;
+  }
+  .neu-btn:active {
+    box-shadow: var(--neu-inset);
+    transform: scale(0.98);
+  }
+  .neu-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    box-shadow: var(--neu-flat);
+  }
+  .btn-submit { color: var(--accent); font-weight: 700; min-width: 150px; }
+  .btn-submit:not(:disabled):hover { color: #1d4ed8; }
+  .btn-reset  { color: var(--yellow-col); }
+  .btn-clear  { color: #dc2626; }
+
+  /* Progress dots */
+  .progress-dots {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    margin-top: 14px;
+  }
+  .dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--shadow-dark);
+    box-shadow: var(--neu-inset);
+    transition: background 0.3s, transform 0.3s;
+  }
+  .dot.active { background: var(--accent); transform: scale(1.3); }
+  .dot.done   { background: var(--green-col); }
+
+  /* Color legend */
+  .color-legend {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 14px;
+    flex-wrap: wrap;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    font-weight: 500;
+  }
+  .legend-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+  }
+
+  /* Regex color sequence */
+  .rc0 { background: #dc2626; }
+  .rc1 { background: #ea580c; }
+  .rc2 { background: #ca8a04; }
+  .rc3 { background: #059669; }
+  .rc4 { background: #0284c7; }
+  .rc5 { background: #7c3aed; }
+  .rc6 { background: #db2777; }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <h1>🎮 WORDLE Regex Solver</h1>
+  <div class="meta">
+    <span class="badge" id="step-badge">Step 1</span>
+    <span class="badge" id="dict-badge">⏳ Loading dictionary…</span>
+  </div>
+</div>
+
+<!-- INSTRUCTIONS -->
+<div class="instructions">
+  <h3>📖 How to Use</h3>
+  <ol>
+    <li>Type your <strong>5-letter guess</strong> in the input box</li>
+    <li>A <strong>3-row colour grid</strong> appears — one row per colour (grey / yellow / green)</li>
+    <li>Click <strong>one button per column</strong> to mark that letter's colour</li>
+    <li>Click <strong>Submit Guess</strong> to update the regex and candidates list</li>
+  </ol>
+</div>
+
+<div id="loading-msg"><span class="spinner"></span> Loading word list from WORDLE.txt…</div>
+
+<!-- MAIN LAYOUT -->
+<div class="main-layout" id="app" style="display:none;">
+
+  <!-- LEFT: suggestions -->
+  <div class="side-panel" id="suggestions-panel">
+    <div class="panel-title">💡 Word Suggestions</div>
+    <div class="panel-placeholder">🔤 Suggested words will<br>appear after each guess</div>
+  </div>
+
+  <!-- CENTER -->
+  <div class="center-panel">
+
+    <div class="color-legend">
+      <div class="legend-item"><div class="legend-dot" style="background:var(--grey-col)"></div>Grey = not in word</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--yellow-col)"></div>Yellow = wrong position</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--green-col)"></div>Green = correct</div>
+    </div>
+
+    <div class="input-row">
+      <input class="guess-input" id="guess-input" type="text" maxlength="5" placeholder="Type guess (e.g. CRANE)…" autocomplete="off" spellcheck="false">
+    </div>
+
+    <div id="grid-wrapper"></div>
+
+    <div class="btn-row">
+      <button class="neu-btn btn-submit" id="btn-submit" disabled>📤 Submit (0/5)</button>
+      <button class="neu-btn btn-reset"  id="btn-reset">🔄 Reset Grid</button>
+      <button class="neu-btn btn-clear"  id="btn-clear">🗑️ Clear All</button>
+    </div>
+
+    <div class="progress-dots" id="progress-dots">
+      <div class="dot active" id="dot-1"></div>
+      <div class="dot" id="dot-2"></div>
+      <div class="dot" id="dot-3"></div>
+      <div class="dot" id="dot-4"></div>
+      <div class="dot" id="dot-5"></div>
+      <div class="dot" id="dot-6"></div>
+    </div>
+  </div>
+
+  <!-- RIGHT: regex history -->
+  <div class="side-panel" id="regex-panel">
+    <div class="panel-title">🎯 Regex Evolution</div>
+    <div class="panel-placeholder">📝 Regex patterns will<br>appear after each guess</div>
+  </div>
+
+</div>
+
+<script>
+/* ═══════════════════════════════════════════════
+   WORD LIST — loaded from WORDLE.txt at runtime
+═══════════════════════════════════════════════ */
+let WORDS = [];
+
+async function loadWords() {
+  try {
+    const res = await fetch('./WORDLE.txt');
+    if (!res.ok) throw new Error('fetch failed');
+    const text = await res.text();
+    WORDS = text.split('\n')
+      .map(w => w.trim().toUpperCase())
+      .filter(w => w.length === 5 && /^[A-Z]+$/.test(w));
+    document.getElementById('dict-badge').textContent = `📚 ${WORDS.length} words`;
+    document.getElementById('loading-msg').style.display = 'none';
+    document.getElementById('app').style.display = 'grid';
+  } catch (e) {
+    document.getElementById('loading-msg').innerHTML =
+      '⚠️ Could not load <code>WORDLE.txt</code>. Make sure it sits in the same folder as this HTML file.';
+  }
+}
+
+/* ═══════════════════════════════════════════════
+   SOLVER STATE
+═══════════════════════════════════════════════ */
+const state = {
+  excluded: new Set(),
+  included: new Set(),
+  confirmed: {},          // { "0": "A", "2": "T" … }
+  excludedAtPos: {},      // { 0: Set{…}, … }
+  history: [],
+  step: 1
+};
+
+function resetState() {
+  state.excluded = new Set();
+  state.included = new Set();
+  state.confirmed = {};
+  state.excludedAtPos = {};
+  state.history = [];
+  state.step = 1;
+}
+
+function processGuess(word, colors) {
+  for (let i = 0; i < 5; i++) {
+    const letter = word[i];
+    const color  = colors[i];
+    if (color === 'grey') {
+      state.excluded.add(letter);
+    } else if (color === 'yellow') {
+      state.included.add(letter);
+      if (!state.excludedAtPos[i]) state.excludedAtPos[i] = new Set();
+      state.excludedAtPos[i].add(letter);
+    } else if (color === 'green') {
+      state.confirmed[String(i)] = letter;
+      state.included.add(letter);
+    }
+  }
+}
+
+function generateRegex() {
+  let parts = [];
+  for (let pos = 0; pos < 5; pos++) {
+    if (state.confirmed[String(pos)]) {
+      parts.push(state.confirmed[String(pos)]);
+    } else {
+      let excl = new Set(state.excluded);
+      if (state.excludedAtPos[pos]) {
+        state.excludedAtPos[pos].forEach(l => excl.add(l));
+      }
+      if (excl.size > 0) {
+        parts.push('[^' + [...excl].sort().join('') + ']');
+      } else {
+        parts.push('.');
+      }
+    }
+  }
+  return '^' + parts.join('') + '$';
+}
+
+function getCandidates(regex) {
+  const re = new RegExp(regex);
+  return WORDS.filter(w =>
+    re.test(w) && [...state.included].every(l => w.includes(l))
+  ).sort();
+}
+
+/* ═══════════════════════════════════════════════
+   UI STATE
+═══════════════════════════════════════════════ */
+let colorSelections = {};   // { colIndex: 'grey'|'yellow'|'green' }
+let letterBtns = {};        // { "row-col": buttonEl }
+let currentWord = '';
+
+/* ═══════════════════════════════════════════════
+   GRID BUILDER
+═══════════════════════════════════════════════ */
+const ROW_CONFIG = [
+  { color: 'grey',   cls: 'grey-btn',   labelCls: 'grey-label',   icon: '❌', label: 'Grey — not in word'       },
+  { color: 'yellow', cls: 'yellow-btn', labelCls: 'yellow-label', icon: '🟨', label: 'Yellow — wrong position'  },
+  { color: 'green',  cls: 'green-btn',  labelCls: 'green-label',  icon: '🟩', label: 'Green — correct position' },
+];
+
+function buildGrid(word) {
+  colorSelections = {};
+  letterBtns = {};
+  const wrapper = document.getElementById('grid-wrapper');
+  wrapper.innerHTML = '';
+  const section = document.createElement('div');
+  section.className = 'grid-section';
+
+  ROW_CONFIG.forEach((cfg, rowIdx) => {
+    const lbl = document.createElement('div');
+    lbl.className = `grid-row-label ${cfg.labelCls}`;
+    lbl.textContent = `${cfg.icon} ${cfg.label}`;
+    section.appendChild(lbl);
+
+    const row = document.createElement('div');
+    row.className = 'letter-row';
+
+    for (let col = 0; col < 5; col++) {
+      const btn = document.createElement('button');
+      btn.className = `letter-btn ${cfg.cls}`;
+      btn.textContent = word[col];
+      const key = `${rowIdx}-${col}`;
+      letterBtns[key] = { el: btn, color: cfg.color, col };
+
+      btn.addEventListener('click', () => handleLetterClick(rowIdx, col));
+      row.appendChild(btn);
+    }
+    section.appendChild(row);
+  });
+
+  wrapper.appendChild(section);
+  updateSubmitBtn();
+}
+
+function handleLetterClick(rowIdx, col) {
+  const clickedKey  = `${rowIdx}-${col}`;
+  const clickedData = letterBtns[clickedKey];
+  const wasSelected = clickedData.el.classList.contains('selected');
+
+  // Deselect all rows for this column
+  ROW_CONFIG.forEach((_, r) => {
+    const k = `${r}-${col}`;
+    if (letterBtns[k]) {
+      letterBtns[k].el.classList.remove('selected');
+    }
+  });
+  delete colorSelections[col];
+
+  // Re-select if wasn't already
+  if (!wasSelected) {
+    clickedData.el.classList.add('selected');
+    colorSelections[col] = clickedData.color;
+  }
+
+  updateSubmitBtn();
+}
+
+function updateSubmitBtn() {
+  const count = Object.keys(colorSelections).length;
+  const btn = document.getElementById('btn-submit');
+  if (count === 5) {
+    btn.disabled = false;
+    btn.textContent = '✅ Submit Guess!';
+  } else {
+    btn.disabled = true;
+    btn.textContent = `📤 Submit (${count}/5)`;
+  }
+}
+
+/* ═══════════════════════════════════════════════
+   PANEL UPDATERS
+═══════════════════════════════════════════════ */
+const REGEX_COLORS = ['rc0','rc1','rc2','rc3','rc4','rc5','rc6'];
+
+function updateRegexPanel() {
+  const panel = document.getElementById('regex-panel');
+  let html = '<div class="panel-title">🎯 Regex Evolution</div>';
+
+  state.history.forEach((item, i) => {
+    const cls = REGEX_COLORS[i % REGEX_COLORS.length];
+    html += `
+      <div class="regex-card ${cls}">
+        <div class="regex-card-title">✏️ Step ${item.step}: ${item.word}</div>
+        <div class="regex-code">patt${item.step} = r"${item.regex}"</div>
+        <div class="regex-match">✓ Matches: <strong>${item.count} word${item.count !== 1 ? 's' : ''}</strong></div>
+      </div>`;
+  });
+
+  panel.innerHTML = html;
+  panel.scrollTop = panel.scrollHeight;
+}
+
+function updateSuggestionsPanel(candidates) {
+  const panel = document.getElementById('suggestions-panel');
+  let html = '';
+
+  if (candidates.length === 0) {
+    html = `<div class="panel-title">💡 No Matches</div>
+            <div class="panel-placeholder">❌ No words match.<br>Try different colours.</div>`;
+  } else if (candidates.length === 1) {
+    html = `<div class="panel-title">🎉 Solution Found!</div>
+            <div class="solution-box">${candidates[0]}</div>`;
+  } else {
+    const shown = candidates.slice(0, 90);
+    const extra = candidates.length - shown.length;
+    html = `<div class="panel-title">💡 ${candidates.length} Suggestion${candidates.length !== 1 ? 's' : ''}</div>
+            <div class="count-line">${shown.length} shown${extra > 0 ? ` · +${extra} more` : ''}</div>
+            <div class="word-grid">`;
+    shown.forEach(w => { html += `<span class="word-chip">${w}</span>`; });
+    html += '</div>';
+  }
+
+  panel.innerHTML = html;
+}
+
+/* ═══════════════════════════════════════════════
+   PROGRESS DOTS
+═══════════════════════════════════════════════ */
+function updateDots(step) {
+  for (let i = 1; i <= 6; i++) {
+    const dot = document.getElementById(`dot-${i}`);
+    dot.classList.remove('active', 'done');
+    if (i < step)  dot.classList.add('done');
+    if (i === step) dot.classList.add('active');
+  }
+}
+
+/* ═══════════════════════════════════════════════
+   EVENT HANDLERS
+═══════════════════════════════════════════════ */
+document.getElementById('guess-input').addEventListener('input', function() {
+  let val = this.value.toUpperCase().replace(/[^A-Z]/g, '').slice(0, 5);
+  this.value = val;
+  currentWord = val;
+
+  if (val.length === 5) {
+    buildGrid(val);
+  } else {
+    document.getElementById('grid-wrapper').innerHTML = '';
+    colorSelections = {};
+    updateSubmitBtn();
+  }
+});
+
+document.getElementById('btn-submit').addEventListener('click', () => {
+  if (currentWord.length !== 5 || Object.keys(colorSelections).length !== 5) return;
+
+  // Build colors array [0..4]
+  const colors = [];
+  for (let i = 0; i < 5; i++) colors[i] = colorSelections[i];
+
+  processGuess(currentWord, colors);
+  const regex = generateRegex();
+  const candidates = getCandidates(regex);
+
+  state.history.push({
+    step: state.step,
+    word: currentWord,
+    regex,
+    count: candidates.length
+  });
+
+  updateRegexPanel();
+  updateSuggestionsPanel(candidates);
+
+  // Advance step
+  state.step++;
+  document.getElementById('step-badge').textContent = `Step ${state.step}`;
+  updateDots(state.step);
+
+  // Clear
+  document.getElementById('guess-input').value = '';
+  document.getElementById('grid-wrapper').innerHTML = '';
+  colorSelections = {};
+  currentWord = '';
+  updateSubmitBtn();
+});
+
+document.getElementById('btn-reset').addEventListener('click', () => {
+  // Deselect all without clearing the grid
+  Object.values(letterBtns).forEach(d => d.el.classList.remove('selected'));
+  colorSelections = {};
+  updateSubmitBtn();
+});
+
+document.getElementById('btn-clear').addEventListener('click', () => {
+  resetState();
+  colorSelections = {};
+  currentWord = '';
+  document.getElementById('guess-input').value = '';
+  document.getElementById('grid-wrapper').innerHTML = '';
+  updateSubmitBtn();
+  document.getElementById('step-badge').textContent = 'Step 1';
+  updateDots(1);
+
+  document.getElementById('suggestions-panel').innerHTML =
+    '<div class="panel-title">💡 Word Suggestions</div>' +
+    '<div class="panel-placeholder">🔤 Suggested words will<br>appear after each guess</div>';
+
+  document.getElementById('regex-panel').innerHTML =
+    '<div class="panel-title">🎯 Regex Evolution</div>' +
+    '<div class="panel-placeholder">📝 Regex patterns will<br>appear after each guess</div>';
+});
+
+/* ═══════════════════════════════════════════════
+   BOOT
+═══════════════════════════════════════════════ */
+loadWords();
+</script>
+</body>
+</html>

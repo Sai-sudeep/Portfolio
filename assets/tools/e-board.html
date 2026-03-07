@@ -56,11 +56,13 @@
         .eq-panel { overflow: hidden; max-height: 0; transition: max-height 0.35s cubic-bezier(0.4,0,0.2,1); }
         .eq-panel.open { max-height: 340px; }
         .eq-inner { padding: 18px 10px 10px 10px; }
-        .eq-seg { position: relative; display: inline-flex; width: 160px; height: 32px; background: #d1d9e6; border-radius: 16px; box-shadow: inset 3px 3px 6px var(--shadow-dark), inset -3px -3px 6px var(--shadow-light); margin-bottom: 18px; }
+        
+        /* The proper EQ toggle class */
+        .eq-seg { position: relative; display: inline-flex; width: 160px; height: 32px; background: #d1d9e6; border-radius: 16px; box-shadow: inset 3px 3px 6px var(--shadow-dark), inset -3px -3px 6px var(--shadow-light); margin-bottom: 18px; margin-left: auto; margin-right: auto; }
         .eq-seg input { display: none; }
         .eq-seg-slider { position: absolute; top: 3px; left: 3px; width: 76px; height: 26px; background: var(--bg); border-radius: 13px; box-shadow: 2px 2px 5px var(--shadow-dark), -2px -2px 5px var(--shadow-light); transition: transform 0.3s cubic-bezier(0.25,0.8,0.25,1); z-index: 1; }
         .eq-seg input:checked ~ .eq-seg-slider { transform: translateX(78px); }
-        .eq-seg-label { flex: 1; text-align: center; line-height: 32px; font-size: 11px; font-weight: 800; color: #7f8c8d; z-index: 2; cursor: pointer; letter-spacing: 1px; }
+        .eq-seg-label { flex: 1; text-align: center; line-height: 32px; font-size: 11px; font-weight: 800; color: #7f8c8d; z-index: 2; cursor: pointer; letter-spacing: 1px; transition: color 0.3s; }
         .eq-seg input:not(:checked) ~ .eq-seg-label.left  { color: var(--accent); }
         .eq-seg input:checked       ~ .eq-seg-label.right { color: var(--accent); }
         
@@ -156,9 +158,9 @@
             
             <div class="eq-panel" id="eqPanel2" style="width:100%;">
                 <div class="eq-inner">
-                    <div style="text-align:center;margin-bottom:18px;">
-                        <div style="position:relative;display:inline-flex;width:160px;height:32px;background:#d1d9e6;border-radius:16px;box-shadow:inset 3px 3px 6px var(--shadow-dark),inset -3px -3px 6px var(--shadow-light);">
-                            <input type="checkbox" id="eq-tog2" onchange="switchEQUI2()" style="display:none;">
+                    <div style="text-align:center;">
+                        <div class="eq-seg">
+                            <input type="checkbox" id="eq-tog2" onchange="switchEQUI2()">
                             <div class="eq-seg-slider"></div>
                             <label for="eq-tog2" class="eq-seg-label left">KNOBS</label>
                             <label for="eq-tog2" class="eq-seg-label right">FADERS</label>

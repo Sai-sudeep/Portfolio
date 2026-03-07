@@ -15,6 +15,18 @@ permalink: /tools/
     <div class="tools-grid">
 
       <div class="tool-card">
+        <div class="tool-icon">🎹</div>
+        <div class="tool-info">
+          <h3>E-board</h3>
+          <p>A professional virtual electronic keyboard featuring physical modeling synthesis and a high-fidelity 3D interface. Supports a full 88-key range (A0-A7) with detented controls and haptic feedback.</p>
+        </div>
+        <div class="tool-actions">
+          <button class="tool-btn tool-btn-preview" onclick="openTool('e-board')">👁️ Preview Here</button>
+          <a class="tool-btn tool-btn-newpage" href="/assets/tools/e-board.html" target="_blank">↗ Open in New Page</a>
+        </div>
+      </div>
+
+      <div class="tool-card">
         <div class="tool-icon">🎵</div>
         <div class="tool-info">
           <h3>Alankar / Palta Maker</h3>
@@ -214,6 +226,10 @@ permalink: /tools/
 
 <script>
 var tools = {
+  'e-board': {
+    title: '🎹 E-board',
+    src: '/assets/tools/e-board.html'
+  },
   'palta-maker': {
     title: '🎵 Alankar / Palta Maker',
     src: '/assets/tools/palta-maker.html'

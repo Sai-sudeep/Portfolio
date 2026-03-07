@@ -1,9 +1,8 @@
 ---
-
 layout: page
 title: Tools
 permalink: /tools/
-------------------
+---
 
 <div class="detail-page">
   <div class="about-content">
@@ -12,7 +11,6 @@ permalink: /tools/
       <p>I built this page because I used to rely on different websites and tools for small day-to-day tasks. Sometimes a site would have server issues, other times I would forget which one I had used earlier. So I started putting together a few simple tools in one place to make things easier. Hope you find these tools interesting and useful.</p>
     </div>
 
-```
 <div class="tool-categories">
   <button class="category-btn active" onclick="filterTools('all')">All Tools</button>
   <button class="category-btn" onclick="filterTools('nlp')">NLP Tools</button>
@@ -91,7 +89,6 @@ permalink: /tools/
   </div>
   <iframe id="tool-iframe" src="" frameborder="0" allowfullscreen></iframe>
 </div>
-```
 
   </div>
 </div>

@@ -62,7 +62,7 @@
             box-sizing: border-box;
         }
 
-        textarea {
+        .output-box {
             width: 100%;
             background-color: #e0e5ec;
             border: none;
@@ -73,8 +73,6 @@
             font-weight: 500;
             font-family: monospace;
             font-size: 14px;
-            outline: none;
-            resize: none;
             box-sizing: border-box;
             min-height: 150px;
             max-height: 500px;
@@ -297,7 +295,7 @@
 
     <button class="btn-generate" onclick="generateAlankar()">✨ Generate Alankar ✨</button>
     
-    <textarea id="outputText" readonly>Your generated Alankar will appear here.</textarea>
+    <div id="outputText" class="output-box">Your generated Alankar will appear here.</div>
     
     <button class="btn-copy" id="copyBtn" onclick="copyOutput()">📋 Copy Output</button>
 
@@ -539,15 +537,6 @@
         return formattedOutput;
     }
 
-    // Function to auto-adjust textarea height
-    function autoAdjustTextareaHeight(textarea) {
-        // Reset height to auto to get the scroll height
-        textarea.style.height = 'auto';
-        
-        // Calculate new height based on content
-        const newHeight = Math.min(Math.max(textarea.scrollHeight, 150), 500);
-        textarea.style.height = newHeight + 'px';
-    }
 
     function generateAlankar() {
         let inputPattern = document.getElementById('patternInput').value.trim();
@@ -559,8 +548,7 @@
         let avrohScale = cleanScale(avrohInput);
 
         if(!aarohScale.length || !avrohScale.length) {
-            outputBox.value = "⚠️ Error: Please enter valid scale notes.";
-            autoAdjustTextareaHeight(outputBox);
+            outputBox.innerHTML = "⚠️ Error: Please enter valid scale notes.";
             return;
         }
 
@@ -578,8 +566,7 @@
                 let cleaned = cleanScale(p)[0];
                 let idx = aarohScale.indexOf(cleaned);
                 if(idx === -1) {
-                    outputBox.value = `⚠️ Error: Unrecognized swara "${p}". Use notes from: ${aarohScale.join(' ')}`;
-                    autoAdjustTextareaHeight(outputBox);
+                    outputBox.innerHTML = `⚠️ Error: Unrecognized swara "${p}". Use notes from: ${aarohScale.join(' ')}`;
                     return;
                 }
                 offsets.push(idx);
@@ -619,43 +606,42 @@
         
         // Set the HTML content with formatted buttons
         outputBox.innerHTML = formattedOutput;
-        
-        // Auto-adjust the height
-        autoAdjustTextareaHeight(outputBox);
     }
 
     // ==========================================
     // 5. COPY BUTTON LOGIC (Fixed for offline files)
     // ==========================================
     function copyOutput() {
-        let textArea = document.getElementById('outputText');
+        let outputBox = document.getElementById('outputText');
         let btn = document.getElementById('copyBtn');
         let originalText = btn.innerHTML;
 
         try {
-            // Get the plain text from the textarea (strip HTML tags)
-            let plainText = textArea.innerText || textArea.textContent;
-            
-            // Create a temporary textarea for copying
+            let plainText = outputBox.innerText || outputBox.textContent;
+
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(plainText).then(() => {
+                    btn.innerHTML = '✅ Copied to Clipboard!';
+                    setTimeout(() => btn.innerHTML = originalText, 2000);
+                });
+                return;
+            }
+
+            // Fallback for non-secure contexts (e.g. local file://)
             let tempTextArea = document.createElement('textarea');
             tempTextArea.value = plainText;
+            tempTextArea.style.position = 'fixed';
+            tempTextArea.style.opacity = '0';
             document.body.appendChild(tempTextArea);
-            
-            // Select and copy
             tempTextArea.select();
             tempTextArea.setSelectionRange(0, 99999);
             document.execCommand('copy');
-            
-            // Remove temporary element
             document.body.removeChild(tempTextArea);
-            
             btn.innerHTML = '✅ Copied to Clipboard!';
         } catch (err) {
-            // Fallback if browser entirely blocks copying
             btn.innerHTML = '❌ Press Ctrl+C to copy';
         }
 
-        // Reset the button text
         setTimeout(() => btn.innerHTML = originalText, 2000);
     }
 </script>

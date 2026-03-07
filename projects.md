@@ -6,7 +6,7 @@ permalink: /projects/
 
 <div class="detail-page">
   <div class="detail-page-header">
-    <p class="page-subtitle">🚀 Research projects spanning computational linguistics, musicology, and NLP</p>
+    <p class="page-subtitle">🗂️ Research projects spanning computational linguistics, musicology, and NLP</p>
   </div>
 
   <div class="timeline-container">

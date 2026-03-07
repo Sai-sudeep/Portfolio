@@ -74,9 +74,45 @@
             font-family: monospace;
             font-size: 14px;
             outline: none;
-            height: 250px;
-            resize: vertical;
+            resize: none;
             box-sizing: border-box;
+            min-height: 150px;
+            max-height: 500px;
+            overflow-y: auto;
+            text-align: center;
+            line-height: 1.8;
+        }
+
+        /* Output button styling */
+        .output-line {
+            display: inline-block;
+            background-color: #e0e5ec;
+            border-radius: 8px;
+            box-shadow: 4px 4px 8px rgba(163,177,198,0.5), -4px -4px 8px rgba(255,255,255, 0.8);
+            padding: 8px 15px;
+            margin: 5px;
+            font-weight: 500;
+            font-family: monospace;
+            font-size: 14px;
+            color: #2c3e50;
+            border: none;
+            transition: all 0.2s ease;
+            cursor: default;
+            white-space: nowrap;
+        }
+
+        .output-line:hover {
+            box-shadow: inset 2px 2px 4px rgba(163,177,198, 0.6), inset -2px -2px 4px rgba(255,255,255, 0.7);
+        }
+
+        /* Section headers */
+        .section-header {
+            display: block;
+            font-weight: bold;
+            color: #2c3e50;
+            font-size: 16px;
+            margin: 15px 0 10px 0;
+            text-align: center;
         }
 
         button {
@@ -180,6 +216,8 @@
             color: #555;
             font-size: 14px;
             line-height: 1.4;
+            text-align: justify;
+            text-justify: inter-word;
         }
 
         .copyright { text-align: center; font-size: 12px; color: #7f8c8d; margin-top: 20px; }
@@ -189,6 +227,10 @@
             .layout-container { flex-direction: column; }
             .input-group { flex-direction: column; align-items: flex-start; }
             .input-group label { margin-bottom: 5px; }
+            .output-line {
+                white-space: normal;
+                word-break: break-word;
+            }
         }
     </style>
 </head>
@@ -453,6 +495,60 @@
         return { swaras, baseIdx, taarSOffset };
     }
 
+    // Function to format output as button-like elements
+    function formatOutputAsButtons(aarohStr, avrohStr) {
+        let formattedOutput = '';
+        
+        // Add Aaroh section header
+        formattedOutput += '<span class="section-header">Aaroh (Ascending):</span><br>';
+        
+        // Format Aaroh swaras as buttons
+        const aarohLines = aarohStr.split(' ,\n');
+        aarohLines.forEach(line => {
+            if (line.trim()) {
+                const swaras = line.trim().split(/\s+/);
+                swaras.forEach(swara => {
+                    if (swara.trim()) {
+                        formattedOutput += `<span class="output-line">${swara.trim()}</span> `;
+                    }
+                });
+                formattedOutput += '<br>';
+            }
+        });
+        
+        // Add spacing between sections
+        formattedOutput += '<br><br>';
+        
+        // Add Avroh section header
+        formattedOutput += '<span class="section-header">Avroh (Descending):</span><br>';
+        
+        // Format Avroh swaras as buttons
+        const avrohLines = avrohStr.split(' ,\n');
+        avrohLines.forEach(line => {
+            if (line.trim()) {
+                const swaras = line.trim().split(/\s+/);
+                swaras.forEach(swara => {
+                    if (swara.trim()) {
+                        formattedOutput += `<span class="output-line">${swara.trim()}</span> `;
+                    }
+                });
+                formattedOutput += '<br>';
+            }
+        });
+        
+        return formattedOutput;
+    }
+
+    // Function to auto-adjust textarea height
+    function autoAdjustTextareaHeight(textarea) {
+        // Reset height to auto to get the scroll height
+        textarea.style.height = 'auto';
+        
+        // Calculate new height based on content
+        const newHeight = Math.min(Math.max(textarea.scrollHeight, 150), 500);
+        textarea.style.height = newHeight + 'px';
+    }
+
     function generateAlankar() {
         let inputPattern = document.getElementById('patternInput').value.trim();
         let aarohInput = document.getElementById('aarohInput').value;
@@ -464,6 +560,7 @@
 
         if(!aarohScale.length || !avrohScale.length) {
             outputBox.value = "⚠️ Error: Please enter valid scale notes.";
+            autoAdjustTextareaHeight(outputBox);
             return;
         }
 
@@ -482,6 +579,7 @@
                 let idx = aarohScale.indexOf(cleaned);
                 if(idx === -1) {
                     outputBox.value = `⚠️ Error: Unrecognized swara "${p}". Use notes from: ${aarohScale.join(' ')}`;
+                    autoAdjustTextareaHeight(outputBox);
                     return;
                 }
                 offsets.push(idx);
@@ -516,7 +614,14 @@
         let aarohStr = aarohList.map(p => " " + phraseToString(p, aarohData.swaras, aarohData.baseIdx)).join(" ,\n");
         let avrohStr = avrohList.map(p => " " + phraseToString(p, avrohData.swaras, avrohData.baseIdx)).join(" ,\n");
 
-        outputBox.value = `Input: ${inputPattern}\nScale: ${aarohScale.join(' ')}\n\nAaroh:\n${aarohStr}\n\nAvroh:\n${avrohStr}`;
+        // Create the output with button-like formatting (without Input and Scale headers)
+        const formattedOutput = formatOutputAsButtons(aarohStr, avrohStr);
+        
+        // Set the HTML content with formatted buttons
+        outputBox.innerHTML = formattedOutput;
+        
+        // Auto-adjust the height
+        autoAdjustTextareaHeight(outputBox);
     }
 
     // ==========================================
@@ -527,23 +632,30 @@
         let btn = document.getElementById('copyBtn');
         let originalText = btn.innerHTML;
 
-        // 1. Select the text
-        textArea.select();
-        textArea.setSelectionRange(0, 99999); // Ensures it works on mobile devices too
-
         try {
-            // 2. Execute the classic copy command (allows offline local copying)
+            // Get the plain text from the textarea (strip HTML tags)
+            let plainText = textArea.innerText || textArea.textContent;
+            
+            // Create a temporary textarea for copying
+            let tempTextArea = document.createElement('textarea');
+            tempTextArea.value = plainText;
+            document.body.appendChild(tempTextArea);
+            
+            // Select and copy
+            tempTextArea.select();
+            tempTextArea.setSelectionRange(0, 99999);
             document.execCommand('copy');
+            
+            // Remove temporary element
+            document.body.removeChild(tempTextArea);
+            
             btn.innerHTML = '✅ Copied to Clipboard!';
         } catch (err) {
             // Fallback if browser entirely blocks copying
             btn.innerHTML = '❌ Press Ctrl+C to copy';
         }
 
-        // 3. Deselect the text
-        window.getSelection().removeAllRanges();
-
-        // 4. Reset the button text
+        // Reset the button text
         setTimeout(() => btn.innerHTML = originalText, 2000);
     }
 </script>

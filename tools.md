@@ -30,7 +30,7 @@ permalink: /tools/
         <div class="tool-icon">🎛️</div>
         <div class="tool-info">
           <h3>Warm Pad</h3>
-          <p>A multi-voice polyphonic synthesizer designed for creating lush, evolving warm pads. Features a dynamic preset chord engine, 4 waveform architectures, global ADSR, and master effects.</p>
+          <p>A multi-voice polyphonic synthesizer designed for creating lush, evolving warm pads. Features a dynamic preset chord engine, global ADSR, and master effects.</p>
         </div>
         <div class="tool-actions">
           <button class="tool-btn tool-btn-preview" onclick="openTool('warm-pad')">👁️ Preview Here</button>

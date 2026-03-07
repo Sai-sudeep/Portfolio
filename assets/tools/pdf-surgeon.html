@@ -17,7 +17,6 @@
             --text: #2c3e50;
             --text-muted: #7f8c8d;
             --accent: #082567;
-            --accent-light: #eff6ff;
             --green: #10b981;
             --red: #ef4444;
             --purple: #8b5cf6;
@@ -39,7 +38,7 @@
         }
         .neu-inset {
             background: var(--bg); border-radius: 10px;
-            box-shadow: inset 4px 4px 8px var(--shadow-dark), inset -4px -4px 8px var(--shadow-light);
+            box-shadow: inset 4px 4px 8px var(--shadow-dark), -4px -4px 8px var(--shadow-light);
         }
 
         .main-layout { display: flex; gap: 20px; flex: 1; }
@@ -47,91 +46,115 @@
         /* ── Sidebar ── */
         .sidebar {
             width: 280px; flex-shrink: 0; padding: 20px;
-            display: flex; flex-direction: column; gap: 14px;
+            display: flex; flex-direction: column; gap: 12px;
         }
-        .sidebar h2 { font-size: 1rem; color: var(--text); font-weight: 700; }
+        .sidebar h2 { font-size: 1rem; font-weight: 700; }
 
         .file-list {
-            display: flex; flex-direction: column; gap: 8px; flex: 1;
-            overflow-y: auto; max-height: 400px; padding-right: 2px;
+            display: flex; flex-direction: column; gap: 8px;
+            overflow-y: auto; max-height: 360px; flex: 1; padding-right: 2px;
         }
         .file-item {
             padding: 10px 14px; border-radius: 10px; background: var(--bg);
             box-shadow: 4px 4px 8px var(--shadow-dark), -4px -4px 8px var(--shadow-light);
             cursor: pointer; transition: all 0.2s ease;
-            display: flex; align-items: center; justify-content: space-between; gap: 8px;
+            display: flex; align-items: center; gap: 8px;
         }
         .file-item:hover { box-shadow: 3px 3px 6px var(--shadow-dark), -3px -3px 6px var(--shadow-light); }
         .file-item.active { box-shadow: inset 4px 4px 8px var(--shadow-dark), inset -4px -4px 8px var(--shadow-light); }
         .file-item-name { font-size: 12px; font-weight: 600; flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
         .file-item.active .file-item-name { color: var(--accent); }
-
-        .status-dot { width: 9px; height: 9px; border-radius: 50%; background: #cbd5e1; flex-shrink: 0; box-shadow: 1px 1px 3px var(--shadow-dark), -1px -1px 3px var(--shadow-light); }
+        .status-dot { width: 9px; height: 9px; border-radius: 50%; background: #cbd5e1; flex-shrink: 0; }
         .status-dot.saved { background: var(--green); }
 
         .sidebar-footer { font-size: 11px; color: var(--text-muted); text-align: center; line-height: 1.5; }
 
         /* ── Workspace ── */
         .workspace { flex: 1; padding: 20px; display: flex; flex-direction: column; gap: 16px; min-height: 0; }
-        .empty-state { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--text-muted); gap: 10px; }
+        .empty-state {
+            flex: 1; display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            color: var(--text-muted); gap: 10px;
+        }
+        .empty-state .icon { font-size: 3rem; opacity: 0.4; }
         .empty-state h3 { font-size: 1.1rem; font-weight: 600; }
 
-        /* ── Toolbar & Buttons ── */
-        .toolbar { padding: 16px 20px; border-radius: 14px; display: flex; flex-direction: column; gap: 15px; }
-        .toolbar-row { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
-        .controls-group { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
-        
+        /* ── Toolbar ── */
+        .toolbar { padding: 16px 20px; border-radius: 14px; display: flex; flex-direction: column; gap: 14px; }
+        .toolbar-row { display: flex; align-items: flex-end; flex-wrap: wrap; gap: 14px; }
         .control-item { display: flex; flex-direction: column; gap: 5px; }
-        .control-item label { font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
-        select, input[type="text"] {
+        .control-item label {
+            font-size: 11px; font-weight: 700; color: var(--text-muted);
+            text-transform: uppercase; letter-spacing: 0.5px;
+        }
+        .control-item .value-badge { font-size: 13px; font-weight: 700; color: var(--accent); padding: 8px 4px; }
+
+        select, input[type="text"], input[type="number"] {
             padding: 8px 12px; border: none; border-radius: 8px; background: var(--bg);
             box-shadow: inset 3px 3px 6px var(--shadow-dark), inset -3px -3px 6px var(--shadow-light);
             color: var(--text); font-size: 13px; font-weight: 600; outline: none;
         }
+        input[type="range"] { cursor: pointer; accent-color: var(--accent); width: 80px; }
+        
+        /* Checkbox styling */
+        .checkbox-wrap { display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; color: var(--text); cursor: pointer; }
+        .checkbox-wrap input { width: 16px; height: 16px; cursor: pointer; accent-color: var(--accent); }
 
+        .toolbar-divider { height: 1px; background: rgba(0,0,0,0.06); margin: 2px 0; }
+
+        /* ── Buttons ── */
         .btn-action {
-            padding: 10px 20px; border: none; border-radius: 10px; background: var(--bg);
+            padding: 10px 18px; border: none; border-radius: 10px; background: var(--bg);
             box-shadow: 5px 5px 10px var(--shadow-dark), -5px -5px 10px var(--shadow-light);
             font-weight: 700; font-size: 13px; color: var(--text); cursor: pointer;
-            transition: all 0.2s ease; white-space: nowrap; display: inline-flex; align-items: center; gap: 6px; justify-content: center;
+            transition: all 0.2s ease; white-space: nowrap;
+            display: inline-flex; align-items: center; gap: 6px;
         }
         .btn-action:hover { box-shadow: 3px 3px 6px var(--shadow-dark), -3px -3px 6px var(--shadow-light); }
-        .btn-action:active, .btn-action:disabled { box-shadow: inset 4px 4px 8px var(--shadow-dark), inset -4px -4px 8px var(--shadow-light); }
-        .btn-action:disabled { opacity: 0.6; cursor: not-allowed; }
+        .btn-action:active { box-shadow: inset 4px 4px 8px var(--shadow-dark), inset -4px -4px 8px var(--shadow-light); }
+        .btn-action:disabled { opacity: 0.55; cursor: not-allowed; box-shadow: inset 4px 4px 8px var(--shadow-dark), inset -4px -4px 8px var(--shadow-light); }
         .btn-action.primary { color: var(--accent); }
         .btn-action.success { color: var(--green); }
-        .btn-action.danger { color: var(--red); }
-        .btn-action.purple { color: var(--purple); }
-        .btn-action.full-width { width: 100%; }
+        .btn-action.danger  { color: var(--red); }
+        .btn-action.purple  { color: var(--purple); }
+        .btn-action.full-width { width: 100%; justify-content: center; }
 
-        /* ── Page Grid ── */
-        .page-grid-wrap { flex: 1; padding: 20px; overflow-y: auto; min-height: 300px; }
-        #page-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 16px; align-content: start; }
-        
+        /* ── Grid ── */
+        .page-grid-wrap { flex: 1; padding: 20px; overflow-y: auto; min-height: 250px; }
+        #page-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 16px; align-content: start; }
         .page-card {
             border-radius: 12px; padding: 10px; background: var(--bg);
             box-shadow: 5px 5px 10px var(--shadow-dark), -5px -5px 10px var(--shadow-light);
             position: relative; cursor: grab; transition: transform 0.15s ease; user-select: none;
         }
         .page-card:hover { transform: translateY(-2px); }
-        .page-card canvas { width: 100%; height: auto; border-radius: 6px; display: block; box-shadow: inset 2px 2px 4px var(--shadow-dark), inset -2px -2px 4px var(--shadow-light); }
+        .page-card.sortable-ghost { opacity: 0.35; }
+        .page-card canvas {
+            width: 100%; height: auto; border-radius: 6px; display: block;
+            box-shadow: inset 2px 2px 4px var(--shadow-dark), inset -2px -2px 4px var(--shadow-light);
+        }
         .page-label { font-size: 10px; font-weight: 600; color: var(--text-muted); text-align: center; margin-top: 7px; }
         .remove-btn {
             position: absolute; top: -8px; right: -8px; background: var(--red); color: white; border: none; border-radius: 50%;
-            width: 22px; height: 22px; font-size: 12px; font-weight: 700; cursor: pointer; box-shadow: 2px 2px 5px rgba(239,68,68,0.4); z-index: 10;
+            width: 22px; height: 22px; font-size: 11px; font-weight: 700; cursor: pointer;
+            display: flex; align-items: center; justify-content: center; box-shadow: 2px 2px 5px rgba(239,68,68,0.4); z-index: 10; transition: transform 0.15s ease;
         }
+        .remove-btn:hover { transform: scale(1.2); }
 
         .status-bar { padding: 8px 16px; border-radius: 10px; font-size: 12px; font-weight: 600; color: var(--text-muted); text-align: center; }
-        
+
         /* ── Preview Modal ── */
         .modal-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85);
-            z-index: 1000; display: flex; flex-direction: column; padding: 20px; backdrop-filter: blur(5px);
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.88); z-index: 1000;
+            display: flex; flex-direction: column; padding: 24px; backdrop-filter: blur(6px);
         }
-        .modal-header { display: flex; justify-content: space-between; align-items: center; color: white; margin-bottom: 20px; }
+        .modal-header { display: flex; justify-content: space-between; align-items: center; color: white; margin-bottom: 20px; flex-shrink: 0; }
+        .modal-header h2 { font-size: 1.1rem; }
         .modal-content { flex: 1; overflow-y: auto; display: flex; flex-direction: column; align-items: center; gap: 20px; padding-bottom: 40px; }
-        .modal-content canvas { max-width: 100%; box-shadow: 0 10px 30px rgba(0,0,0,0.5); border-radius: 4px; }
-        
+        .modal-content canvas { width: 100%; max-width: 700px; height: auto; box-shadow: 0 12px 40px rgba(0,0,0,0.6); border-radius: 4px; display: block; }
+        .preview-sheet-label { color: #94a3b8; font-size: 12px; font-weight: 600; text-align: center; margin-bottom: 4px; }
+
+        .app-footer { text-align: center; font-size: 12px; color: var(--text-muted); padding-top: 4px; }
         .hidden { display: none !important; }
         @media (max-width: 768px) { .main-layout { flex-direction: column; } .sidebar { width: 100%; } }
     </style>
@@ -140,86 +163,134 @@
 
 <div class="app-header">
     <h1>📄 PDF Page Surgeon Pro</h1>
-    <p>Bulk manipulations, ranges, drafts, and merges — entirely in your browser</p>
+    <p>Reorder · Delete · Smart N-up Layout · Crop & Merge — entirely in your browser</p>
 </div>
 
 <div class="main-layout">
+
     <div class="sidebar neu-raised">
         <h2>📁 PDF Queue</h2>
         <input type="file" id="pdf-input" accept=".pdf" multiple class="hidden">
         <button class="btn-action primary full-width" id="add-pdf-btn">＋ Add PDFs (Max 20)</button>
         <div class="file-list" id="queue"></div>
-        
-        <div style="display:flex; flex-direction:column; gap:10px; margin-top:10px;">
-            <button class="btn-action purple full-width" id="merge-all-btn">⎘ Merge All & Download</button>
-            <button class="btn-action full-width" id="dl-all-btn">⬇ Download All (ZIP/Multiple)</button>
+        <div style="display:flex; flex-direction:column; gap:10px; margin-top:4px;">
+            <button class="btn-action purple full-width" id="merge-all-btn">⎘ Merge All &amp; Download</button>
+            <button class="btn-action full-width" id="dl-all-btn">⬇ Download All Individually</button>
         </div>
-        <div class="sidebar-footer">🔒 All processing is local.</div>
+        <div class="sidebar-footer">🔒 All processing is local.<br>No files are uploaded anywhere.</div>
     </div>
 
     <div class="workspace neu-raised">
+
         <div id="empty-view" class="empty-state">
-            <div style="font-size:3rem; opacity:0.4;">📂</div>
+            <div class="icon">📂</div>
             <h3>No PDF Selected</h3>
             <p>Add a PDF from the sidebar to start editing.</p>
         </div>
 
         <div id="editor-view" class="hidden" style="display:flex; flex-direction:column; gap:16px; flex:1;">
-            
+
             <div class="toolbar neu-raised">
+
                 <div class="toolbar-row">
-                    <div class="controls-group">
-                        <div class="control-item">
-                            <label>Layout</label>
-                            <select id="n-up">
-                                <option value="1">1 Page/Sheet</option>
-                                <option value="2">2 Pages/Sheet</option>
-                                <option value="4">4 Pages (2×2)</option>
-                            </select>
-                        </div>
-                        <div class="control-item">
-                            <label>Orientation</label>
-                            <select id="orient">
-                                <option value="port">Portrait</option>
-                                <option value="land">Landscape</option>
-                            </select>
-                        </div>
-                        <div class="control-item">
-                            <label>Page Count</label>
-                            <div id="page-count" style="font-size:13px; font-weight:700; color:var(--accent); padding: 8px 4px;">—</div>
+                    <div class="control-item">
+                        <label>Pages / Sheet</label>
+                        <div style="display:flex; align-items:center; gap:8px;">
+                            <input type="range" id="nup-slider" min="1" max="9" value="1">
+                            <span id="nup-val" class="value-badge">1</span>
                         </div>
                     </div>
-                    
                     <div class="control-item">
-                        <label>Bulk Delete (e.g. 1, 3, 5-8)</label>
-                        <div style="display:flex; gap:8px;">
-                            <input type="text" id="range-input" placeholder="1, 3, 5-8" style="width: 130px;">
-                            <button class="btn-action danger" id="del-range-btn">✕ Drop</button>
-                        </div>
+                        <label>Sheet Size</label>
+                        <select id="sheet-size">
+                            <option value="a4">A4 (210×297mm)</option>
+                            <option value="a3">A3 (297×420mm)</option>
+                            <option value="letter">US Letter</option>
+                        </select>
+                    </div>
+                    <div class="control-item">
+                        <label>Orientation</label>
+                        <select id="orient">
+                            <option value="port">Portrait</option>
+                            <option value="land">Landscape</option>
+                        </select>
+                    </div>
+                    <div class="control-item" style="justify-content:center; padding-bottom: 8px;">
+                        <label class="checkbox-wrap">
+                            <input type="checkbox" id="auto-rotate" checked>
+                            Auto-Rotate to Fill
+                        </label>
                     </div>
                 </div>
-                
-                <hr style="border:0; height:1px; background:rgba(0,0,0,0.05);">
 
-                <div class="toolbar-row" style="justify-content: flex-end;">
-                    <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                <div class="toolbar-row">
+                    <div class="control-item">
+                        <label>Gap <small>(-ve overlaps)</small></label>
+                        <div style="display:flex; align-items:center; gap:8px;">
+                            <input type="range" id="gap-slider" min="-100" max="100" value="10">
+                            <span id="gap-val" class="value-badge">10px</span>
+                        </div>
+                    </div>
+                    <div class="control-item">
+                        <label>Margin <small>(-ve drops off edge)</small></label>
+                        <div style="display:flex; align-items:center; gap:8px;">
+                            <input type="range" id="margin-slider" min="-100" max="100" value="10">
+                            <span id="margin-val" class="value-badge">10px</span>
+                        </div>
+                    </div>
+                    <div class="control-item">
+                        <label>Zoom / Crop Margins</label>
+                        <div style="display:flex; align-items:center; gap:8px;">
+                            <input type="range" id="zoom-slider" min="1.0" max="2.0" step="0.02" value="1.0">
+                            <span id="zoom-val" class="value-badge">100%</span>
+                        </div>
+                    </div>
+                    <div class="control-item">
+                        <label>Pages Left</label>
+                        <div id="page-count" class="value-badge">—</div>
+                    </div>
+                </div>
+
+                <div class="toolbar-divider"></div>
+
+                <div class="toolbar-row" style="justify-content:space-between;">
+                    <div style="display:flex; align-items:flex-end; gap:10px;">
+                        <div class="control-item">
+                            <label>Drop Pages (e.g. 1, 3, 5-8)</label>
+                            <input type="text" id="range-input" placeholder="1, 3, 5-8" style="width:140px;">
+                        </div>
+                        <button class="btn-action danger" id="del-range-btn">✕ Drop</button>
+                    </div>
+
+                    <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
                         <button class="btn-action" id="reset-btn">↩ Reset</button>
-                        <button class="btn-action" id="preview-btn">👁 Preview Draft</button>
+                        <button class="btn-action" id="preview-btn">👁 Preview</button>
                         <button class="btn-action success" id="save-draft-btn">💾 Save Draft</button>
-                        <button class="btn-action primary" id="dl-current-btn">⬇ Download Active</button>
+                        <button class="btn-action primary" id="dl-current-btn">⬇ Download</button>
                     </div>
                 </div>
             </div>
 
-            <div class="page-grid-wrap neu-inset"><div id="page-grid"></div></div>
-            <div class="status-bar neu-inset" id="status-bar"><span id="status-text">Ready.</span></div>
+            <div class="page-grid-wrap neu-inset">
+                <div id="page-grid"></div>
+            </div>
+
+            <div class="status-bar neu-inset">
+                <span id="status-text">Ready.</span>
+            </div>
+
         </div>
     </div>
 </div>
 
+<div class="app-footer">&copy; Sai Sudeep Das (2026)</div>
+
 <div id="preview-modal" class="modal-overlay hidden">
     <div class="modal-header">
-        <h2>👁 Post-Manipulation Preview</h2>
+        <div>
+            <h2 style="margin-bottom:2px;">👁 Output Preview</h2>
+            <div style="font-size:11px; color:#64748b;">Verifying Smart Bounds, Zoom, and Gap Mathematics</div>
+        </div>
         <button class="btn-action danger" id="close-modal-btn">✕ Close</button>
     </div>
     <div class="modal-content" id="preview-container"></div>
@@ -228,34 +299,57 @@
 <script>
 (function () {
     'use strict';
+
     pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.worker.min.js';
-    const { PDFDocument } = PDFLib;
+    const { PDFDocument, degrees } = PDFLib;
+
+    const SHEET_SIZES = {
+        a4:      [595.28,  841.89],
+        a3:      [841.89, 1190.55],
+        letter:  [612.00,  792.00]
+    };
 
     let pdfRegistry = {};
     let activeId = null;
 
     const grid = document.getElementById('page-grid');
-    new Sortable(grid, { animation: 150, onEnd: updatePageCount });
+    new Sortable(grid, { animation: 150, ghostClass: 'sortable-ghost', onEnd: updatePageCount });
 
-    // Listeners
-    document.getElementById('add-pdf-btn').onclick = () => document.getElementById('pdf-input').click();
-    document.getElementById('reset-btn').onclick = resetToOriginal;
+    // ── Sliders UI ────────────────────────────────────────────────────────────
+    function updateVal(sliderId, valId, suffix = '') {
+        document.getElementById(sliderId).oninput = function() {
+            let displayVal = this.value;
+            if (suffix === '%') displayVal = Math.round(this.value * 100);
+            document.getElementById(valId).textContent = displayVal + suffix;
+            setStatus('Geometry changed — click Preview to see changes.');
+        };
+    }
+    updateVal('nup-slider', 'nup-val');
+    updateVal('gap-slider', 'gap-val', 'px');
+    updateVal('margin-slider', 'margin-val', 'px');
+    updateVal('zoom-slider', 'zoom-val', '%');
+
+    // ── Buttons ───────────────────────────────────────────────────────────────
+    document.getElementById('add-pdf-btn').onclick  = () => document.getElementById('pdf-input').click();
+    document.getElementById('reset-btn').onclick    = resetToOriginal;
     document.getElementById('save-draft-btn').onclick = saveDraft;
     document.getElementById('dl-current-btn').onclick = () => downloadSingle(activeId);
-    document.getElementById('preview-btn').onclick = previewDraft;
-    document.getElementById('close-modal-btn').onclick = () => document.getElementById('preview-modal').classList.add('hidden');
-    document.getElementById('merge-all-btn').onclick = mergeAllAndDownload;
-    document.getElementById('dl-all-btn').onclick = downloadAll;
-    
+    document.getElementById('preview-btn').onclick  = previewDraft;
     document.getElementById('del-range-btn').onclick = handleBulkDelete;
+    document.getElementById('merge-all-btn').onclick = mergeAllAndDownload;
+    document.getElementById('dl-all-btn').onclick   = downloadAll;
+    document.getElementById('close-modal-btn').onclick = () => document.getElementById('preview-modal').classList.add('hidden');
 
     document.getElementById('pdf-input').onchange = async (e) => {
         for (const file of Array.from(e.target.files)) {
-            if (Object.keys(pdfRegistry).length >= 20) { alert('Max 20 PDFs.'); break; }
-            const id = 'pdf_' + Math.random().toString(36).substr(2, 9);
+            if (Object.keys(pdfRegistry).length >= 20) { alert('Limit 20 PDFs.'); break; }
             const bytes = new Uint8Array(await file.arrayBuffer());
-            try { await PDFDocument.load(bytes.slice(0)); } catch (err) { alert(`Skipped ${file.name} (invalid PDF).`); continue; }
-            pdfRegistry[id] = { name: file.name, originalBytes: bytes, pageOrder: null, settings: { nup: 1, orient: 'port' } };
+            try { await PDFDocument.load(bytes.slice(0)); } catch { continue; }
+            const id = 'pdf_' + Math.random().toString(36).substr(2, 9);
+            pdfRegistry[id] = {
+                name: file.name, originalBytes: bytes, pageOrder: null,
+                settings: { nup: 1, sheetSize: 'a4', orient: 'port', gap: 10, margin: 10, zoom: 1.0, autoRotate: true }
+            };
             addSidebarItem(id, file.name);
             if (!activeId) loadEditor(id);
         }
@@ -274,147 +368,196 @@
         activeId = id;
         document.getElementById('empty-view').classList.add('hidden');
         document.getElementById('editor-view').classList.remove('hidden');
+
         document.querySelectorAll('.file-item').forEach(el => el.classList.remove('active'));
         document.getElementById('item_' + id).classList.add('active');
 
-        document.getElementById('n-up').value = pdfRegistry[id].settings.nup;
-        document.getElementById('orient').value = pdfRegistry[id].settings.orient;
+        const s = pdfRegistry[id].settings;
+        document.getElementById('nup-slider').value = s.nup; document.getElementById('nup-val').textContent = s.nup;
+        document.getElementById('sheet-size').value = s.sheetSize;
+        document.getElementById('orient').value = s.orient;
+        document.getElementById('gap-slider').value = s.gap; document.getElementById('gap-val').textContent = s.gap + 'px';
+        document.getElementById('margin-slider').value = s.margin; document.getElementById('margin-val').textContent = s.margin + 'px';
+        document.getElementById('zoom-slider').value = s.zoom; document.getElementById('zoom-val').textContent = Math.round(s.zoom * 100) + '%';
+        document.getElementById('auto-rotate').checked = s.autoRotate;
 
-        setStatus('⏳ Rendering editor previews…');
-        grid.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:30px;">Rendering original pages...</div>`;
-
+        setStatus('⏳ Rendering page previews…');
+        grid.innerHTML = '';
+        
         try {
             const pdfDoc = await pdfjsLib.getDocument({ data: pdfRegistry[id].originalBytes.slice(0) }).promise;
             const order = pdfRegistry[id].pageOrder || Array.from({ length: pdfDoc.numPages }, (_, i) => i);
-            
+
             const frag = document.createDocumentFragment();
             for (let i = 0; i < order.length; i++) {
                 const pageNum = order[i];
                 const page = await pdfDoc.getPage(pageNum + 1);
-                const viewport = page.getViewport({ scale: 0.3 });
+                const vp = page.getViewport({ scale: 0.3 });
                 const canvas = document.createElement('canvas');
-                canvas.height = viewport.height; canvas.width = viewport.width;
-                await page.render({ canvasContext: canvas.getContext('2d'), viewport }).promise;
+                canvas.width = vp.width; canvas.height = vp.height;
+                await page.render({ canvasContext: canvas.getContext('2d'), viewport: vp }).promise;
 
                 const card = document.createElement('div');
                 card.className = 'page-card'; card.dataset.origIdx = pageNum;
-                card.innerHTML = `<button class="remove-btn" onclick="this.parentElement.remove(); document.getElementById('page-count').innerText = document.querySelectorAll('.page-card').length + ' pages';">✕</button>`;
-                card.appendChild(canvas);
+
+                const removeBtn = document.createElement('button');
+                removeBtn.className = 'remove-btn'; removeBtn.textContent = '✕';
+                removeBtn.onclick = (e) => { e.stopPropagation(); card.remove(); updatePageCount(); };
+
                 const label = document.createElement('div');
                 label.className = 'page-label'; label.textContent = `Page ${pageNum + 1}`;
-                card.appendChild(label); frag.appendChild(card);
+                card.append(removeBtn, canvas, label); frag.appendChild(card);
             }
-            grid.innerHTML = ''; grid.appendChild(frag);
-            updatePageCount(); setStatus('Editor loaded.');
-        } catch (err) { setStatus('❌ Load error.'); }
+            grid.appendChild(frag); updatePageCount();
+            setStatus('Ready — adjust sliders, drop pages, then Preview or Download.');
+        } catch (err) { setStatus('❌ Failed to load PDF frames.'); }
     }
 
     function handleBulkDelete() {
-        const val = document.getElementById('range-input').value;
+        const val = document.getElementById('range-input').value.trim();
         if (!val) return;
         const toDelete = new Set();
         val.split(',').forEach(part => {
-            const range = part.trim().split('-');
-            if (range.length === 1 && !isNaN(range[0]) && range[0]) toDelete.add(parseInt(range[0]));
-            else if (range.length === 2 && !isNaN(range[0]) && !isNaN(range[1])) {
-                for (let i = parseInt(range[0]); i <= parseInt(range[1]); i++) toDelete.add(i);
-            }
+            const [a, b] = part.trim().split('-').map(s => parseInt(s.trim()));
+            if (!isNaN(a) && isNaN(b)) toDelete.add(a);
+            else if (!isNaN(a) && !isNaN(b)) for (let i = a; i <= b; i++) toDelete.add(i);
         });
-
-        document.querySelectorAll('.page-card').forEach(card => {
-            const originalPageNum = parseInt(card.dataset.origIdx) + 1; // 1-based
-            if (toDelete.has(originalPageNum)) card.remove();
+        grid.querySelectorAll('.page-card').forEach(card => {
+            if (toDelete.has(parseInt(card.dataset.origIdx) + 1)) card.remove();
         });
-        updatePageCount();
-        document.getElementById('range-input').value = '';
-        setStatus(`Removed selected pages.`);
+        updatePageCount(); document.getElementById('range-input').value = '';
     }
 
     function saveDraft() {
         if (!activeId) return;
-        const indices = Array.from(grid.querySelectorAll('.page-card')).map(c => parseInt(c.dataset.origIdx));
-        pdfRegistry[activeId].pageOrder = indices;
-        pdfRegistry[activeId].settings = { 
-            nup: parseInt(document.getElementById('n-up').value), 
-            orient: document.getElementById('orient').value 
-        };
+        pdfRegistry[activeId].pageOrder = getActiveIndices();
+        pdfRegistry[activeId].settings = readSettings();
         document.getElementById('dot_' + activeId).classList.add('saved');
-        setStatus('✅ Draft saved to memory.');
+        setStatus('✅ Draft saved.');
     }
 
     function resetToOriginal() {
         if (!activeId) return;
         pdfRegistry[activeId].pageOrder = null;
-        pdfRegistry[activeId].settings = { nup: 1, orient: 'port' };
+        pdfRegistry[activeId].settings = { nup: 1, sheetSize: 'a4', orient: 'port', gap: 10, margin: 10, zoom: 1.0, autoRotate: true };
         document.getElementById('dot_' + activeId).classList.remove('saved');
         loadEditor(activeId);
     }
 
-    // --- Core PDF Builder ---
-    async function buildPdfBytes(id, useLiveDomForActive = true) {
-        let indices, nup, orient;
-        if (id === activeId && useLiveDomForActive) {
-            indices = Array.from(grid.querySelectorAll('.page-card')).map(c => parseInt(c.dataset.origIdx));
-            nup = parseInt(document.getElementById('n-up').value);
-            orient = document.getElementById('orient').value;
-        } else {
-            if (!pdfRegistry[id].pageOrder) {
-                // Return full original unmanipulated PDF config
-                const tempDoc = await PDFDocument.load(pdfRegistry[id].originalBytes.slice(0));
+    function readSettings() {
+        return {
+            nup: parseInt(document.getElementById('nup-slider').value),
+            sheetSize: document.getElementById('sheet-size').value,
+            orient: document.getElementById('orient').value,
+            gap: parseInt(document.getElementById('gap-slider').value),
+            margin: parseInt(document.getElementById('margin-slider').value),
+            zoom: parseFloat(document.getElementById('zoom-slider').value),
+            autoRotate: document.getElementById('auto-rotate').checked
+        };
+    }
+
+    function getActiveIndices() {
+        return Array.from(grid.querySelectorAll('.page-card')).map(c => parseInt(c.dataset.origIdx));
+    }
+
+    // ═══════════════════════════════════════════════════════════════════════════
+    // ── MATH ENGINE: AUTO-ROTATE & ZOOM ALGORITHM ─────────────────────────────
+    // ═══════════════════════════════════════════════════════════════════════════
+    async function buildPdfBytes(id, useActiveDom = false) {
+        let indices, s;
+        if (id === activeId && useActiveDom) { indices = getActiveIndices(); s = readSettings(); } 
+        else {
+            const reg = pdfRegistry[id];
+            if (reg.pageOrder) { indices = reg.pageOrder; s = reg.settings; } 
+            else {
+                const tempDoc = await PDFDocument.load(reg.originalBytes.slice(0));
                 indices = Array.from({ length: tempDoc.getPageCount() }, (_, i) => i);
-                nup = 1; orient = 'port';
-            } else {
-                indices = pdfRegistry[id].pageOrder;
-                nup = pdfRegistry[id].settings.nup;
-                orient = pdfRegistry[id].settings.orient;
+                s = { nup: 1, sheetSize: 'a4', orient: 'port', gap: 10, margin: 10, zoom: 1.0, autoRotate: true };
             }
         }
+        if (!indices || indices.length === 0) return null;
 
-        if (indices.length === 0) return null;
+        const [baseW, baseH] = SHEET_SIZES[s.sheetSize];
+        const isLand = s.orient === 'land';
+        const sheetW = isLand ? baseH : baseW;
+        const sheetH = isLand ? baseW : baseH;
+
+        // Dynamic Grid Math
+        const nup = s.nup;
+        let cols, rows;
+        if (nup === 1) { cols = 1; rows = 1; }
+        else if (nup === 2) { cols = isLand ? 2 : 1; rows = isLand ? 1 : 2; }
+        else if (nup <= 4) { cols = 2; rows = 2; }
+        else if (nup <= 6) { cols = isLand ? 3 : 2; rows = isLand ? 2 : 3; }
+        else if (nup <= 9) { cols = 3; rows = 3; }
+        else { cols = isLand ? 4 : 3; rows = isLand ? 3 : 4; }
+
+        const gap = s.gap;    
+        const margin = s.margin; 
+        const cellW = (sheetW - margin * 2 - gap * (cols - 1)) / cols;
+        const cellH = (sheetH - margin * 2 - gap * (rows - 1)) / rows;
 
         const srcDoc = await PDFDocument.load(pdfRegistry[id].originalBytes.slice(0));
         const outDoc = await PDFDocument.create();
-        const srcPages = srcDoc.getPages();
-
-        const isLandscape = orient === 'land';
-        const pageW = isLandscape ? 841.89 : 595.28;
-        const pageH = isLandscape ? 595.28 : 841.89;
-        const MARGIN = 10;
 
         for (let i = 0; i < indices.length; i += nup) {
-            const outPage = outDoc.addPage([pageW, pageH]);
+            const outPage = outDoc.addPage([sheetW, sheetH]);
+
             for (let j = 0; j < nup; j++) {
                 if (i + j >= indices.length) break;
-                const origIdx = indices[i + j];
-                if (origIdx < 0 || origIdx >= srcPages.length) continue;
+                if (indices[i + j] < 0 || indices[i + j] >= srcDoc.getPageCount()) continue;
 
-                const [copiedPage] = await outDoc.copyPages(srcDoc, [origIdx]);
-                const embedded = await outDoc.embedPage(copiedPage);
+                const [cp] = await outDoc.copyPages(srcDoc, [indices[i + j]]);
+                const emb = await outDoc.embedPage(cp);
 
-                let cellX=0, cellY=0, cellW=pageW, cellH=pageH;
-                if (nup === 2) { cellH = pageH/2; cellY = (j===0) ? pageH/2 : 0; }
-                else if (nup === 4) { cellW = pageW/2; cellH = pageH/2; cellX = (j%2===0) ? 0 : pageW/2; cellY = (j<2) ? pageH/2 : 0; }
+                const col = j % cols;
+                const row = Math.floor(j / cols);
+                const cellOriginX = margin + col * (cellW + gap);
+                const cellOriginY = sheetH - margin - (row + 1) * cellH - row * gap;
 
-                const drawW = cellW - MARGIN*2; const drawH = cellH - MARGIN*2;
-                const scale = Math.min(drawW / embedded.width, drawH / embedded.height);
-                const scaledW = embedded.width * scale; const scaledH = embedded.height * scale;
+                // ── Auto Rotate Engine ──
+                const scale_0 = Math.min(cellW / emb.width, cellH / emb.height);
+                const scale_90 = Math.min(cellW / emb.height, cellH / emb.width);
+                
+                let angle = 0;
+                let finalScale = scale_0;
 
-                outPage.drawPage(embedded, {
-                    x: cellX + MARGIN + (drawW - scaledW)/2, y: cellY + MARGIN + (drawH - scaledH)/2,
-                    width: scaledW, height: scaledH
-                });
+                // If rotating makes it fit MUCH larger, we rotate 90 deg clockwise
+                if (s.autoRotate && scale_90 > scale_0) {
+                    angle = -90;
+                    finalScale = scale_90;
+                }
+
+                // ── Zoom/Crop Engine ──
+                finalScale *= s.zoom;
+
+                const drawW = emb.width * finalScale;
+                const drawH = emb.height * finalScale;
+                const midX = cellOriginX + cellW / 2;
+                const midY = cellOriginY + cellH / 2;
+
+                if (angle === 0) {
+                    outPage.drawPage(emb, {
+                        x: midX - drawW / 2, y: midY - drawH / 2, width: drawW, height: drawH
+                    });
+                } else {
+                    // Complex 90deg offset correction around bottom-left origin
+                    outPage.drawPage(emb, {
+                        x: midX - drawH / 2, y: midY + drawW / 2, width: drawW, height: drawH, rotate: degrees(-90)
+                    });
+                }
             }
         }
         return await outDoc.save();
     }
 
-    // --- Actions ---
     async function previewDraft() {
         if (!activeId) return;
-        setStatus('⏳ Compiling preview...');
+        const btn = document.getElementById('preview-btn');
+        btn.disabled = true; btn.textContent = '⏳ Compiling…';
         try {
             const bytes = await buildPdfBytes(activeId, true);
-            if (!bytes) return alert("No pages to preview.");
+            if (!bytes) return alert('No pages to preview.');
             const pdf = await pdfjsLib.getDocument({ data: bytes }).promise;
             
             const container = document.getElementById('preview-container');
@@ -423,75 +566,74 @@
 
             for (let i = 1; i <= pdf.numPages; i++) {
                 const page = await pdf.getPage(i);
-                const viewport = page.getViewport({ scale: 1.2 });
+                const vp = page.getViewport({ scale: 1.5 });
                 const canvas = document.createElement('canvas');
-                canvas.width = viewport.width; canvas.height = viewport.height;
-                await page.render({ canvasContext: canvas.getContext('2d'), viewport }).promise;
-                container.appendChild(canvas);
+                canvas.width = vp.width; canvas.height = vp.height;
+                await page.render({ canvasContext: canvas.getContext('2d'), viewport: vp }).promise;
+                
+                const label = document.createElement('div'); label.className = 'preview-sheet-label'; label.textContent = `Sheet ${i} / ${pdf.numPages}`;
+                container.append(label, canvas);
             }
-            setStatus('Ready.');
-        } catch(e) { alert("Preview error: " + e.message); setStatus('Error.'); }
+            setStatus('✅ Preview loaded.');
+        } catch (err) { alert('Preview error: ' + err.message); } 
+        finally { btn.disabled = false; btn.textContent = '👁 Preview'; }
     }
 
     async function downloadSingle(id) {
         if (!id) return;
-        setStatus('⏳ Building PDF...');
+        const btn = document.getElementById('dl-current-btn'); btn.disabled = true;
         try {
-            const bytes = await buildPdfBytes(id, true);
-            if(!bytes) return alert("Nothing to download.");
+            const bytes = await buildPdfBytes(id, id === activeId);
+            if (!bytes) return alert('No pages to download.');
             triggerDownload(bytes, `Edited_${pdfRegistry[id].name}`);
-            setStatus('✅ Downloaded active file.');
-        } catch(e) { alert("Download error."); }
+            setStatus('✅ Download complete.');
+        } catch (err) { alert('Download error: ' + err.message); } 
+        finally { btn.disabled = false; }
     }
 
     async function mergeAllAndDownload() {
         const ids = Object.keys(pdfRegistry);
-        if (ids.length === 0) return alert("Queue empty.");
-        document.getElementById('merge-all-btn').disabled = true;
-        setStatus('⏳ Merging all PDFs in queue. Please wait...');
+        if (!ids.length) return alert('Queue empty.');
+        const btn = document.getElementById('merge-all-btn'); btn.disabled = true; setStatus('⏳ Merging…');
         try {
             const masterDoc = await PDFDocument.create();
-            for (let id of ids) {
-                const bytes = await buildPdfBytes(id, false); // use saved drafts, ignore active un-saved live DOM
-                if (bytes) {
-                    const tempDoc = await PDFDocument.load(bytes);
-                    const copied = await masterDoc.copyPages(tempDoc, tempDoc.getPageIndices());
-                    copied.forEach(p => masterDoc.addPage(p));
-                }
+            for (const id of ids) {
+                const bytes = await buildPdfBytes(id, id === activeId);
+                if (!bytes) continue;
+                const tempDoc = await PDFDocument.load(bytes);
+                const pages = await masterDoc.copyPages(tempDoc, tempDoc.getPageIndices());
+                pages.forEach(p => masterDoc.addPage(p));
             }
-            const finalBytes = await masterDoc.save();
-            triggerDownload(finalBytes, 'Merged_All_Surgeon.pdf');
-            setStatus('✅ Master PDF Downloaded.');
-        } catch(e) { alert("Merge error: " + e.message); }
-        document.getElementById('merge-all-btn').disabled = false;
+            triggerDownload(await masterDoc.save(), 'Merged_All_Surgeon.pdf');
+        } catch (err) { alert('Merge error: ' + err.message); } 
+        finally { btn.disabled = false; }
     }
 
     async function downloadAll() {
         const ids = Object.keys(pdfRegistry);
-        if (ids.length === 0) return alert("Queue empty.");
-        setStatus('⏳ Processing bulk downloads...');
-        for (let id of ids) {
-            const bytes = await buildPdfBytes(id, false); // Use drafts only
-            if(bytes) {
-                triggerDownload(bytes, `Edited_${pdfRegistry[id].name}`);
-                await new Promise(r => setTimeout(r, 1000)); // Delay to prevent browser blocking
-            }
+        if (!ids.length) return alert('Queue empty.');
+        setStatus('⏳ Downloading bulk…');
+        for (const id of ids) {
+            try {
+                const bytes = await buildPdfBytes(id, id === activeId);
+                if (bytes) { triggerDownload(bytes, `Edited_${pdfRegistry[id].name}`); await new Promise(r => setTimeout(r, 1200)); }
+            } catch (err) { console.error(err); }
         }
-        setStatus('✅ Bulk download complete.');
+        setStatus('✅ Bulk done.');
     }
 
     function triggerDownload(bytes, filename) {
         const blob = new Blob([bytes], { type: 'application/pdf' });
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
-        a.href = url; a.download = filename;
-        a.style.display = 'none'; document.body.appendChild(a); a.click();
-        setTimeout(() => { document.body.removeChild(a); URL.revokeObjectURL(url); }, 2000);
+        a.href = url; a.download = filename; a.style.display = 'none';
+        document.body.appendChild(a); a.click();
+        setTimeout(() => { document.body.removeChild(a); URL.revokeObjectURL(url); }, 2500);
     }
 
     function updatePageCount() {
-        const count = grid.querySelectorAll('.page-card').length;
-        document.getElementById('page-count').textContent = count + (count === 1 ? ' page' : ' pages');
+        const n = grid.querySelectorAll('.page-card').length;
+        document.getElementById('page-count').textContent = n + (n === 1 ? ' page' : ' pages');
     }
 
     function setStatus(msg) { document.getElementById('status-text').textContent = msg; }

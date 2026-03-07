@@ -40,10 +40,13 @@
         }
 
         .input-group label {
-            width: 110px;
+            width: 140px;
             font-weight: bold;
             font-size: 14px;
             color: #555;
+            line-height: 1.4;
+            display: flex;
+            flex-direction: column;
         }
 
         input[type="text"], select {
@@ -106,6 +109,7 @@
         /* Section headers */
         .section-header {
             display: block;
+            line-height: 1.4;
             font-weight: bold;
             color: #2c3e50;
             font-size: 16px;
@@ -129,8 +133,8 @@
             box-shadow: inset 4px 4px 8px rgba(163,177,198, 0.7), inset -4px -4px 8px rgba(255,255,255, 0.8);
         }
 
-        .btn-generate { width: 100%; height: 50px; margin: 10px 0; font-size: 16px; }
-        .btn-copy { width: 100%; padding: 12px; margin-top: 10px; font-size: 15px; }
+        .btn-generate { width: 100%; min-height: 50px; height: auto; padding: 10px 0; margin: 10px 0; font-size: 16px; line-height: 1.5; }
+        .btn-copy { width: 100%; padding: 10px 12px; margin-top: 10px; font-size: 15px; line-height: 1.5; }
 
         /* Keyboard */
         .keyboard-box {
@@ -145,9 +149,9 @@
             box-sizing: border-box;
         }
 
-        .kbd-title { text-align: center; font-weight: bold; color: #555; margin-bottom: 10px; font-size: 14px; }
+        .kbd-title { text-align: center; font-weight: bold; color: #555; margin-bottom: 10px; font-size: 14px; line-height: 1.6; }
         .kbd-row { display: flex; gap: 8px; margin-bottom: 8px; align-items: center; justify-content: center; }
-        .kbd-label { font-weight: bold; width: 60px; text-align: right; padding-right: 5px; color: #666; font-size: 12px; }
+        .kbd-label { font-weight: bold; width: 90px; text-align: right; padding-right: 5px; color: #666; font-size: 12px; line-height: 1.4; }
         
         .kbd-btn {
             width: 36px; height: 36px;
@@ -177,6 +181,7 @@
             font-weight: bold;
             color: #2c3e50;
             font-size: 16px;
+            line-height: 1.6;
         }
 
         .guide-toggle {
@@ -207,6 +212,7 @@
             margin: 0 0 5px 0;
             color: #2c3e50;
             font-size: 15px;
+            line-height: 1.6;
         }
 
         .guide-step p {
@@ -219,6 +225,8 @@
         }
 
         .copyright { text-align: center; font-size: 12px; color: #7f8c8d; margin-top: 20px; }
+
+        .hint { display: block; font-size: 11px; color: #888; font-weight: 400; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin-top: 2px; line-height: 1.3; }
 
         /* Responsive */
         @media (max-width: 768px) {
@@ -235,33 +243,33 @@
 <body>
 
 <div class="main-box">
-    <h2>🎶 Alankar / Palta Maker 🎶</h2>
+    <h2>🎶 Alankar / Palta Maker 🎶<span class="hint">(अलंकार / पलटा मेकर)</span></h2>
 
     <!-- Guide Section -->
     <div class="guide-container">
         <div class="guide-header" onclick="toggleGuide()">
-            <div class="guide-title">📘 How to Use This Tool</div>
+            <div class="guide-title">📘 How to Use This Tool<span class="hint">(इस टूल का उपयोग कैसे करें)</span></div>
             <div class="guide-toggle" id="guideToggle">+</div>
         </div>
         <div class="guide-content" id="guideContent">
             <div class="guide-step">
-                <h4>1. Select or Enter a Scale</h4>
+                <h4>1. Select or Enter a Scale<span class="hint">(स्केल चुनें या दर्ज करें)</span></h4>
                 <p>Choose a preset raga from the <strong>Presets</strong> dropdown or manually enter the <strong>Aaroh (ascending)</strong> and <strong>Avroh (descending)</strong> scale notes in the input fields.</p>
             </div>
             <div class="guide-step">
-                <h4>2. Define a Pattern</h4>
+                <h4>2. Define a Pattern<span class="hint">(क्रम निर्धारित करें)</span></h4>
                 <p>Enter a numeric sequence (e.g., <code>1234</code>) or a sequence of swaras (e.g., <code>S G R</code>) in the <strong>Pattern</strong> field. This defines the order of notes for your Alankar/Palta.</p>
             </div>
             <div class="guide-step">
-                <h4>3. Use the Swara Keyboard</h4>
+                <h4>3. Use the Swara Keyboard<span class="hint">(स्वर कीबोर्र्ड़ का उपयोग करें)</span></h4>
                 <p>Click on the on-screen keyboard to insert special swaras, flats, sharps, and diacritics into any input field. Use <strong>Back</strong>, <strong>Clear</strong>, or <strong>Space</strong> buttons to edit the input conveniently.</p>
             </div>
             <div class="guide-step">
-                <h4>4. Generate Alankar</h4>
+                <h4>4. Generate Alankar<span class="hint">(अलंकार बनाएं)</span></h4>
                 <p>Press the <strong>✨ Generate Alankar ✨</strong> button to produce the full ascending (Aaroh) and descending (Avroh) sequences based on your pattern and scale. The output appears in the large textarea.</p>
             </div>
             <div class="guide-step">
-                <h4>5. Copy or Save Output</h4>
+                <h4>5. Copy or Save Output<span class="hint">(परिणाम कॉपी करें)</span></h4>
                 <p>Click <strong>📋 Copy Output</strong> to copy the generated Alankar to your clipboard for easy use in teaching, practice, or documentation.</p>
             </div>
         </div>
@@ -270,19 +278,19 @@
     <div class="layout-container">
         <div class="left-panel">
             <div class="input-group">
-                <label>Presets:</label>
+                <label><span>Presets:</span><span class="hint">(पूर्वनिर्धारित)</span></label>
                 <select id="presetSelect" onchange="loadPreset()"></select>
             </div>
             <div class="input-group">
-                <label>Aaroh Scale:</label>
+                <label><span>Aaroh Scale:</span><span class="hint">(आरोह सप्तक)</span></label>
                 <input type="text" id="aarohInput" value="S R G M P D N">
             </div>
             <div class="input-group">
-                <label>Avroh Scale:</label>
+                <label><span>Avroh Scale:</span><span class="hint">(अवरोह सप्तक)</span></label>
                 <input type="text" id="avrohInput" value="S R G M P D N">
             </div>
             <div class="input-group">
-                <label>Pattern:</label>
+                <label><span>Pattern:</span><span class="hint">(क्रम)</span></label>
                 <input type="text" id="patternInput" value="14123" placeholder="e.g. 123 or S G R">
             </div>
         </div>
@@ -293,11 +301,11 @@
         </div>
     </div>
 
-    <button class="btn-generate" onclick="generateAlankar()">✨ Generate Alankar ✨</button>
+    <button class="btn-generate" onclick="generateAlankar()">✨ Generate ✨<span class="hint">(अलंकार बनाएं)</span></button>
     
-    <div id="outputText" class="output-box">Your generated Alankar will appear here.</div>
+    <div id="outputText" class="output-box">Your generated Alankar will appear here.<span class="hint">आपके द्वारा बनाया गया अलंकार यहां दिखाई देगा।</span></div>
     
-    <button class="btn-copy" id="copyBtn" onclick="copyOutput()">📋 Copy Output</button>
+    <button class="btn-copy" id="copyBtn" onclick="copyOutput()">📋 Copy Output<span class="hint">(परिणाम कॉपी करें)</span></button>
 
     <div class="copyright">&copy; Sai Sudeep Das (2026)</div>
 </div>
@@ -398,16 +406,16 @@
 
     function buildKeyboard() {
         const swaras = [
-            {cat: 'Lower', notes: ['Ṣ','Ṛ','G̣','Ṃ','P̣','Ḍ','Ṇ']},
-            {cat: 'Middle', notes: ['S','R','G','M','P','D','N']},
-            {cat: 'Upper', notes: ['Ṡ','Ṙ','Ġ','Ṁ','Ṗ','Ḋ','Ṅ']},
-            {cat: 'Sharp', notes: ['M̍']},
-            {cat: 'Flat', notes: ['Ṟ','G̱','Ḏ','Ṉ']},
-            {cat: 'Kan', notes: ['ˢ','ᴿ','ᴳ','ᴹ','ᴾ','ᴰ','ᴺ']}
+            {cat: 'Lower<span class="hint">(मंद्र)</span>', notes: ['Ṣ','Ṛ','G̣','Ṃ','P̣','Ḍ','Ṇ']},
+            {cat: 'Middle<span class="hint">(मध्य)</span>', notes: ['S','R','G','M','P','D','N']},
+            {cat: 'Upper<span class="hint">(तार)</span>', notes: ['Ṡ','Ṙ','Ġ','Ṁ','Ṗ','Ḋ','Ṅ']},
+            {cat: 'Sharp<span class="hint">(तीव्र)</span>', notes: ['M̍']},
+            {cat: 'Flat<span class="hint">(कोमल)</span>', notes: ['Ṟ','G̱','Ḏ','Ṉ']},
+            {cat: 'Grace Note<span class="hint">(कण स्वर)</span>', notes: ['ˢ','ᴿ','ᴳ','ᴹ','ᴾ','ᴰ','ᴺ']}
         ];
         const diacritics = {'̣': 'Dot↓', '̇': 'Dot↑', '̱': 'Line', '̍': 'Tivra'};
 
-        let html = '<div class="kbd-title">🎹 Swara Keyboard</div>';
+        let html = '<div class="kbd-title">🎹 Swara Keyboard<span class="hint">(स्वर कीबोर्ड़)</span></div>';
         
         swaras.forEach(row => {
             html += `<div class="kbd-row"><div class="kbd-label">${row.cat}</div>`;
@@ -417,12 +425,12 @@
             html += `</div>`;
         });
 
-        html += `<div class="kbd-row" style="margin-top:10px;"><div class="kbd-label">Controls</div>
+        html += `<div class="kbd-row" style="margin-top:10px;"><div class="kbd-label">Controls<span class="hint">(नियंत्रण)</span></div>
                  <button class="kbd-btn kbd-ctrl" onmousedown="event.preventDefault()" onclick="insSwar(' ')">Space</button>
                  <button class="kbd-btn kbd-ctrl" onmousedown="event.preventDefault()" onclick="backspaceSwar()">⌫ Back</button>
                  <button class="kbd-btn kbd-ctrl" onmousedown="event.preventDefault()" onclick="clearInput()">Clear</button></div>`;
 
-        html += `<div class="kbd-row"><div class="kbd-label">Marks</div>`;
+        html += `<div class="kbd-row"><div class="kbd-label">Marks<span class="hint">(चिह्न)</span></div>`;
         for(let sym in diacritics) {
             html += `<button class="kbd-btn" onmousedown="event.preventDefault()" onclick="insSwar('${sym}')">◌${sym}</button>`;
         }
@@ -498,7 +506,7 @@
         let formattedOutput = '';
         
         // Add Aaroh section header
-        formattedOutput += '<span class="section-header">Aaroh (Ascending):</span><br>';
+        formattedOutput += '<span class="section-header">Aaroh (Ascending)<span class="hint">(आरोह)</span></span><br>';
         
         // Format Aaroh swaras as buttons
         const aarohLines = aarohStr.split(' ,\n');
@@ -518,7 +526,7 @@
         formattedOutput += '<br><br>';
         
         // Add Avroh section header
-        formattedOutput += '<span class="section-header">Avroh (Descending):</span><br>';
+        formattedOutput += '<span class="section-header">Avroh (Descending)<span class="hint">(अवरोह)</span></span><br>';
         
         // Format Avroh swaras as buttons
         const avrohLines = avrohStr.split(' ,\n');

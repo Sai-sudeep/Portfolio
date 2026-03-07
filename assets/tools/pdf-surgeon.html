@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF Page Surgeon</title>
+    <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.0/Sortable.min.js"></script>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --bg: #e0e5ec;
+            --shadow-light: rgba(255,255,255,0.85);
+            --shadow-dark: rgba(163,177,198,0.65);
+            --text: #2c3e50;
+            --text-muted: #7f8c8d;
+            --accent: #082567;
+            --accent-light: #eff6ff;
+            --green: #10b981;
+            --red: #ef4444;
+        }
+
+        body {
+            background: var(--bg);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            gap: 20px;
+        }
+
+        /* ── Header ── */
+        .app-header { text-align: center; }
+        .app-header h1 { font-size: 1.6rem; color: var(--text); margin-bottom: 4px; }
+        .app-header p { font-size: 13px; color: var(--text-muted); }
+
+        /* ── Neumorphic base ── */
+        .neu-raised {
+            background: var(--bg);
+            border-radius: 14px;
+            box-shadow: 8px 8px 16px var(--shadow-dark), -8px -8px 16px var(--shadow-light);
+        }
+        .neu-inset {
+            background: var(--bg);
+            border-radius: 10px;
+            box-shadow: inset 4px 4px 8px var(--shadow-dark), inset -4px -4px 8px var(--shadow-light);
+        }
+
+        /* ── Layout ── */
+        .main-layout { display: flex; gap: 20px; flex: 1; }
+
+        /* ── Sidebar ── */
+        .sidebar {
+            width: 270px; flex-shrink: 0; padding: 20px;
+            display: flex; flex-direction: column; gap: 14px;
+        }
+        .sidebar h2 { font-size: 1rem; color: var(--text); font-weight: 700; }
+
+        .btn-add {
+            width: 100%; padding: 12px; border: none; border-radius: 10px;
+            background: var(--bg); box-shadow: 6px 6px 12px var(--shadow-dark), -6px -6px 12px var(--shadow-light);
+            font-weight: 700; font-size: 14px; color: var(--accent); cursor: pointer; transition: all 0.2s ease;
+        }
+        .btn-add:hover { box-shadow: 4px 4px 8px var(--shadow-dark), -4px -4px 8px var(--shadow-light); }
+        .btn-add:active { box-shadow: inset 4px 4px 8px var(--shadow-dark), inset -4px -4px 8px var(--shadow-light); }
+
+        .file-list {
+            display: flex; flex-direction: column; gap: 8px; flex: 1;
+            overflow-y: auto; max-height: 500px; padding-right: 2px;
+        }
+
+        .file-item {
+            padding: 10px 14px; border-radius: 10px; background: var(--bg);
+            box-shadow: 4px 4px 8px var(--shadow-dark), -4px -4px 8px var(--shadow-light);
+            cursor: pointer; transition: all 0.2s ease;
+            display: flex; align-items: center; justify-content: space-between; gap: 8px;
+        }
+        .file-item:hover { box-shadow: 3px 3px 6px var(--shadow-dark), -3px -3px 6px var(--shadow-light); }
+        .file-item.active { box-shadow: inset 4px 4px 8px var(--shadow-dark), inset -4px -4px 8px var(--shadow-light); }
+        .file-item-name {
+            font-size: 12px; font-weight: 600; color: var(--text); flex: 1;
+            overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+        }
+        .file-item.active .file-item-name { color: var(--accent); }
+
+        .status-dot {
+            width: 9px; height: 9px; border-radius: 50%; background: #cbd5e1; flex-shrink: 0;
+            box-shadow: 1px 1px 3px var(--shadow-dark), -1px -1px 3px var(--shadow-light);
+        }
+        .status-dot.saved { background: var(--green); }
+        .status-dot.unsaved { background: #f59e0b; }
+
+        .sidebar-footer { font-size: 11px; color: var(--text-muted); text-align: center; line-height: 1.5; }
+
+        /* ── Workspace ── */
+        .workspace { flex: 1; padding: 20px; display: flex; flex-direction: column; gap: 16px; min-height: 0; }
+
+        /* ── Empty state ── */
+        .empty-state {
+            flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;
+            color: var(--text-muted); gap: 10px;
+        }
+        .empty-state .icon { font-size: 3rem; opacity: 0.4; }
+        .empty-state h3 { font-size: 1.1rem; font-weight: 600; }
+        .empty-state p { font-size: 13px; }
+
+        /* ── Toolbar ── */
+        .toolbar {
+            padding: 16px 20px; border-radius: 14px; display: flex; align-items: center;
+            justify-content: space-between; flex-wrap: wrap; gap: 12px;
+        }
+
+        .controls-group { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+        .control-item { display: flex; flex-direction: column; gap: 5px; }
+        .control-item label {
+            font-size: 11px; font-weight: 700; color: var(--text-muted);
+            text-transform: uppercase; letter-spacing: 0.5px;
+        }
+
+        select {
+            padding: 8px 12px; border: none; border-radius: 8px; background: var(--bg);
+            box-shadow: inset 3px 3px 6px var(--shadow-dark), inset -3px -3px 6px var(--shadow-light);
+            color: var(--text); font-size: 13px; font-weight: 600; outline: none; cursor: pointer;
+        }
+
+        .btn-action {
+            padding: 10px 20px; border: none; border-radius: 10px; background: var(--bg);
+            box-shadow: 5px 5px 10px var(--shadow-dark), -5px -5px 10px var(--shadow-light);
+            font-weight: 700; font-size: 13px; color: var(--text); cursor: pointer;
+            transition: all 0.2s ease; white-space: nowrap;
+        }
+        .btn-action:hover { box-shadow: 3px 3px 6px var(--shadow-dark), -3px -3px 6px var(--shadow-light); }
+        .btn-action:active, .btn-action:disabled {
+            box-shadow: inset 4px 4px 8px var(--shadow-dark), inset -4px -4px 8px var(--shadow-light);
+        }
+        .btn-action:disabled { opacity: 0.6; cursor: not-allowed; }
+        .btn-action.primary { color: var(--accent); }
+
+        .btn-actions-group { display: flex; gap: 10px; flex-wrap: wrap; }
+
+        /* ── Page grid ── */
+        .page-grid-wrap { flex: 1; padding: 20px; overflow-y: auto; min-height: 300px; }
+        #page-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 16px; align-content: start; }
+
+        /* ── Page cards ── */
+        .page-card {
+            border-radius: 12px; padding: 10px; background: var(--bg);
+            box-shadow: 5px 5px 10px var(--shadow-dark), -5px -5px 10px var(--shadow-light);
+            position: relative; cursor: grab; transition: box-shadow 0.2s ease, transform 0.15s ease; user-select: none;
+        }
+        .page-card:hover { transform: translateY(-2px); }
+        .page-card.sortable-ghost { opacity: 0.4; }
+        .page-card.sortable-chosen { cursor: grabbing; }
+
+        .page-card canvas {
+            width: 100%; height: auto; border-radius: 6px; display: block;
+            box-shadow: inset 2px 2px 4px var(--shadow-dark), inset -2px -2px 4px var(--shadow-light);
+        }
+
+        .page-label { font-size: 10px; font-weight: 600; color: var(--text-muted); text-align: center; margin-top: 7px; }
+
+        .remove-btn {
+            position: absolute; top: -8px; right: -8px; background: var(--red); color: white;
+            border: none; border-radius: 50%; width: 22px; height: 22px; font-size: 12px; font-weight: 700;
+            cursor: pointer; display: flex; align-items: center; justify-content: center;
+            box-shadow: 2px 2px 5px rgba(239,68,68,0.4); transition: transform 0.15s ease; z-index: 10;
+        }
+        .remove-btn:hover { transform: scale(1.15); }
+
+        /* ── Status bar & Loading ── */
+        .status-bar {
+            padding: 8px 16px; border-radius: 10px; font-size: 12px; font-weight: 600;
+            color: var(--text-muted); text-align: center; display: flex; align-items: center; justify-content: center; gap: 8px;
+        }
+        .loading-msg { grid-column: 1 / -1; text-align: center; padding: 40px; color: var(--text-muted); font-weight: 600; font-size: 14px; }
+
+        /* ── Progress ── */
+        .progress-wrap { grid-column: 1 / -1; display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 30px; }
+        .progress-bar-outer { width: 100%; max-width: 300px; height: 8px; border-radius: 4px; box-shadow: inset 3px 3px 6px var(--shadow-dark), inset -3px -3px 6px var(--shadow-light); overflow: hidden; }
+        .progress-bar-inner { height: 100%; background: var(--accent); border-radius: 4px; transition: width 0.2s ease; }
+        .progress-label { font-size: 13px; font-weight: 600; color: var(--text-muted); }
+
+        .hidden { display: none !important; }
+
+        /* ── Responsive ── */
+        @media (max-width: 768px) {
+            .main-layout { flex-direction: column; }
+            .sidebar { width: 100%; }
+            .file-list { max-height: 200px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="app-header">
+    <h1>📄 PDF Page Surgeon</h1>
+    <p>Reorder, delete pages, apply N-up layouts — all locally in your browser</p>
+</div>
+
+<div class="main-layout">
+    <div class="sidebar neu-raised">
+        <h2>📁 PDF Queue</h2>
+        <input type="file" id="pdf-input" accept=".pdf" multiple class="hidden">
+        <button class="btn-add" id="add-pdf-btn">＋ Add PDFs (Max 20)</button>
+        <div class="file-list" id="queue"></div>
+        <div class="sidebar-footer">🔒 All processing is done locally.<br>No files are uploaded anywhere.</div>
+    </div>
+
+    <div class="workspace neu-raised">
+        <div id="empty-view" class="empty-state">
+            <div class="icon">📂</div>
+            <h3>No PDF Selected</h3>
+            <p>Add a PDF from the sidebar to start editing.</p>
+        </div>
+
+        <div id="editor-view" class="hidden" style="display:flex; flex-direction:column; gap:16px; flex:1;">
+            <div class="toolbar neu-raised">
+                <div class="controls-group">
+                    <div class="control-item">
+                        <label>Layout</label>
+                        <select id="n-up">
+                            <option value="1">1 Page per Sheet</option>
+                            <option value="2">2 Pages per Sheet</option>
+                            <option value="4">4 Pages (2×2 Grid)</option>
+                        </select>
+                    </div>
+                    <div class="control-item">
+                        <label>Orientation</label>
+                        <select id="orient">
+                            <option value="port">Portrait</option>
+                            <option value="land">Landscape</option>
+                        </select>
+                    </div>
+                    <div class="control-item">
+                        <label>Page Count</label>
+                        <div id="page-count" style="font-size:13px; font-weight:700; color:var(--accent); padding: 8px 4px;">—</div>
+                    </div>
+                </div>
+                <div class="btn-actions-group">
+                    <button class="btn-action" id="reset-btn">↩ Reset</button>
+                    <button class="btn-action primary" id="dl-btn">⬇ Download PDF</button>
+                </div>
+            </div>
+
+            <div class="page-grid-wrap neu-inset">
+                <div id="page-grid"></div>
+            </div>
+
+            <div class="status-bar neu-inset" id="status-bar">
+                <span id="status-text">Drag to reorder · Click ✕ to remove pages</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+(function () {
+    'use strict';
+
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.worker.min.js';
+    const { PDFDocument } = PDFLib;
+
+    let pdfRegistry = {};
+    let activeId = null;
+
+    const grid = document.getElementById('page-grid');
+    new Sortable(grid, {
+        animation: 150, ghostClass: 'sortable-ghost', chosenClass: 'sortable-chosen',
+        onEnd: () => updatePageCount()
+    });
+
+    // Clean Event Listeners
+    document.getElementById('add-pdf-btn').addEventListener('click', () => document.getElementById('pdf-input').click());
+    document.getElementById('reset-btn').addEventListener('click', resetToOriginal);
+    document.getElementById('dl-btn').addEventListener('click', downloadPDF);
+    
+    document.getElementById('n-up').addEventListener('change', () => setStatus('Layout changed — click Download to apply.'));
+    document.getElementById('orient').addEventListener('change', () => setStatus('Orientation changed — click Download to apply.'));
+
+    document.getElementById('pdf-input').addEventListener('change', async (e) => {
+        const files = Array.from(e.target.files);
+        for (const file of files) {
+            if (Object.keys(pdfRegistry).length >= 20) {
+                alert('Maximum 20 PDFs allowed.'); break;
+            }
+            const id = 'pdf_' + Math.random().toString(36).substr(2, 9);
+            const bytes = new Uint8Array(await file.arrayBuffer());
+
+            try {
+                await PDFDocument.load(bytes.slice(0));
+            } catch (err) {
+                alert(`"${file.name}" could not be parsed and was skipped.`); continue;
+            }
+
+            pdfRegistry[id] = { name: file.name, originalBytes: bytes, pageOrder: null, settings: { nup: 1, orient: 'port' } };
+            addSidebarItem(id, file.name);
+            if (!activeId) loadEditor(id);
+        }
+        e.target.value = '';
+    });
+
+    function addSidebarItem(id, name) {
+        const item = document.createElement('div');
+        item.className = 'file-item'; item.id = 'item_' + id;
+        const nameEl = document.createElement('div');
+        nameEl.className = 'file-item-name'; nameEl.title = name;
+        nameEl.textContent = name.length > 22 ? name.slice(0, 22) + '…' : name;
+        const dot = document.createElement('div');
+        dot.className = 'status-dot'; dot.id = 'dot_' + id;
+        item.appendChild(nameEl); item.appendChild(dot);
+        item.onclick = () => loadEditor(id);
+        document.getElementById('queue').appendChild(item);
+    }
+
+    async function loadEditor(id) {
+        activeId = id;
+        document.getElementById('empty-view').classList.add('hidden');
+        document.getElementById('editor-view').classList.remove('hidden');
+
+        document.querySelectorAll('.file-item').forEach(el => el.classList.remove('active'));
+        document.getElementById('item_' + id).classList.add('active');
+
+        document.getElementById('n-up').value = pdfRegistry[id].settings.nup;
+        document.getElementById('orient').value = pdfRegistry[id].settings.orient;
+
+        setStatus('⏳ Rendering page previews…');
+        grid.innerHTML = `<div class="loading-msg">Rendering previews…</div>`;
+        document.getElementById('page-count').textContent = '—';
+
+        try {
+            const pdfDoc = await pdfjsLib.getDocument({ data: pdfRegistry[id].originalBytes.slice(0) }).promise;
+            const total = pdfDoc.numPages;
+            const order = pdfRegistry[id].pageOrder || Array.from({ length: total }, (_, i) => i);
+
+            grid.innerHTML = '';
+            const progWrap = document.createElement('div');
+            progWrap.className = 'progress-wrap';
+            progWrap.innerHTML = `<div class="progress-label" id="prog-label">Loading page 0 / ${total}</div>
+                <div class="progress-bar-outer"><div class="progress-bar-inner" id="prog-bar" style="width:0%"></div></div>`;
+            grid.appendChild(progWrap);
+
+            const renderedCards = [];
+            for (let i = 0; i < order.length; i++) {
+                const pageNum = order[i];
+                const page = await pdfDoc.getPage(pageNum + 1);
+                const viewport = page.getViewport({ scale: 0.35 });
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+                canvas.height = viewport.height; canvas.width = viewport.width;
+                await page.render({ canvasContext: ctx, viewport }).promise;
+
+                const card = document.createElement('div');
+                card.className = 'page-card'; card.dataset.origIdx = pageNum;
+                
+                const removeBtn = document.createElement('button');
+                removeBtn.className = 'remove-btn'; removeBtn.title = 'Remove this page'; removeBtn.textContent = '✕';
+                removeBtn.addEventListener('click', (e) => {
+                    e.stopPropagation(); card.remove(); updatePageCount();
+                    setStatus('Page removed. Download to save changes.');
+                });
+
+                card.appendChild(removeBtn); card.appendChild(canvas);
+                const label = document.createElement('div');
+                label.className = 'page-label'; label.textContent = `Page ${pageNum + 1}`;
+                card.appendChild(label); renderedCards.push(card);
+
+                document.getElementById('prog-bar').style.width = Math.round(((i + 1) / order.length) * 100) + '%';
+                document.getElementById('prog-label').textContent = `Loading page ${i + 1} / ${order.length}`;
+            }
+
+            grid.innerHTML = ''; renderedCards.forEach(card => grid.appendChild(card));
+            updatePageCount(); setStatus('Drag to reorder · Click ✕ to remove pages · Download when ready');
+        } catch (err) {
+            console.error(err); grid.innerHTML = `<div class="loading-msg" style="color:var(--red)">❌ Failed to render PDF: ${err.message}</div>`; setStatus('Error loading file.');
+        }
+    }
+
+    function resetToOriginal() {
+        if (!activeId) return;
+        pdfRegistry[activeId].pageOrder = null;
+        pdfRegistry[activeId].settings = { nup: 1, orient: 'port' };
+        setDotState(activeId, 'neutral'); loadEditor(activeId);
+    }
+
+    async function downloadPDF() {
+        if (!activeId) return;
+        const btn = document.getElementById('dl-btn');
+        btn.disabled = true; btn.textContent = '⏳ Building PDF…'; setStatus('⏳ Building PDF — please wait…');
+
+        try {
+            const nup = parseInt(document.getElementById('n-up').value);
+            const orient = document.getElementById('orient').value;
+            const cards = Array.from(grid.querySelectorAll('.page-card'));
+            if (cards.length === 0) { alert('No pages remaining. Nothing to download.'); return; }
+            
+            const indices = cards.map(c => parseInt(c.dataset.origIdx));
+            pdfRegistry[activeId].pageOrder = indices;
+            pdfRegistry[activeId].settings = { nup, orient }; setDotState(activeId, 'saved');
+
+            const srcDoc = await PDFDocument.load(pdfRegistry[activeId].originalBytes.slice(0));
+            const srcPages = srcDoc.getPages();
+            const outDoc = await PDFDocument.create();
+
+            const isLandscape = orient === 'land';
+            const A4_W = 595.28; const A4_H = 841.89;
+            const pageW = isLandscape ? A4_H : A4_W; const pageH = isLandscape ? A4_W : A4_H;
+            const MARGIN = 10;
+
+            for (let i = 0; i < indices.length; i += nup) {
+                const outPage = outDoc.addPage([pageW, pageH]);
+                for (let j = 0; j < nup; j++) {
+                    const idx = i + j; if (idx >= indices.length) break;
+                    const origPageIndex = indices[idx];
+                    if (origPageIndex < 0 || origPageIndex >= srcPages.length) continue;
+
+                    // FIX: Must copy the page to the new document's context first before embedding
+                    const [copiedPage] = await outDoc.copyPages(srcDoc, [origPageIndex]);
+                    const embedded = await outDoc.embedPage(copiedPage);
+                    
+                    const srcW = embedded.width; const srcH = embedded.height;
+                    let cellX, cellY, cellW, cellH;
+                    
+                    if (nup === 1) { cellX = 0; cellY = 0; cellW = pageW; cellH = pageH; } 
+                    else if (nup === 2) { cellW = pageW; cellH = pageH / 2; cellX = 0; cellY = (j === 0) ? pageH / 2 : 0; } 
+                    else { cellW = pageW / 2; cellH = pageH / 2; cellX = (j % 2 === 0) ? 0 : pageW / 2; cellY = (j < 2) ? pageH / 2 : 0; }
+
+                    const drawX0 = cellX + MARGIN; const drawY0 = cellY + MARGIN;
+                    const drawW = cellW - MARGIN * 2; const drawH = cellH - MARGIN * 2;
+                    const scale = Math.min(drawW / srcW, drawH / srcH);
+                    const scaledW = srcW * scale; const scaledH = srcH * scale;
+
+                    outPage.drawPage(embedded, {
+                        x: drawX0 + (drawW - scaledW) / 2, 
+                        y: drawY0 + (drawH - scaledH) / 2, 
+                        width: scaledW, 
+                        height: scaledH 
+                    });
+                }
+            }
+
+            const pdfBytes = await outDoc.save();
+            const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            const baseName = pdfRegistry[activeId].name.replace(/\.pdf$/i, '');
+            const suffix = nup > 1 ? `_${nup}up_${orient}` : '';
+            a.download = `Edited_${baseName}${suffix}.pdf`;
+            a.style.display = 'none'; document.body.appendChild(a); a.click();
+            setTimeout(() => { document.body.removeChild(a); URL.revokeObjectURL(url); }, 2000);
+            setStatus(`✅ Downloaded: ${a.download}`);
+
+        } catch (err) {
+            console.error(err); alert('Error building PDF: ' + err.message);
+            setStatus('❌ Error during download. See console.');
+        } finally {
+            btn.disabled = false; btn.textContent = '⬇ Download PDF';
+        }
+    }
+
+    function updatePageCount() {
+        const count = grid.querySelectorAll('.page-card').length;
+        document.getElementById('page-count').textContent = count + (count === 1 ? ' page' : ' pages');
+    }
+
+    function setStatus(msg) { document.getElementById('status-text').textContent = msg; }
+    function setDotState(id, state) {
+        const dot = document.getElementById('dot_' + id); if (!dot) return;
+        dot.classList.remove('saved', 'unsaved');
+        if (state === 'saved') dot.classList.add('saved'); if (state === 'unsaved') dot.classList.add('unsaved');
+    }
+})();
+</script>
+</body>
+</html>
